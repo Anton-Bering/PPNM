@@ -1,0 +1,24 @@
+Manual threading with 1 thread(s): harmonic sum = 18.9978964138526
+Broken Parallel.For sum: 13.7502761198028
+ThreadLocal Parallel.For sum = 18.9978964138549
+real 1.03
+user 8.41
+sys 0.00
+Manual threading with 2 thread(s): harmonic sum = 18.997896413853
+Broken Parallel.For sum: 13.9682537077932
+ThreadLocal Parallel.For sum = 18.9978964138514
+real 0.98
+user 8.38
+sys 0.01
+Manual threading with 3 thread(s): harmonic sum = 18.9978964138495
+Broken Parallel.For sum: 13.7612611938427
+ThreadLocal Parallel.For sum = 18.9978964138522
+real 1.06
+user 9.02
+sys 0.03
+Manual threading with 4 thread(s): harmonic sum = 18.9978964138499
+Broken Parallel.For sum: 14.245312096407
+ThreadLocal Parallel.For sum = 18.9978964138535
+real 0.96
+user 8.88
+sys 0.01
