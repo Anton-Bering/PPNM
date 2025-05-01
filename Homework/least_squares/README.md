@@ -10,6 +10,6 @@ Fit a linear combination of given functions.
 
 **A)** Ordinary least-squares fit by QR-decomposition (6 points)   
 **B)** Uncertainties of the fitting coefficients (3 points)  
-**c)** Evaluation of the quality of the uncertainties on the fit coefficients (1 points)  
+**C)** Evaluation of the quality of the uncertainties on the fit coefficients (1 points)  
 
 
