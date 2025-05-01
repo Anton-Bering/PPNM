@@ -10,5 +10,5 @@ Implement the *Jacobi eigenvalue algorithm* for matrix diagonalization (matrix e
 
 **A)** Jacobi diagonalization with cyclic sweeps (6 points)   
 **B)** Hydrogen atom, s-wave radial Schrödinger equation on a grid (3 points)  
-**c)** Scaling and optimization (1 points)  
+**C)** Scaling and optimization (1 points)  
 
