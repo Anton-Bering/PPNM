@@ -14,6 +14,6 @@ The method used is the *modified Gram-Schmidt orthogonalization*.
 
 ## Tasks
 
-**a)** Solve linear equations using QR-decomposition by modified Gram-Schmidt orthogonalization (6 points) 
-**b)** Compute matrix inverse using Gram-Schmidt QR factorization (3 points) 
-**c)** Count the number of operations for QR-decomposition (1 points) 
+**a)** Solve linear equations using QR-decomposition by modified Gram-Schmidt orthogonalization (6 points)   
+**b)** Compute matrix inverse using Gram-Schmidt QR factorization (3 points)  
+**c)** Count the number of operations for QR-decomposition (1 points)  
