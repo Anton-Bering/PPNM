@@ -1,0 +1,27 @@
+Part A: Testing adaptive Runge-Kutta solver on simple ODEs
+u'' = -u from x=0 to 6.28318530717959: y_end = (0.000000, 1.000000), expected ~(0.000000, 1.000000)
+Steps taken: 52756
+
+Lotka-Volterra from t=0 to t=15: final (prey, pred) = (0.714, 0.075)
+Initial was (prey, pred) = (10, 5)
+
+Part B: Relativistic Precession of Planetary Orbit
+Circular orbit (ε=0) after φ=37.6991118430775: u_final = 1.000000 (should remain ~1)
+
+Orbit    φ (radians)    u (Newtonian)    u (Relativistic)
+    1         6.283          1.000000          1.032260
+    2        12.566          1.000000          1.064430
+    3        18.850          1.000000          1.096378
+    4        25.133          1.000000          1.127976
+    5        31.416          1.000000          1.159094
+
+Part C: Higher Order Stepper, Spline Interpolation, and Three-Body Problem
+y'' = 2x from 0 to 10: y_end = 333.333333, exact = 333.333333
+Steps taken with RK23: 2426
+
+Three-body figure-8 orbit simulation (m1=m2=m3=1, G=1)
+Final positions vs initial positions after one period:
+r1: final = (0.969790, -0.243398), initial = (0.970044, -0.243088)
+r2: final = (-0.970388, 0.242864), initial = (-0.970044, 0.243088)
+r3: final = (0.000598, 0.000535), initial = (0.000000, 0.000000)
+Each body's final position is approximately equal to its starting position, demonstrating the periodic figure-8 orbit.

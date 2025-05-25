@@ -1,0 +1,17 @@
+Testing QR decomposition (Part A) on a tall matrix...
+- Q^T * Q orthonormality error (max deviation): 3.33e-016
+- R upper-triangular check (max below-diag element): 0.00e+000
+- Reconstruction error (max |QR - A|): 1.11e-016
+
+Testing solving Ax = b (Part A) on a square system...
+- Determinant of A (from QR): 6.76e-002
+- Solution error ||A*x - b||: 1.72e-015
+
+Testing matrix inverse computation (Part B)...
+- Inverse check, max |A * A_inv - I|: 1.11e-015
+
+Timing QR decomposition for increasing N (Part C)...
+N, Time (ms)
+100, 2
+150, 8
+200, 16

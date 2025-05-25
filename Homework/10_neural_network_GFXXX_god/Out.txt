@@ -1,0 +1,35 @@
+--- --- Part A: Function Approximation --- ---
+
+Approximate: g(x)=Cos(5*x-1)*Exp(-x*x)
+Initial cost = 29.250191, Final cost = 0.000695
+Sample predictions vs actual (after training):
+    x        F(x) (pred)    g(x) (actual)    error
+ -1.00        0.356722        0.353227        0.003495
+ -0.50       -0.727045       -0.729313        0.002268
+  0.00        0.536526        0.540302       -0.003777
+  0.50        0.053270        0.055090       -0.001820
+  1.00       -0.242822       -0.240462       -0.002360
+
+Wrote plot_data.txt
+ --- --- Part B: Derivatives and Antiderivative --- ---
+
+At x = 0.00:
+  F(x) = 0.536526,    g(x) = 0.540302
+  F'(x) = 4.205863,   g'(x) = 4.207355
+  F''(x) = -14.684434,  g''(x) = -14.588162
+  ∫F(x) dx (antiderivative) = -0.384080  (constant of integration omitted)
+
+Wrote derivatives_data.txt
+--- --- Part C: Solving a Differential Equation with ANN --- ---
+
+Initial cost = 81.301852, Final cost = 0.000670
+Boundary check: F(0) = -0.000073 (target 0.00),  F'(0) = 0.999774 (target 1.00)
+Sample solution values vs actual sin(x):
+    x        F(x) (pred)    sin(x) (actual)   error
+  0.00       -0.000073        0.000000       -0.000073
+  0.52        0.501202        0.500000        0.001202
+  0.79        0.708706        0.707107        0.001599
+  1.57        1.003547        1.000000        0.003547
+  3.14        0.003554        0.000000        0.003554
+Wrote solution_data.txt
+Wrote residual_data.txt

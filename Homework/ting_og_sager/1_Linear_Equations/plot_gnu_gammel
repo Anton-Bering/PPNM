@@ -1,0 +1,17 @@
+set terminal pngcairo size 900,600 enhanced font 'Arial,11'
+set output 'timing.png'
+
+set title 'QR Decomposition Runtime vs Matrix Size'
+set xlabel 'Matrix size N'
+set ylabel 'Time [s]'
+
+set key top left
+set grid
+set style line 1 lt 1 lw 2 pt 7 ps 1.5 lc rgb 'blue'
+
+# Add a guide line for N^3 (for comparison, scaled)
+f(x) = 1e-8 * x**3
+
+plot \
+    'out.times.data' using 1:2 with linespoints linestyle 1 title 'Measured QR time', \
+    f(x) with lines lt 0 lc rgb 'gray' title 'Theoretical O(N^3)'

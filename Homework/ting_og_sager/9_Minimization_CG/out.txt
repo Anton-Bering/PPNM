@@ -1,0 +1,4 @@
+Rosenbrock minimized in 1000 steps.
+Minimum at (x, y) = (-1.200003, 0.999993), f = 2.420118E+001
+Himmelblau minimized in 1000 steps.
+Minimum at (x, y) = (-2.805525, 2.912156), f = 1.802319E+000

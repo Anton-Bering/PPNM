@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/NewtonMinimization.csproj": {}
+  },
+  "projects": {
+    "/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/NewtonMinimization.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/NewtonMinimization.csproj",
+        "projectName": "NewtonMinimization",
+        "projectPath": "/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/NewtonMinimization.csproj",
+        "packagesPath": "/home/anton/.nuget/packages/",
+        "outputPath": "/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/anton/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.408/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

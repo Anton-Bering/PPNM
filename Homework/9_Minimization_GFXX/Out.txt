@@ -1,0 +1,4 @@
+Rosenbrock minimum (forward diff): (x=1.000, y=1.000), after 14 iterations.
+Rosenbrock minimum (central diff): (x=1.000, y=1.000), after 13 iterations.
+Himmelblau minimum: (x=-0.120, y=-0.325), after 1000 iterations.
+Higgs fit results: m = 125.01 GeV, Γ = 6.99 GeV, A = 12.69

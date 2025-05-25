@@ -1,0 +1,15 @@
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.GeneratedMSBuildEditorConfig.editorconfig
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.AssemblyInfoInputs.cache
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.AssemblyInfo.cs
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.csproj.CoreCompileInputs.cache
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.sourcelink.json
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/bin/Debug/net8.0/2_EV_Q
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/bin/Debug/net8.0/2_EV_Q.deps.json
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/bin/Debug/net8.0/2_EV_Q.runtimeconfig.json
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/bin/Debug/net8.0/2_EV_Q.dll
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/bin/Debug/net8.0/2_EV_Q.pdb
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.dll
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/refint/2_EV_Q.dll
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.pdb
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/2_EV_Q.genruntimeconfig.cache
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/2_EV_Q/obj/Debug/net8.0/ref/2_EV_Q.dll

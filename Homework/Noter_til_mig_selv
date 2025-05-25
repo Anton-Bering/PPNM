@@ -1,0 +1,25 @@
+### Forbrædninger der skal laves:
+
+## 4_splines: 
+
+# Samling maulet udregnet og program regnet værdiger af b_i & c_i; fx. udregne: B_i=b_i_mauelt/b_i_program og C_i=c_i_mauelt/c_i_program 
+
+## 5_ODE:
+
+# Gør sådan at oscillator_with_friction_plot.png bliver magen til det på https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.htm
+
+# Fix Planetary_orbits_plot.png (virker ikke nu)
+
+## 2_eigenvalues_GFXX_kopi:
+
+# Får styr på preses hvad Out.txt skal indeholde
+
+## 7_Monte_Carlo_FGXX_kopi 
+
+# area_of_a_unit_circle.txt indeholder kun resultae for få væredig af N, det skule være for N=1, N=,2 N=3 o.s.v
+
+# Gør så at der komm et plot: gaussian_bell_integral_error.plot
+
+## 10_Neurel_Netwer
+
+# godt, skal bare lige tilpas Out.txt 

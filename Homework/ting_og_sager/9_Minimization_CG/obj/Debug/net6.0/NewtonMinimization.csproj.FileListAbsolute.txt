@@ -1,0 +1,15 @@
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/bin/Debug/net6.0/NewtonMinimization
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/bin/Debug/net6.0/NewtonMinimization.deps.json
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/bin/Debug/net6.0/NewtonMinimization.runtimeconfig.json
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/bin/Debug/net6.0/NewtonMinimization.dll
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/bin/Debug/net6.0/NewtonMinimization.pdb
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.GeneratedMSBuildEditorConfig.editorconfig
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.AssemblyInfoInputs.cache
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.AssemblyInfo.cs
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.csproj.CoreCompileInputs.cache
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.sourcelink.json
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.dll
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/refint/NewtonMinimization.dll
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.pdb
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/NewtonMinimization.genruntimeconfig.cache
+/home/anton/28_04_25_PPNN/repos/PPNM/Homework/9_Minimization_CG/obj/Debug/net6.0/ref/NewtonMinimization.dll

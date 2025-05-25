@@ -1,0 +1,18 @@
+--- Part A ---
+-- Make some indicative plots to prove that the linear spline and the integrator work as intended --
+This is done by taking the table: {x_i=0,1,...,9; y_i=cos(x_i)},
+the data is in cos.txt and the plot is in cos.png.
+
+--- Part B ---
+-- Make some indicative plots to prove that the quadratic spline and the integrator work as intended.
+This is done by using {x_i=0,1,...,9; y_i=sin(x_i)}.
+the data is in sin.txt and the plot is in sin.png.
+
+-- Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines, and compare the results with the quadratic-spline program --
+The manual calculations of the values of b_i and c_i are in Manually_calculate_bi_and_ci.txt.
+
+--- Part C ---
+-- Check that the built-in cubic splines in Gnuplot produce a similar cubic spline to the implementation --
+The data from my result is in sqrt.txt and the plot is in sqrt.png.
+In sqrt_comparing.png, a comparison is shown between my results (sqrt.txt and sqrt.png) and the built-in Gnuplot spline.
+

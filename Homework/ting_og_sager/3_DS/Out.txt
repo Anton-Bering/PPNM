@@ -1,0 +1,48 @@
+---------- Part A ----------
+Checking that the QR algorithm works for tall matrices ...
+Random tall matrix A (m=7, n=4):
+   0.075   0.607   0.866   0.957
+   0.790   0.047   0.883   0.070
+   0.907   0.415   0.322   0.085
+   0.773   0.431   0.234   0.141
+   0.258   0.169   0.440   0.272
+   0.329   0.420   0.520   0.140
+   0.226   0.372   0.907   0.137
+
+Matrix Q:
+   0.050   0.751   0.190   0.575
+   0.524  -0.421   0.637   0.198
+   0.601  -0.009  -0.361  -0.005
+   0.512   0.094  -0.433   0.029
+   0.171   0.064   0.193   0.246
+   0.218   0.351  -0.020  -0.426
+   0.150   0.350   0.450  -0.622
+
+Matrix R:
+   1.508   0.701   1.143   0.305
+   0.000   0.761   0.827   0.817
+   0.000   0.000   0.992   0.246
+   0.000   0.000   0.000   0.490
+
+Checking that Q^T * Q = I within a tolerance ...
+True
+
+Check complete: The QR decomposition works for tall matrices.
+
+Beginning OLS fitting to the Rutherford and Soddy data ...
+
+Fitted parameters:
+a = 142.404 ± 0.035
+λ = 0.171 ± 0.007
+T_½ = 4.062 ± 0.170 days
+The modern value of T_½ is 3.6316 days, which is outside the predicted uncertainty.
+
+---------- Part B ----------
+Covariance matrix:
+0.001253  -0.000197  
+-0.000197  0.000051  
+
+The predicted uncertainty in the half-life is 0.170 days.
+
+---------- Part C ----------
+Fitted values with uncertainty limits exported to fit_limits.txt.

@@ -1,0 +1,30 @@
+using System;
+public class matrix {
+    public readonly int size1, size2;
+    private double[] data;
+    // Indexer for 2D access (row i, col j)
+    public double this[int i, int j] {
+        get { return data[i + j * size1]; }
+        set { data[i + j * size1] = value; }
+    }
+    // Constructor for matrix of given size (rows, cols)
+    public matrix(int n, int m) {
+        size1 = n;
+        size2 = m;
+        data = new double[n * m];
+    }
+    // Copy method to duplicate matrix
+    public matrix copy() {
+        matrix B = new matrix(size1, size2);
+        Array.Copy(this.data, B.data, this.data.Length);
+        return B;
+    }
+    // Static method to create identity matrix of size n x n
+    public static matrix id(int n) {
+        matrix I = new matrix(n, n);
+        for (int i = 0; i < n; i++) {
+            I[i, i] = 1.0;
+        }
+        return I;
+    }
+}

@@ -1,0 +1,27 @@
+Part A: Testing basic adaptive integrator on sample integrals.
+∫[0,1] √x dx = 0.666666680 	(exact = 0.666666667, error = 0.000000013)
+Estimated error = 0.000003630
+∫[0,1] x^(-1/2) dx = 1.999999999 	(exact = 2.000000000, error = -0.000000001)
+Estimated error = 0.000006672
+∫[0,1] √(1-x^2) dx = 0.785398171 	(exact = 0.785398163, error = 0.000000007)
+Estimated error = 0.000003413
+∫[0,1] ln(x)/√x dx = -3.999999999 	(exact = -4.000000000, error = 0.000000001)
+Estimated error = 0.000009912
+
+Computing error function erf(z) via integration:
+erf(1) ≈ 0.842700794 (exact = 0.842700792949715000, abs error = 1.242896E-009)
+Accuracy vs requested tolerance for erf(1):
+acc		Result		Error_to_exact
+1.0E-001	0.842510368	-1.904253E-004
+1.0E-002	0.842510368	-1.904253E-004
+1.0E-003	0.842729958	2.916554E-005
+1.0E-004	0.842701223	4.295577E-007
+1.0E-005	0.842700821	2.822738E-008
+1.0E-006	0.842700794	1.249646E-009
+
+Part B: Clenshaw-Curtis transformation for endpoint singularities.
+Integral ∫[0,1] x^(-1/2) dx (expected 2):
+Without transform: result = 1.999999999, calls = 123900
+With Clenshaw-Curtis: result = 2.000000000, calls = 352
+Estimated error (no transform) = 0.000006672
+Integral ∫[0,1] ln(x)/√x dx (expected -4):

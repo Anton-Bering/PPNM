@@ -1,0 +1,40 @@
+--- --- Part A --- ---
+
+-- Calculate two-dimensional integrals with my Monte Carlo routine --
+
+--- Calculating Unit Circle Area ---
+Data saved to: Estimate_the_area_of_a_unit_circle.txt
+
+ Error scaling plotted in: area_of_a_unit_circle_error.plot 
+
+
+--- Calculating Gaussian Bell Integral ---
+
+ Error scaling plotted in: gaussian_bell_integral_error.plot 
+
+
+--- Calculating Special 3D Integral ---
+Part B: Quasi-Random Sequences vs Pseudorandom Monte Carlo
+Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
+       N      MC est.err   MC actual err     QMC est.err  QMC actual err
+
+--- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
+Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
+       N      MC est.err   MC actual err     QMC est.err  QMC actual err
+    1000   6.885642E-003   3.905262E-003   2.105490E-004   1.783078E-003
+   10000   2.189329E-003   1.387724E-003   2.932159E-005   2.253326E-004
+  100000   6.944442E-004   6.446211E-004   2.449113E-006   2.617998E-005
+
+Results saved to: QuasiVsPseudoResults.txt
+(MC uses internal variance; QMC uses difference of two sequences.)
+
+(Estimated errors: MC uses internal variance; QMC uses difference of two sequences.)
+
+Part C: Recursive Stratified Sampling
+
+--- Part C: Recursive Stratified Sampling ---
+Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
+Plain MC:      result = 1.011928,  error estimate = 0.145989,  actual error = 0.011974
+Stratified MC: result = 0.988878,  error estimate = 0.002143,  actual error = 0.011077
+
+Results saved to: StratifiedSamplingResults.txt

@@ -1,0 +1,6 @@
+Integral of 1/(1+x^2) from 0 to 1 = 0.785672 ± 0.000507 (exact 0.785398, N=100000)
+Integral of x^2 * exp(-x^2) from 0 to infinity:
+  Plain MC (uniform x in [0,4])   = 0.439983 ± 0.001650 (N=100000)
+  Importance sampling (p(x)=2x*exp(-x^2)) = 0.443402 ± 0.000732 (N=100000)
+  Exact result = 0.443113
+Area of unit circle (radius 1) = 3.142040 ± 0.005192 (exact 3.141593, N=100000)

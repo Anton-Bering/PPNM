@@ -1,0 +1,41 @@
+--- PART A ---
+
+-- Testing the routines by solving the ordinary differential equations (ODE) ---
+
+In sho_data.txt and sho_plot.png is the data and plot, respectively, from solving: u''=-u
+In exp_data.txt and exp_plot.png is the data and plot, respectively, from solving: dy/dx = y
+In poly_data.txt and poly_plot.png is the data and plot, respectively, from solving: y'' = 6x
+For comparison, the plots also contain the analytical solutions.
+
+-- Reproduce (with my routines) the example from the scipy.integrate.odeint manual (oscillator with friction) ---
+
+In oscillator_with_friction.txt and oscillator_with_friction_plot.png is the data and plot, respectively.
+
+-- Reproduce (with my routines) the example from the the scipy.integrate.solve_ivp manual (Lotka-Volterra system) ---
+
+In lotka_volterra.txt and lotka_volterra_plot.png is the data and plot, respectively.
+
+--- PART B ---
+
+-- Integrate this equation with ε=0 and initial conditions u(0)=1, u'(0)=0 : (Newtonian circular motion). --
+
+The resulting data is in Newtonian_circular_motion.txt
+
+-- Integrate this equation with ε=0 and initial conditions u(0)=1, u'(0)≈-0.5 : ( Newtonian elliptical motion). --
+
+The resulting data is in Newtonian_elliptical_motion.txt
+
+-- Integrate this equation with ε≈0.01 and initial conditions u(0)=1, u'(0)≈-0.5 : (Relativistic precession of a planetary orbit). --
+
+The resulting data is in Relativistic_motion.txt
+
+--  Plot planetary orbit for Newtonian circular motion, Newtonian elliptical motion, and Relativistic. --
+
+This plot is in Planetary_orbits_plot.png
+
+--- Part C ---
+
+-- Using my numerical ODE integrator reproduce the solution the remarkable stable planar periodic solution to the three-body problem --
+
+The reproduced solution data is in three_body_problem.txt and plotted in three_body_problem_plot.png
+
