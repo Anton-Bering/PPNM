@@ -7,17 +7,17 @@ all: main.exe times plot
 main.exe: Main.cs Matrix.cs Vector.cs QR.cs
 	mcs -out:main.exe Main.cs Matrix.cs Vector.cs QR.cs
 
-# Del C: Mål tid for matrixstørrelser fra 200 til 800
+# Del C: Mål tid for matrixstørrelser fra 2 til 502
 times: main.exe
 	@echo "Generating times.txt ..."
 	@echo "# N    Time (seconds)" > times.txt
-	@for N in $(shell seq 200 100 800); do \
+	@for N in $(shell seq 2 10 502); do \
 		echo -n "$$N    " >> times.txt; \
 		/usr/bin/time -f "%e" mono main.exe -size:$$N 1>/dev/null 2>> times.txt; \
 	done
 	@echo "Done."
 
-# Lav et plot af times.txt og fit med f(x) = a*x**3
+# Lav et plot af times.txt og fit med f(x) = c + a*x**3
 plot: times.txt plot.gpi
 	@gnuplot plot.gpi
 	@echo "📈 Plot gemt som times_plot.png"
@@ -28,4 +28,4 @@ open: times_plot.png
 
 # Ryd op
 clean:
-	rm -f main.exe Out.txt times.txt times_plot.png
+	rm -f main.exe Out.txt times.txt times_plot.png fit.log
