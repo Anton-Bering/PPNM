@@ -7,7 +7,7 @@ all: main.exe times plot
 main.exe: Main.cs Matrix.cs Vector.cs QR.cs
 	mcs -out:main.exe Main.cs Matrix.cs Vector.cs QR.cs
 
-# Del C: Mål tid for matrixstørrelser fra 2 til 502
+# Del C: Hvor lang tid det tager at "QR-factorize a random NxN matrix
 times: main.exe
 	@echo "Generating times.txt ..."
 	@echo "# N    Time (seconds)" > times.txt
