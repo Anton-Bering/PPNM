@@ -1,64 +1,86 @@
---- PART A ---
+--- --- --- PART A --- --- ---
 
---- Prove that the implementation works as intended --
+-- -- -- Prove that the implementation works as intended -- -- --
 
-Generate a random symmetric matrix A (5x5) :
      0.249      0.111      0.467      0.772      0.658 
      0.111      0.433      0.354      0.944      0.101 
      0.467      0.354      0.642      0.029      0.248 
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
-Apply my routine to perform the eigenvalue-decomposition, A = V D V^T (where V is the orthogonal matrix of eigenvectors and D is the diagonal matrix with the corresponding eigenvalues).
-Check that V^T A V = D:
+Apply my routine to perform the eigenvalue-decomposition, A=VDVᵀ (where V is the orthogonal matrix of eigenvectors and D is the diagonal matrix with the corresponding eigenvalues).
 
-V^T * A * V yields:
+Check that VᵀAV=D:
+
+
+VᵀAV yields:
    -1.0378 4.8572E-17 1.6601E-11  4.503E-12 1.0048E-14 
          0   -0.27446 2.7159E-11 -2.0817E-16 1.1102E-16 
 1.6601E-11 2.7159E-11    0.54037 -8.3267E-17 6.6449E-10 
  4.503E-12 -1.6653E-16 -1.1102E-16    0.64253 4.6683E-10 
 1.0242E-14          0 6.6449E-10 4.6683E-10     2.4554 
-Is V^T A V = D?
+
+ Is VᵀAV=D?
 True
 
 Eigenvalue vector w from Jacobi:    -1.0378 -0.27446  0.54037  0.64253   2.4554
-Check that V D V^T = A:
 
-The product V * D * V^T yields:
+Check that VDVᵀ=A:
+
+
+ VDVᵀ yields:
      0.249      0.111      0.467      0.772      0.658 
      0.111      0.433      0.354      0.944      0.101 
      0.467      0.354      0.642      0.029      0.248 
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
-Is V D V^T = A ?
+Is VDVᵀ=A ?
 True
-Check that V^T V = I :
 
- V^T V yields:
+Check that VᵀV=I :
+
+ VᵀV yields:
          1 -5.5511E-17 -1.8041E-16 -5.5511E-17 -1.1102E-16 
 -5.5511E-17          1 -1.9429E-16 1.9429E-16 -1.1102E-16 
 -1.8041E-16 -1.9429E-16          1 -2.7756E-17 5.5511E-17 
 -5.5511E-17 1.9429E-16 -2.7756E-17          1 1.3878E-16 
 -1.1102E-16 -1.1102E-16 5.5511E-17 1.3878E-16          1 
 
-Is V^T V = I ?
+Is VᵀV=I ?
 True
-Check that V V^T = I :
 
- V V^T yields:
+Check that VVᵀ=I :
+
+
+ VVᵀ yields:
          1 -1.6653E-16 1.3878E-17 1.3878E-16 1.3878E-16 
 -1.6653E-16          1 -5.5511E-17 -2.7756E-17 -8.3267E-17 
 1.3878E-17 -5.5511E-17          1 1.1102E-16 5.5511E-17 
 1.3878E-16 -2.7756E-17 1.1102E-16          1 5.5511E-17 
 1.3878E-16 -8.3267E-17 5.5511E-17 5.5511E-17          1 
 
-Is V V^T = I ?
+Is VVᵀ=I ?
 True
 
----------- PART B ----------
+--- --- --- PART B --- --- ---
+
+-- -- -- Calculate numerically the lowest egenvalues -- -- --
+
+
+The lowest eigenvalues of the hydrogen atom is:
+ε_0 = -0.489228
+ε_1 = -0.111120
+ε_2 = 0.096284
+ε_3 = 0.411759
+ε_4 = 0.829649
+-- -- -- Calculate eigenfunctions of the s-wave states in the hydrogen atom -- -- --
+
+The data for the data for the eigenfunctions are in radial_n1.txt, radial_n2.txt, radial_n3.txt.
+A plot of the eigenfunctions are in radial_wavefunctions.png
 Convergence data written to varying_dr.txt and varying_rmax.txt.
 Wavefunctions written to radial_n1.txt, radial_n2.txt, radial_n3.txt.
 
----------- PART C ----------
+--- --- --- PART C --- --- ---
+
 [Optional optimizations go here if implemented.]

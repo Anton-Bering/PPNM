@@ -8,14 +8,14 @@ main.exe: Main.cs Matrix.cs Vector.cs QR.cs
 	mcs -out:main.exe Main.cs Matrix.cs Vector.cs QR.cs
 
 # Del C: Hvor lang tid det tager at "QR-factorize a random NxN matrix
-times: main.exe
-	@echo "Generating times.txt ..."
-	@echo "# N    Time (seconds)" > times.txt
-	@for N in $(shell seq 2 10 502); do \
-		echo -n "$$N    " >> times.txt; \
-		/usr/bin/time -f "%e" mono main.exe -size:$$N 1>/dev/null 2>> times.txt; \
+timing: main.exe
+	@echo "Generating timing.txt ..."
+	@echo "# N    Time (seconds)" > timing.txt
+	@for N in $(shell seq 100 20 500); do \
+		mono main.exe -size:$$N >> timing.txt; \
 	done
 	@echo "Done."
+
 
 # Lav et plot af times.txt og fit med f(x) = c + a*x**3
 plot: times.txt plot.gpi

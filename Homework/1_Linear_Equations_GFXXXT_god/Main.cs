@@ -21,7 +21,7 @@ public class MainClass {
         return sb.ToString();
     }
 
-
+    // Bruges til at målde tiden det tager at QR-faktoriser en NxN matrix
     public static void Main(string[] args) {
         if (args.Length > 0 && args[0].StartsWith("-size:")) {
             int N = int.Parse(args[0].Substring(6));
@@ -30,9 +30,15 @@ public class MainClass {
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < N; j++)
                     A_perf[i, j] = rnd.NextDouble();
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
             var qr = new QR(A_perf);
+            sw.Stop();
+
+            Console.WriteLine($"{N} {sw.Elapsed.TotalSeconds:F6}");
             return;
         }
+
 
         Console.WriteLine("--- --- --- PART A --- --- ---\n");
         Console.WriteLine("-- -- -- Check that \"decomp\" works as intended -- -- --\n");

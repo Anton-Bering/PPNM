@@ -4,12 +4,12 @@ using System.IO;
 public class Program {
     public static void Main(string[] args) {
         using (StreamWriter writer = new StreamWriter("Out.txt")) {
-            writer.WriteLine("--- PART A ---\n");
+            writer.WriteLine("--- --- --- PART A --- --- ---\n");
 
-            writer.WriteLine("--- Prove that the implementation works as intended --\n");
+            writer.WriteLine("-- -- -- Prove that the implementation works as intended -- -- --\n");
 
-            writer.WriteLine("Generate a random symmetric matrix A (5x5) :");
             int sizeA = 5;
+            Console.WriteLine($"Generate a random symmetric matrix A ({sizeA}x{sizeA}):");
             matrix A = new matrix(sizeA, sizeA);
             Random rnd = new Random(1);
             for (int i = 0; i < sizeA; i++)
@@ -20,44 +20,44 @@ public class Program {
             }
             printMatrix(writer, A);
 
-            writer.WriteLine("\nApply my routine to perform the eigenvalue-decomposition, A = V D V^T (where V is the orthogonal matrix of eigenvectors and D is the diagonal matrix with the corresponding eigenvalues).");
-            writer.WriteLine("Check that V^T A V = D:");
+            writer.WriteLine("\nApply my routine to perform the eigenvalue-decomposition, A=VDVᵀ (where V is the orthogonal matrix of eigenvectors and D is the diagonal matrix with the corresponding eigenvalues).\n");
+            writer.WriteLine("Check that VᵀAV=D:\n");
             matrix A_copy = A.copy();
             vector w = new vector(sizeA);
             matrix V = new matrix(sizeA, sizeA);
             jacobi.cyclic(A, w, V);
 
             matrix VtAV = multiply(transpose(V), multiply(A_copy, V));
-            writer.WriteLine("\nV^T A V yields:");
+            writer.WriteLine("\nVᵀAV yields:");
             printMatrix(writer, VtAV);
-            writer.WriteLine("Is V^T A V = D?");
+            writer.WriteLine("\n Is VᵀAV=D?");
             writer.WriteLine(isDiagonalClose(VtAV, w));
 
             writer.WriteLine("\nEigenvalue vector w from Jacobi:   " + string.Join(" ", formatVector(w)));
 
-            writer.WriteLine("Check that V D V^T = A:");
+            writer.WriteLine("\nCheck that VDVᵀ=A:\n");
             matrix D = diagonalMatrix(w);
             matrix VDVt = multiply(multiply(V, D), transpose(V));
-            writer.WriteLine("\n V D V^T yields:");
+            writer.WriteLine("\n VDVᵀ yields:");
             printMatrix(writer, VDVt);
-            writer.WriteLine("\nIs V D V^T = A ?");
+            writer.WriteLine("\nIs VDVᵀ=A ?");
             writer.WriteLine(areMatricesClose(A_copy, VDVt));
 
-            writer.WriteLine("Check that V^T V = I :");
+            writer.WriteLine("\nCheck that VᵀV=I :");
             matrix VtV = multiply(transpose(V), V);
-            writer.WriteLine("\n V^T V yields:");
+            writer.WriteLine("\n VᵀV yields:");
             printMatrix(writer, VtV);
-            writer.WriteLine("\nIs V^T V = I ?");
+            writer.WriteLine("\nIs VᵀV=I ?");
             writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA)));
 
-            writer.WriteLine("Check that V V^T = I :");
+            writer.WriteLine("\nCheck that VVᵀ=I :\n");
             matrix VVt = multiply(V, transpose(V));
-            writer.WriteLine("\n V V^T yields:");
+            writer.WriteLine("\n VVᵀ yields:");
             printMatrix(writer, VVt);
-            writer.WriteLine("\nIs V V^T = I ?");
+            writer.WriteLine("\nIs VVᵀ=I ?");
             writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA)));
 
-            writer.WriteLine("\n--- PART B ---\n");
+            writer.WriteLine("\n--- --- --- PART B --- --- ---\n");
             double[] drs = {0.5, 0.3, 0.2, 0.1, 0.05, 0.02};
             double[] rmaxs = {5.0, 10.0, 15.0};
             double fixed_rmax = 10;
@@ -68,6 +68,13 @@ public class Program {
             vector w_main = new vector(npoints_main);
             matrix V_main = new matrix(npoints_main, npoints_main);
             jacobi.cyclic(H_main, w_main, V_main);
+            writer.WriteLine("-- -- -- Calculate numerically the lowest egenvalues -- -- --\n");
+            writer.WriteLine("\nThe lowest eigenvalues of the hydrogen atom is:");
+            for (int i = 0; i < 5; i++) {
+                writer.WriteLine($"ε_{i} = {w_main[i]:F6}");
+            }
+
+            writer.WriteLine("-- -- -- Calculate eigenfunctions of the s-wave states in the hydrogen atom -- -- --\n");
 
             double normConst = 1.0 / Math.Sqrt(fixed_dr);
             for (int k = 0; k < 3; k++) {
@@ -107,11 +114,14 @@ public class Program {
                     rmaxWriter.WriteLine($"{rmax}, {E0}");
                 }
             }
+            writer.WriteLine("The data for the data for the eigenfunctions are in radial_n1.txt, radial_n2.txt, radial_n3.txt.");
+            writer.WriteLine("A plot of the eigenfunctions are in radial_wavefunctions.png");
+
 
             writer.WriteLine("Convergence data written to varying_dr.txt and varying_rmax.txt.");
             writer.WriteLine("Wavefunctions written to radial_n1.txt, radial_n2.txt, radial_n3.txt.");
 
-            writer.WriteLine("\n--- PART C ---");
+            writer.WriteLine("\n--- --- --- PART C --- --- ---\n");
             writer.WriteLine("[Optional optimizations go here if implemented.]");
         }
     }
