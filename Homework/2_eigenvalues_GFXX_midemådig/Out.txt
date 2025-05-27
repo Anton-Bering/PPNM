@@ -74,9 +74,10 @@ The lowest eigenvalues of the hydrogen atom is:
 ε_2 = 0.096284
 ε_3 = 0.411759
 ε_4 = 0.829649
+
 -- -- -- Calculate eigenfunctions of the s-wave states in the hydrogen atom -- -- --
 
-The data for the data for the eigenfunctions are in radial_n1.txt, radial_n2.txt, radial_n3.txt.
+The data for the data for the eigenfunctions witch n=1, 2, 3 are in radial_n1.txt, radial_n2.txt, radial_n3.txt, respeley.
 A plot of the eigenfunctions are in radial_wavefunctions.png
 Convergence data written to varying_dr.txt and varying_rmax.txt.
 Wavefunctions written to radial_n1.txt, radial_n2.txt, radial_n3.txt.

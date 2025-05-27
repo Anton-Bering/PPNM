@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 
 public class Program {
     public static void Main(string[] args) {
@@ -58,7 +59,9 @@ public class Program {
             writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA)));
 
             writer.WriteLine("\n--- --- --- PART B --- --- ---\n");
-            double[] drs = {0.5, 0.3, 0.2, 0.1, 0.05, 0.02};
+            double[] drs = Enumerable.Range(1, 100).Select(i => i * 0.01).ToArray(); // dr values from 0.01 to 1.00
+            // HERHER: det tager ret lang tid at køre, så jeg skulle måske sette intivalernde noget ned.
+
             double[] rmaxs = {5.0, 10.0, 15.0};
             double fixed_rmax = 10;
             double fixed_dr = 0.3;
@@ -74,18 +77,31 @@ public class Program {
                 writer.WriteLine($"ε_{i} = {w_main[i]:F6}");
             }
 
-            writer.WriteLine("-- -- -- Calculate eigenfunctions of the s-wave states in the hydrogen atom -- -- --\n");
+            writer.WriteLine("\n-- -- -- Calculate eigenfunctions of the s-wave states in the hydrogen atom -- -- --\n");
 
+            // Analytisk løsning:
             double normConst = 1.0 / Math.Sqrt(fixed_dr);
             for (int k = 0; k < 3; k++) {
-                using (StreamWriter sw = new StreamWriter($"radial_n{(k + 1)}.txt")) {
+                using (StreamWriter sw = new StreamWriter($"radial_n{(k + 1)}.txt"))
+                using (StreamWriter sa = new StreamWriter($"analytic_n{(k + 1)}.txt")) {
                     for (int i = 0; i < npoints_main; i++) {
                         double r = fixed_dr * (i + 1);
                         double f = normConst * V_main[i, k];
                         sw.WriteLine($"{r} {f}");
+
+                        double fa = 0;
+                        if (k == 0)
+                            fa = 2 * r * Math.Exp(-r); // n=1
+                        else if (k == 1)
+                            fa = - ( (1.0 / Math.Sqrt(2)) * (1 - r / 2) * r * Math.Exp(-r / 2) ); // n=2
+                        else if (k == 2)
+                            fa = (2.0 / (81 * Math.Sqrt(3))) * (27 - 18 * r + 2 * r * r) * r * Math.Exp(-r / 3); // n=3
+
+                        sa.WriteLine($"{r} {fa}");
                     }
                 }
             }
+
 
             using (StreamWriter drWriter = new StreamWriter("varying_dr.txt")) {
                 drWriter.WriteLine("dr, E0");
@@ -114,7 +130,7 @@ public class Program {
                     rmaxWriter.WriteLine($"{rmax}, {E0}");
                 }
             }
-            writer.WriteLine("The data for the data for the eigenfunctions are in radial_n1.txt, radial_n2.txt, radial_n3.txt.");
+            writer.WriteLine("The data for the data for the eigenfunctions witch n=1, 2, 3 are in radial_n1.txt, radial_n2.txt, radial_n3.txt, respeley.");
             writer.WriteLine("A plot of the eigenfunctions are in radial_wavefunctions.png");
 
 
