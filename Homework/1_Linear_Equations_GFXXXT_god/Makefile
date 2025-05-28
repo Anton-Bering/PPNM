@@ -1,13 +1,13 @@
 # Standard-mål: kompiler, mål tid, lav plot og generer Out.txt
-all: main.exe times plot
+all: main.exe timing plot
 	@mono main.exe > Out.txt
-	@echo "✅ Out.txt, times.txt og times_plot.png er nu genereret."
+	@echo "✅ Out.txt, timing.txt og times_plot.png er nu genereret."
 
 # Kompilér C#-kode
 main.exe: Main.cs Matrix.cs Vector.cs QR.cs
 	mcs -out:main.exe Main.cs Matrix.cs Vector.cs QR.cs
 
-# Del C: Hvor lang tid det tager at "QR-factorize a random NxN matrix
+# Del C: Hvor lang tid det tager at QR-faktorisere en NxN matrix
 timing: main.exe
 	@echo "Generating timing.txt ..."
 	@echo "# N    Time (seconds)" > timing.txt
@@ -16,9 +16,8 @@ timing: main.exe
 	done
 	@echo "Done."
 
-
-# Lav et plot af times.txt og fit med f(x) = c + a*x**3
-plot: times.txt plot.gpi
+# Lav et plot af timing.txt og fit med f(x) = a*x**3
+plot: timing.txt plot.gpi
 	@gnuplot plot.gpi
 	@echo "📈 Plot gemt som times_plot.png"
 
@@ -28,4 +27,4 @@ open: times_plot.png
 
 # Ryd op
 clean:
-	rm -f main.exe Out.txt times.txt times_plot.png fit.log
+	rm -f main.exe Out.txt timing.txt times_plot.png fit.log

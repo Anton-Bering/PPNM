@@ -1,36 +1,30 @@
 
 
 *******************************************************************************
-Tue May 27 16:54:53 2025
+Wed May 28 21:04:39 2025
 
 
-FIT:    data read from 'times.txt' using 1:2
+FIT:    data read from 'timing.txt' using 1:2
         format = x:z
-        #datapoints = 51
+        #datapoints = 21
         residuals are weighted equally (unit weight)
 
 function used for fitting: f(x)
-	f(x) = c + a * x**3
+	f(x) = a * x**3
 fitted parameters initialized with current variable values
 
-iter      chisq       delta/lim  lambda   a             c            
-   0 1.2293115756e+17   0.00e+00  3.47e+07    1.000000e+00   2.000000e-02
-   4 1.1418891622e+01  -9.37e-04  3.47e+03    1.403086e-09   2.000000e-02
+iter      chisq       delta/lim  lambda   a            
+   0 6.3928091564e+16   0.00e+00  5.52e+07    1.000000e+00
+   5 1.4241365077e-04  -1.29e-09  5.52e+02    2.155750e-09
 
-After 4 iterations the fit converged.
-final sum of squares of residuals : 11.4189
-rel. change during last iteration : -9.37302e-09
+After 5 iterations the fit converged.
+final sum of squares of residuals : 0.000142414
+rel. change during last iteration : -1.29422e-14
 
-degrees of freedom    (FIT_NDF)                        : 49
-rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.482741
-variance of residuals (reduced chisquare) = WSSR/ndf   : 0.233039
+degrees of freedom    (FIT_NDF)                        : 20
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00266846
+variance of residuals (reduced chisquare) = WSSR/ndf   : 7.12068e-06
 
 Final set of parameters            Asymptotic Standard Error
 =======================            ==========================
-a               = 1.40309e-09      +/- 1.832e-09    (130.6%)
-c               = 0.02             +/- 0.08993      (449.7%)
-
-correlation matrix of the fit parameters:
-                a      c      
-a               1.000 
-c              -0.660  1.000 
+a               = 2.15575e-09      +/- 1.055e-11    (0.4896%)

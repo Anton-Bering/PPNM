@@ -21,8 +21,9 @@ public class MainClass {
         return sb.ToString();
     }
 
-    // Bruges til at målde tiden det tager at QR-faktoriser en NxN matrix
     public static void Main(string[] args) {
+
+        // Bruges til at målde tiden det tager at QR-faktoriser en NxN matrix
         if (args.Length > 0 && args[0].StartsWith("-size:")) {
             int N = int.Parse(args[0].Substring(6));
             var rnd = new Random(1);
@@ -31,11 +32,11 @@ public class MainClass {
                 for (int j = 0; j < N; j++)
                     A_perf[i, j] = rnd.NextDouble();
 
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            var qr = new QR(A_perf);
-            sw.Stop();
+            var sw = System.Diagnostics.Stopwatch.StartNew(); // start ur
+            var qr = new QR(A_perf);    // lav QR-faktorisation
+            sw.Stop(); // stop ur
 
-            Console.WriteLine($"{N} {sw.Elapsed.TotalSeconds:F6}");
+            Console.WriteLine($"{N} {sw.Elapsed.TotalSeconds:F6}"); // udskriver N og tiden i sekunder
             return;
         }
 

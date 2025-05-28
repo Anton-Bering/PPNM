@@ -6,9 +6,8 @@ set xlabel "N"
 set ylabel "Time [seconds]"
 set grid
 
-f(x) = c + a * x**3
-c = 0.02
-fit f(x) 'times.txt' using 1:2 via a, c
+f(x) = a * x**3
+fit f(x) 'timing.txt' using 1:2 via a
 
-plot 'times.txt' using 1:2 with linespoints lt rgb "blue" lw 2 pt 7 title "Measured time", \
-     f(x) with lines lt rgb "red" lw 2 title "Fit: c + a·N³"
+plot 'timing.txt' using 1:2 with linespoints lt rgb "blue" lw 2 pt 7 title "Measured time", \
+     f(x) with lines lt rgb "red" lw 2 title "Fit: a·N³"
