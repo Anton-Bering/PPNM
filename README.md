@@ -8,6 +8,6 @@ As students, we have been free to choose our preferred programming language; I h
 
 The course is structured around a series of programming assignments, including *exercises*, *homework*, and ultimately an *examination project*. My solutions to these assignments can be found in the corresponding folders.
 
-The homework assignments (with links) are the following:  
+The homework assignments are the following:  
 [1) Linear Equations](https://fedorov.sdfeu.org/prog/homeworks/lineq.htm)  
 [2) Eigenvalues / EVD (Eigenvalue Decomposition)](https://fedorov.sdfeu.org/prog/homeworks/eigenvalues.htm)
