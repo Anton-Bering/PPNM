@@ -27,4 +27,4 @@ open: QR_factorize_time_plot.svg
 
 # Ryd op
 clean:
-	rm -f main.exe Out.txt QR_factorize_time.txt QR_factorize_time_plot.svg fit.log
+	rm -f main.exe Out.txt QR_factorize_time.txt QR_factorize_time_plot.svg QR_factorize_time_fit.log

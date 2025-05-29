@@ -44,7 +44,7 @@ Matrix QᵀQ:
 -5.551E-17  1.943E-16 -6.939E-17          1 
 
 TEST: Is QᵀQ=I (within a tolerance of 1e-12)?
-RESULT: Yes, QᵀQ = 1.
+RESULT: Yes, QᵀQ=I.
 
 --- Check that QR=A ---
 
