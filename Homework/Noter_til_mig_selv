@@ -1,5 +1,8 @@
 ### Forbrædninger der skal laves:
 
+## 1_Liner_euation:
+# Færidig, (OBS: opgaven forslår "using the POSIX time utility" til at måle tiden jeg brugte "Stopwatch")
+
 ## 4_splines: 
 
 # Samling maulet udregnet og program regnet værdiger af b_i & c_i; fx. udregne: B_i=b_i_mauelt/b_i_program og C_i=c_i_mauelt/c_i_program 
