@@ -41,12 +41,13 @@ public class MainClass {
         }
 
 
-        Console.WriteLine("--- --- --- PART A --- --- ---\n");
-        Console.WriteLine("-- -- -- Check that \"decomp\" works as intended -- -- --\n");
+        Console.WriteLine("------------ TASK A ------------\n");
+        Console.WriteLine("------ Check that \"decomp\" works as intended ------\n");
 
         
         int n = 6, m = 4;
-        Console.WriteLine($"Generate a random tall ({n}x{m}) matrix A:\n");
+        Console.WriteLine($"--- Generate a random tall ({n}x{m}) matrix A ---\n");
+        Console.WriteLine($"Matrix A:");
         var rndA = new Random(1);
         var A = new matrix(n, m);
         for (int i = 0; i < n; i++)
@@ -55,14 +56,14 @@ public class MainClass {
         Console.WriteLine(FormatMatrix(A));
 
         var qrA = new QR(A);
-        Console.WriteLine("Factorize it into QR, its yielded: \n");
-        Console.WriteLine("Q:");
+        Console.WriteLine("--- Factorize A into QR ---\n");
+        Console.WriteLine("Matrix Q:");
         Console.WriteLine(FormatMatrix(qrA.Q));
 
-        Console.WriteLine("\nR:");
+        Console.WriteLine("\nMatrix R:");
         Console.WriteLine(FormatMatrix(qrA.R));
 
-        Console.WriteLine("\nCheck that R is upper triangular: \n");
+        Console.WriteLine("\n--- Check that R is upper triangular ---\n");
         bool isUpperTriangular = true;
         for (int i = 1; i < qrA.R.size1; i++) {
             for (int j = 0; j < i; j++) {
@@ -73,14 +74,14 @@ public class MainClass {
             }
             if (!isUpperTriangular) break;
         }
-        Console.WriteLine("\n Is R upper triangular?");
-        Console.WriteLine(isUpperTriangular ? "Yes, R is upper triangular\n" : "No, R is not upper triangular\n");
+        Console.WriteLine("TEST: Is R upper-triangular?");
+        Console.WriteLine(isUpperTriangular ? "RESULT: Yes, R is upper-triangular.\n" : "RESULT: No, R is not upper-triangular.\n");
         // Console.WriteLine(isUpperTriangular ? "True\n" : "False\n");
 
         // Check Q^T * Q = I
-        Console.WriteLine("\nCheck that QᵀQ=1 \n");
+        Console.WriteLine("--- Check that QᵀQ=I, where I is the identity matrix ---\n");
         var maxErr = 0.0;
-        Console.WriteLine("QᵀQ yields:");
+        Console.WriteLine("Matrix QᵀQ:");
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
                 double sum = 0;
@@ -92,13 +93,14 @@ public class MainClass {
             }
             Console.WriteLine();
         }
-        Console.WriteLine("\nIs QᵀQ=1 ? (within a tolerance of 1e-12)");
-        Console.WriteLine(maxErr < 1e-12 ? "Yes, QᵀQ=1\n" : "No, QᵀQ≠1\n");
+        // Console.WriteLine("\nIs QᵀQ=1 ? (within a tolerance of 1e-12)");
+        Console.WriteLine("\nTEST: Is QᵀQ=I (within a tolerance of 1e-12)?");
+        Console.WriteLine(maxErr < 1e-12 ? "RESULT: Yes, QᵀQ=I.\n" : "RESULT: No, QᵀQ ≠ 1.\n");
         // Console.WriteLine(maxErr < 1e-12 ? "True\n" : "False\n");
 
         // Check A = Q*R
-        Console.WriteLine("Check that QR=A:\n");
-        Console.WriteLine("QR yields:");
+        Console.WriteLine("--- Check that QR=A ---\n");
+        Console.WriteLine("Matrix QR:");
         var QR = new matrix(n, m);
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++) {
@@ -112,12 +114,12 @@ public class MainClass {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
                 qrErr = Math.Max(qrErr, Math.Abs(QR[i, j] - A[i, j]));
-        Console.WriteLine("Is QR=A ? (within a tolerance of 1e-12)");
-        Console.WriteLine(qrErr < 1e-12 ? "Yes, QR=A\n" : "No, QR≠A\n");
+        Console.WriteLine("\nTEST: Is QR=A (within a tolerance of 1e-12)?");
+        Console.WriteLine(qrErr < 1e-12 ? "RESULT: Yes, QR=A.\n" : "RESULT: No, QR≠A.\n");
         // Console.WriteLine(qrErr < 1e-12 ? "True\n" : "False\n");
  
         // --- Check solve ---
-        Console.WriteLine("-- -- -- Check that \"solve\" works as intended -- -- --\n");
+        Console.WriteLine("------ Check that \"solve\" works as intended ------\n");
         int N2 = 4;
         var rndB = new Random(2);
         var A_sq = new matrix(N2, N2);
@@ -127,21 +129,28 @@ public class MainClass {
             for (int j = 0; j < N2; j++)
                 A_sq[i, j] = rndB.NextDouble();
         }
-        Console.WriteLine($"Generate a random square matrix A ({N2}x{N2}):");
+        Console.WriteLine($"--- Generate a random square matrix A ({N2}x{N2})---\n");
+        Console.WriteLine($"Square matrix A:");
         Console.WriteLine(FormatMatrix(A_sq));
-        Console.WriteLine($"\nGenerate a random vector b ({N2}):");
+        Console.WriteLine($"\n--- Generate a random vector b ({N2})---\n");
+        Console.WriteLine($"Vector b:");
         Console.WriteLine(FormatVector(b));
 
-        Console.WriteLine("\nFactorize A into QR;\n");
-        // 
+        Console.WriteLine("\n--- Factorize A into QR---\n");
         var qrSolve = new QR(A_sq);
+        Console.WriteLine("Matrix Q:");
+        Console.WriteLine(FormatMatrix(qrSolve.Q));
+        Console.WriteLine("\nMatrix R:");
+        Console.WriteLine(FormatMatrix(qrSolve.R));
+
         var x = qrSolve.solve(b);
-        Console.WriteLine("Solve QRx=b;\n");
-        Console.WriteLine("its yields x=");
+        Console.WriteLine("--- Solve QRx=b ---\n");
+        Console.WriteLine("Solving QRx=b leads to:");
+        Console.WriteLine("\n Vector x:");
         Console.WriteLine(FormatVector(x));
 
-        Console.WriteLine("\nCheck that Ax=b;\n");
-        Console.WriteLine("Ax yields:");
+        Console.WriteLine("\n--- Check that Ax=b ---\n");
+        Console.WriteLine("Vector Ax:");
         var Ax = new vector(N2);
         for (int i = 0; i < N2; i++) {
             double sum = 0;
@@ -154,13 +163,13 @@ public class MainClass {
         double solveErr = 0;
         for (int i = 0; i < N2; i++)
             solveErr = Math.Max(solveErr, Math.Abs(Ax[i] - b[i]));
-        Console.WriteLine("Is Ax=b ? (within a tolerance of 1e-12)");
-        Console.WriteLine(solveErr < 1e-12 ? "Yes, Ax=b\n" : "No, Ax≠b\n");
+        Console.WriteLine("TEST: Is Ax=b (within a tolerance of 1e-12)?");
+        Console.WriteLine(solveErr < 1e-12 ? "RESULT: Yes, Ax=b.\n" : "RESULT: No, Ax≠b.\n");
         // Console.WriteLine(solveErr < 1e-12 ? "True\n" : "False\n");
 
         // ---------- PART B ----------
-        Console.WriteLine("--- --- --- PART B --- --- ---\n");
-        Console.WriteLine("-- -- -- Check that \"inverse\" works as intended -- -- --\n");
+        Console.WriteLine("------------ TASK B ------------\n");
+        Console.WriteLine("------ Check that \"inverse\" works as intended ------\n");
 
         var rndC = new Random(3);
         var Ainv = new matrix(N2, N2);
@@ -168,18 +177,25 @@ public class MainClass {
             for (int j = 0; j < N2; j++)
                 Ainv[i, j] = rndC.NextDouble();
 
-        Console.WriteLine($"Generate a random square matrix A ({N2}x{N2}):");
+        Console.WriteLine($"--- Generate a random square matrix A ({N2}x{N2}) ---\n");
+        Console.WriteLine($"Square matrix A:");
         Console.WriteLine(FormatMatrix(Ainv));
-        var qrInv = new QR(Ainv);
-        var B = qrInv.inverse();
-
-        Console.WriteLine("Factorize A into QR;\n");
         
-        Console.WriteLine("Calculate the inverse B;");
+        Console.WriteLine("--- Factorize A into QR ---\n");
+        var qrInv = new QR(Ainv);
+        Console.WriteLine("Matrix Q:");
+        Console.WriteLine(FormatMatrix(qrInv.Q));
+        Console.WriteLine("\nMatrix R:");
+        Console.WriteLine(FormatMatrix(qrInv.R));
+
+        Console.WriteLine("\n--- Calculate the inverse B ---\n");
+        var B = qrInv.inverse();
+        Console.WriteLine("Inverse matrix B:");
         Console.WriteLine(FormatMatrix(B, 4));
 
         var AB = matrix.Multiply(Ainv, B);
-        Console.WriteLine("Check that AB=I, where I is the identity matrix;\n");
+        Console.WriteLine("\n--- Check that AB=I, where I is the identity matrix ---\n");
+        Console.WriteLine("Matrix AB:");
         Console.WriteLine(FormatMatrix(AB, 4));
 
         double maxDiff = 0;
@@ -188,16 +204,20 @@ public class MainClass {
                 double expected = (i == j) ? 1.0 : 0.0;
                 maxDiff = Math.Max(maxDiff, Math.Abs(AB[i, j] - expected));
             }
-        Console.WriteLine("Is AB=I ? (within a tolerance of 1e-12)");
-        Console.WriteLine(maxDiff < 1e-12 ? "Yes, AB=I\n" : "No, AB≠I\n");
+        Console.WriteLine("\nTEST: Is AB=I (within a tolerance of 1e-12)?");
+        Console.WriteLine(maxDiff < 1e-12 ? "RESULT: Yes, AB=I.\n" : "RESULT: No, AB≠I.\n");
         // Console.WriteLine(maxDiff < 1e-12 ? "True\n" : "False\n");
 
         // ---------- PART C ----------
-        Console.WriteLine("--- --- PART C --- --- ---\n");
-        Console.WriteLine("Measure the time it takes to QR-factorize a random NxN matrix as function of N. \n");
-        // 
-        Console.WriteLine("The time it takes QR-factorize goes like O(N³).");
-        Console.WriteLine("The time it takes to QR-factorize a random NxN matrix (as a function of N) is recorded in times.txt and plotted in times_plot.png.");
+        Console.WriteLine("\n------------ TASK C ------------\n");
+        Console.WriteLine("------ Measure the time it takes to QR-factorize a random NxN matrix as function of N ------\n");
+        
+        Console.WriteLine("QR_factorize_time.txt contains the data on how long it takes to QR-factorize a random NxN matrix.");
+        Console.WriteLine("QR_factorize_time_plot.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.");
+        Console.WriteLine("The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time_plot.svg.");
+
+        
+         
     }
 }
 

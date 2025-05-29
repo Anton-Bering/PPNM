@@ -1,9 +1,10 @@
---- --- --- PART A --- --- ---
+------------ TASK A ------------
 
--- -- -- Check that "decomp" works as intended -- -- --
+------ Check that "decomp" works as intended ------
 
-Generate a random tall (6x4) matrix A:
+--- Generate a random tall (6x4) matrix A ---
 
+Matrix A:
      0.249      0.111      0.467      0.772 
      0.658      0.433      0.354      0.944 
      0.101      0.642      0.029      0.248 
@@ -11,9 +12,9 @@ Generate a random tall (6x4) matrix A:
      0.283      0.615      0.704      0.702 
      0.950      0.093      0.161      0.382 
 
-Factorize it into QR, its yielded: 
+--- Factorize A into QR ---
 
-Q:
+Matrix Q:
      0.197     -0.033      0.583      0.466 
      0.522      0.031     -0.082      0.616 
      0.080      0.491     -0.606      0.287 
@@ -22,34 +23,32 @@ Q:
      0.753     -0.404     -0.204     -0.402 
 
 
-R:
+Matrix R:
      1.261      0.759      0.732      1.276 
      0.000      1.185      0.668      0.676 
      0.000      0.000      0.591      0.539 
      0.000      0.000      0.000      0.489 
 
 
-Check that R is upper triangular: 
+--- Check that R is upper triangular ---
 
+TEST: Is R upper-triangular?
+RESULT: Yes, R is upper-triangular.
 
- Is R upper triangular?
-Yes, R is upper triangular
+--- Check that QᵀQ=I, where I is the identity matrix ---
 
-
-Check that QᵀQ=1 
-
-QᵀQ yields:
+Matrix QᵀQ:
          1          0  3.331E-16 -5.551E-17 
          0          1  1.665E-16  1.943E-16 
  3.331E-16  1.665E-16          1 -6.939E-17 
 -5.551E-17  1.943E-16 -6.939E-17          1 
 
-Is QᵀQ=1 ? (within a tolerance of 1e-12)
-Yes, QᵀQ=1
+TEST: Is QᵀQ=I (within a tolerance of 1e-12)?
+RESULT: Yes, QᵀQ = 1.
 
-Check that QR=A:
+--- Check that QR=A ---
 
-QR yields:
+Matrix QR:
      0.249      0.111      0.467      0.772 
      0.658      0.433      0.354      0.944 
      0.101      0.642      0.029      0.248 
@@ -57,78 +56,121 @@ QR yields:
      0.283      0.615      0.704      0.702 
      0.950      0.093      0.161      0.382 
 
-Is QR=A ? (within a tolerance of 1e-12)
-Yes, QR=A
 
--- -- -- Check that "solve" works as intended -- -- --
+TEST: Is QR=A (within a tolerance of 1e-12)?
+RESULT: Yes, QR=A.
 
-Generate a random square matrix A (4x4):
+------ Check that "solve" works as intended ------
+
+--- Generate a random square matrix A (4x4)---
+
+Square matrix A:
      0.404      0.166      0.985      0.109 
      0.802      0.446      0.225      0.011 
      0.029      0.008      0.510      0.382 
      0.703      0.235      0.731      0.089 
 
 
-Generate a random vector b (4):
+--- Generate a random vector b (4)---
+
+Vector b:
      0.771
      0.307
      0.765
      0.279
 
 
-Factorize A into QR;
+--- Factorize A into QR---
 
-Solve QRx=b;
+Matrix Q:
+     0.354     -0.145      0.731     -0.565 
+     0.703      0.693     -0.120      0.107 
+     0.025     -0.046      0.597      0.800 
+     0.616     -0.705     -0.308      0.170 
 
-its yields x=
+
+Matrix R:
+     1.141      0.517      0.971      0.111 
+     0.000      0.118     -0.526     -0.088 
+     0.000      0.000      0.772      0.279 
+     0.000      0.000      0.000      0.261 
+
+--- Solve QRx=b ---
+
+Solving QRx=b leads to:
+
+ Vector x:
     -1.639
      3.208
      0.805
      0.988
 
 
-Check that Ax=b;
+--- Check that Ax=b ---
 
-Ax yields:
+Vector Ax:
      0.771
      0.307
      0.765
      0.279
 
-Is Ax=b ? (within a tolerance of 1e-12)
-Yes, Ax=b
+TEST: Is Ax=b (within a tolerance of 1e-12)?
+RESULT: Yes, Ax=b.
 
---- --- --- PART B --- --- ---
+------------ TASK B ------------
 
--- -- -- Check that "inverse" works as intended -- -- --
+------ Check that "inverse" works as intended ------
 
-Generate a random square matrix A (4x4):
+--- Generate a random square matrix A (4x4) ---
+
+Square matrix A:
      0.294      0.698      0.865      0.198 
      0.560      0.181      0.250      0.947 
      0.349      0.380      0.502      0.809 
      0.695      0.030      0.082      0.904 
 
-Factorize A into QR;
+--- Factorize A into QR ---
 
-Calculate the inverse B;
+Matrix Q:
+     0.293      0.836     -0.371     -0.280 
+     0.559     -0.112     -0.366      0.735 
+     0.348      0.327      0.853      0.210 
+     0.693     -0.427      0.024     -0.580 
+
+
+Matrix R:
+     1.002      0.458      0.625      1.496 
+     0.000      0.674      0.824     -0.061 
+     0.000      0.000      0.018      0.292 
+     0.000      0.000      0.000      0.287 
+
+
+--- Calculate the inverse B ---
+
+Inverse matrix B:
     1.5323     0.7079    -3.2991     1.8761 
     7.0554    76.3803   -43.2032   -42.9005 
    -4.8298   -62.4268    35.7929    34.4257 
    -0.9760     2.5650     0.7341    -2.0247 
 
-Check that AB=I, where I is the identity matrix;
 
+--- Check that AB=I, where I is the identity matrix ---
+
+Matrix AB:
     1.0000     0.0000     0.0000     0.0000 
     0.0000     1.0000     0.0000     0.0000 
     0.0000     0.0000     1.0000     0.0000 
     0.0000     0.0000     0.0000     1.0000 
 
-Is AB=I ? (within a tolerance of 1e-12)
-Yes, AB=I
 
---- --- PART C --- --- ---
+TEST: Is AB=I (within a tolerance of 1e-12)?
+RESULT: Yes, AB=I.
 
-Measure the time it takes to QR-factorize a random NxN matrix as function of N. 
 
-The time it takes QR-factorize goes like O(N³).
-The time it takes to QR-factorize a random NxN matrix (as a function of N) is recorded in times.txt and plotted in times_plot.png.
+------------ TASK C ------------
+
+------ Measure the time it takes to QR-factorize a random NxN matrix as function of N ------
+
+QR_factorize_time.txt contains the data on how long it takes to QR-factorize a random NxN matrix.
+QR_factorize_time_plot.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.
+The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time_plot.svg.
