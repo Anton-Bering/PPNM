@@ -24,12 +24,14 @@ public class Program {
 
         using (StreamWriter writer = new StreamWriter("Out.txt")) {
 
-            // --- PART A ---
-            writer.WriteLine("--- Part A ---");
-            writer.WriteLine("-- Make some indicative plots to prove that the linear spline and the integrator work as intended --");
-            writer.WriteLine("This is done by taking the table: {x_i=0,1,...,9; y_i=cos(x_i)},");
-            writer.WriteLine("the data is in cos.txt and the plot is in cos.png.\n");
+            // --- TASJ A ---
+            writer.WriteLine("------------ TASK A ------------");
+            writer.WriteLine("\n------ Make some indicative plots to prove the linear spline and the integrator work as intended ------\n");
+                        
+            writer.WriteLine("--- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} ---");
+            writer.WriteLine("--- And plot its linear interpolant together with interpolant's anti-derivative ---\n");
 
+            writer.WriteLine("The data is in cos.txt and the plot is in cos.svg");
             using (StreamWriter cosWriter = new StreamWriter("cos.txt")) {
                 cosWriter.WriteLine("# x\tspline(x)\tsplineInt(x)");
                 for (double z = 0; z <= 9; z += 0.1) {
@@ -39,11 +41,13 @@ public class Program {
                 }
             }
 
-            // --- PART B ---
-            writer.WriteLine("--- Part B ---");
-            writer.WriteLine("-- Make some indicative plots to prove that the quadratic spline and the integrator work as intended.");
-            writer.WriteLine("This is done by using {x_i=0,1,...,9; y_i=sin(x_i)}.");
-            writer.WriteLine("the data is in sin.txt and the plot is in sin.png.\n");
+            // --- TASK B ---
+            writer.WriteLine("\n------------ TASK B ------------");
+            
+            writer.WriteLine("\n------ Make some indicative plots to prove that the quadratic spline ------");
+            writer.WriteLine("------ And the integrator work as intended ------\n");
+            writer.WriteLine("--- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---\n");
+            writer.WriteLine("The data is in sin.txt and the plot is in sin.svg.");
 
             using (StreamWriter sinWriter = new StreamWriter("sin.txt")) {
                 sinWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");
@@ -55,16 +59,19 @@ public class Program {
                 }
             }
 
-            writer.WriteLine("-- Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines, and compare the results with the quadratic-spline program --");
-            writer.WriteLine("The manual calculations of the values of b_i and c_i are in Manually_calculate_bi_and_ci.txt.\n");
+            writer.WriteLine("\n------ Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines ------");
+            writer.WriteLine("------ And compare the results with the quadratic-spline program ------\n");
 
+            writer.WriteLine("The manually calculated values are in Manually_calculate_bi_and_ci.txt.");
+            writer.WriteLine("The program-computed values are in Computed_bi_and_ci.txt.");
+            writer.WriteLine("The manual and program-computed values are compared visually in the plot bi_and_ci_comparing.png.\n");
 
-            // --- PART C ---
-            writer.WriteLine("--- Part C ---");
-            writer.WriteLine("-- Check that the built-in cubic splines in Gnuplot produce a similar cubic spline to the implementation --");
-            writer.WriteLine("The data from my result is in sqrt.txt and the plot is in sqrt.png.");
-            writer.WriteLine("In sqrt_comparing.png, a comparison is shown between my results (sqrt.txt and sqrt.png) and the built-in Gnuplot spline.\n");
-
+            // --- TASL C ---
+            writer.WriteLine("\n------------ TASK C ------------\n");
+            
+            writer.WriteLine("------- Check that the built-in cubic splines in Gnuplot produce a similar cubic spline to the implementation ------\n");
+            writer.WriteLine("The results from my implementation are in sqrt.txt, and the plot is in sqrt.svg.");
+            writer.WriteLine("In sqrt_comparing.svg, a comparison is shown between my results (from sqrt.txt) and the built-in Gnuplot spline (using the data in sqrt_data_points_to_Gnuplot.txt).\n");
 
             using (StreamWriter sqrtWriter = new StreamWriter("sqrt.txt")) {
                 sqrtWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");

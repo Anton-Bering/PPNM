@@ -1,3 +1,4 @@
+# rå datapunkter: bruges i Gnuplot til at lave en indbygget cubic spline
 # x	y
 0	0.000000000
 1	1.000000000

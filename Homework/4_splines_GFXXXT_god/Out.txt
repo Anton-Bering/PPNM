@@ -1,18 +1,33 @@
---- Part A ---
--- Make some indicative plots to prove that the linear spline and the integrator work as intended --
-This is done by taking the table: {x_i=0,1,...,9; y_i=cos(x_i)},
-the data is in cos.txt and the plot is in cos.png.
+------------ TASK A ------------
 
---- Part B ---
--- Make some indicative plots to prove that the quadratic spline and the integrator work as intended.
-This is done by using {x_i=0,1,...,9; y_i=sin(x_i)}.
-the data is in sin.txt and the plot is in sin.png.
+------ Make some indicative plots to prove the linear spline and the integrator work as intended ------
 
--- Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines, and compare the results with the quadratic-spline program --
-The manual calculations of the values of b_i and c_i are in Manually_calculate_bi_and_ci.txt.
+--- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} ---
+--- And plot its linear interpolant together with interpolant's anti-derivative ---
 
---- Part C ---
--- Check that the built-in cubic splines in Gnuplot produce a similar cubic spline to the implementation --
-The data from my result is in sqrt.txt and the plot is in sqrt.png.
-In sqrt_comparing.png, a comparison is shown between my results (sqrt.txt and sqrt.png) and the built-in Gnuplot spline.
+The data is in cos.txt and the plot is in cos.svg
+
+------------ TASK B ------------
+
+------ Make some indicative plots to prove that the quadratic spline ------
+------ And the integrator work as intended ------
+
+--- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---
+
+The data is in sin.txt and the plot is in sin.svg.
+
+------ Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines ------
+------ And compare the results with the quadratic-spline program ------
+
+The manually calculated values are in Manually_calculate_bi_and_ci.txt.
+The program-computed values are in Computed_bi_and_ci.txt.
+The manual and program-computed values are compared visually in the plot bi_and_ci_comparing.png.
+
+
+------------ TASK C ------------
+
+------- Check that the built-in cubic splines in Gnuplot produce a similar cubic spline to the implementation ------
+
+The results from my implementation are in sqrt.txt, and the plot is in sqrt.svg.
+In sqrt_comparing.svg, a comparison is shown between my results (from sqrt.txt) and the built-in Gnuplot spline (using the data in sqrt_data_points_to_Gnuplot.txt).
 

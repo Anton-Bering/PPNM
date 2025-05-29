@@ -10,4 +10,4 @@ plots: cos.txt sin.txt sqrt.txt plot.gnu
 	gnuplot plot.gnu
 
 clean: 
-	rm -f Splines.exe cos.txt sin.txt sqrt.txt Out.txt cos.png sin.png sqrt.png sqrt_comparing.png comparison_results.txt
+	rm -f Splines.exe cos.txt sin.txt sqrt.txt Out.txt cos.svg sin.svg sqrt.svg sqrt_comparing.svg comparison_results.txt Computed_bi_and_ci.txt bi_comparison.svg ci_comparison.svg
