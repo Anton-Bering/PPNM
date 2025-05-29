@@ -1,3 +1,4 @@
+
 using System;
 using System.IO;
 using System.Linq;
@@ -5,12 +6,13 @@ using System.Linq;
 public class Program {
     public static void Main(string[] args) {
         using (StreamWriter writer = new StreamWriter("Out.txt")) {
-            writer.WriteLine("--- --- --- PART A --- --- ---\n");
+            writer.WriteLine("------------ TASK A ------------\n");
 
-            writer.WriteLine("-- -- -- Prove that the implementation works as intended -- -- --\n");
+            writer.WriteLine("------ Prove that the implementation works as intended ------\n");
 
             int sizeA = 5;
-            Console.WriteLine($"Generate a random symmetric matrix A ({sizeA}x{sizeA}):");
+            Console.WriteLine($"--- Generate a random symmetric matrix A ({sizeA}x{sizeA}) ---\n");
+            writer.WriteLine("Symmetric matrix A:");
             matrix A = new matrix(sizeA, sizeA);
             Random rnd = new Random(1);
             for (int i = 0; i < sizeA; i++)
@@ -21,48 +23,59 @@ public class Program {
             }
             printMatrix(writer, A);
 
-            writer.WriteLine("\nApply my routine to perform the eigenvalue-decomposition, A=VDVᵀ (where V is the orthogonal matrix of eigenvectors and D is the diagonal matrix with the corresponding eigenvalues).\n");
-            writer.WriteLine("Check that VᵀAV=D:\n");
+            writer.WriteLine("\n--- Perform the eigenvalue-decomposition A = V D Vᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---\n");
+
+            writer.WriteLine("--- Check that Vᵀ A V = D ---\n");
             matrix A_copy = A.copy();
             vector w = new vector(sizeA);
             matrix V = new matrix(sizeA, sizeA);
             jacobi.cyclic(A, w, V);
 
             matrix VtAV = multiply(transpose(V), multiply(A_copy, V));
-            writer.WriteLine("\nVᵀAV yields:");
+            writer.WriteLine("\nMatrix Vᵀ A V:");
             printMatrix(writer, VtAV);
-            writer.WriteLine("\n Is VᵀAV=D?");
-            writer.WriteLine(isDiagonalClose(VtAV, w));
+            writer.WriteLine("\nTEST: Is Vᵀ A V = D?");
+            writer.WriteLine(isDiagonalClose(VtAV, w)
+                ? "RESULT: Yes, Vᵀ A V = D"
+                : "RESULT: No, Vᵀ A V ≠ D");
 
             writer.WriteLine("\nEigenvalue vector w from Jacobi:   " + string.Join(" ", formatVector(w)));
 
-            writer.WriteLine("\nCheck that VDVᵀ=A:\n");
+            writer.WriteLine("\n--- Check that V D Vᵀ = A ---\n");
             matrix D = diagonalMatrix(w);
             matrix VDVt = multiply(multiply(V, D), transpose(V));
-            writer.WriteLine("\n VDVᵀ yields:");
+            writer.WriteLine("\nMatrix V D Vᵀ:");
             printMatrix(writer, VDVt);
-            writer.WriteLine("\nIs VDVᵀ=A ?");
-            writer.WriteLine(areMatricesClose(A_copy, VDVt));
+            writer.WriteLine("\nTEST: Is V D Vᵀ = A ?");
+            writer.WriteLine(areMatricesClose(A_copy, VDVt)
+                ? "RESULT: Yes, V D Vᵀ = A"
+                : "RESULT: No, V D Vᵀ ≠ A");
 
-            writer.WriteLine("\nCheck that VᵀV=I :");
+            writer.WriteLine("\n--- Check that Vᵀ V = I ---\n");
             matrix VtV = multiply(transpose(V), V);
-            writer.WriteLine("\n VᵀV yields:");
+            writer.WriteLine("\nMatrix Vᵀ V:");
             printMatrix(writer, VtV);
-            writer.WriteLine("\nIs VᵀV=I ?");
-            writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA)));
+            writer.WriteLine("\nTEST: Is Vᵀ V = I ?");
+            writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA))
+                ? "RESULT: Yes, Vᵀ V = I"
+                : "RESULT: No, Vᵀ V ≠ I");
 
-            writer.WriteLine("\nCheck that VVᵀ=I :\n");
+            writer.WriteLine("\n--- Check that V Vᵀ = I ---\n");
             matrix VVt = multiply(V, transpose(V));
-            writer.WriteLine("\n VVᵀ yields:");
+            writer.WriteLine("\nMatrix V Vᵀ:");
             printMatrix(writer, VVt);
-            writer.WriteLine("\nIs VVᵀ=I ?");
-            writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA)));
+            writer.WriteLine("\nTEST: Is V Vᵀ = I ?");
+            writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA))
+                ? "RESULT: Yes, V Vᵀ = I"
+                : "RESULT: No, V Vᵀ ≠ I");
 
-            writer.WriteLine("\n--- --- --- PART B --- --- ---\n");
-            double[] drs = Enumerable.Range(1, 100).Select(i => i * 0.01).ToArray(); // dr values from 0.01 to 1.00
-            // HERHER: det tager ret lang tid at køre, så jeg skulle måske sette intivalernde noget ned.
+            writer.WriteLine("\n------------ TASK B ------------\n");
 
-            double[] rmaxs = {5.0, 10.0, 15.0};
+            writer.WriteLine("\n------ Calculate numerically the lowest eigenvalues of the hydrogen atom ------");
+            writer.WriteLine("------ And compare them with the exact results --------------------------------\n");
+            
+            double[] drs = Enumerable.Range(1, 100).Select(i => i * 0.01).ToArray();
+            double[] rmaxs = Enumerable.Range(8, 33).Select(i => i * 0.5).ToArray();
             double fixed_rmax = 10;
             double fixed_dr = 0.3;
 
@@ -71,15 +84,12 @@ public class Program {
             vector w_main = new vector(npoints_main);
             matrix V_main = new matrix(npoints_main, npoints_main);
             jacobi.cyclic(H_main, w_main, V_main);
-            writer.WriteLine("-- -- -- Calculate numerically the lowest egenvalues -- -- --\n");
-            writer.WriteLine("\nThe lowest eigenvalues of the hydrogen atom is:");
+
+            writer.WriteLine("\nNumerically calculated lowest eigenvalues:");
             for (int i = 0; i < 5; i++) {
                 writer.WriteLine($"ε_{i} = {w_main[i]:F6}");
             }
 
-            writer.WriteLine("\n-- -- -- Calculate eigenfunctions of the s-wave states in the hydrogen atom -- -- --\n");
-
-            // Analytisk løsning:
             double normConst = 1.0 / Math.Sqrt(fixed_dr);
             for (int k = 0; k < 3; k++) {
                 using (StreamWriter sw = new StreamWriter($"radial_n{(k + 1)}.txt"))
@@ -91,17 +101,16 @@ public class Program {
 
                         double fa = 0;
                         if (k == 0)
-                            fa = 2 * r * Math.Exp(-r); // n=1
+                            fa = 2 * r * Math.Exp(-r);
                         else if (k == 1)
-                            fa = - ( (1.0 / Math.Sqrt(2)) * (1 - r / 2) * r * Math.Exp(-r / 2) ); // n=2
+                            fa = -((1.0 / Math.Sqrt(2)) * (1 - r / 2) * r * Math.Exp(-r / 2));
                         else if (k == 2)
-                            fa = (2.0 / (81 * Math.Sqrt(3))) * (27 - 18 * r + 2 * r * r) * r * Math.Exp(-r / 3); // n=3
+                            fa = (2.0 / (81 * Math.Sqrt(3))) * (27 - 18 * r + 2 * r * r) * r * Math.Exp(-r / 3);
 
                         sa.WriteLine($"{r} {fa}");
                     }
                 }
             }
-
 
             using (StreamWriter drWriter = new StreamWriter("varying_dr.txt")) {
                 drWriter.WriteLine("dr, E0");
@@ -117,6 +126,8 @@ public class Program {
                 }
             }
 
+
+
             using (StreamWriter rmaxWriter = new StreamWriter("varying_rmax.txt")) {
                 rmaxWriter.WriteLine("rmax, E0");
                 foreach (double rmax in rmaxs) {
@@ -130,15 +141,31 @@ public class Program {
                     rmaxWriter.WriteLine($"{rmax}, {E0}");
                 }
             }
-            writer.WriteLine("The data for the data for the eigenfunctions witch n=1, 2, 3 are in radial_n1.txt, radial_n2.txt, radial_n3.txt, respeley.");
-            writer.WriteLine("A plot of the eigenfunctions are in radial_wavefunctions.png");
+
+            writer.WriteLine("\nradial_nᵢ.txt (for i = 1, 2, 3) contains the data for the numerically calculated eigenfunctions with n = 1, 2, 3, respectively.");
+            writer.WriteLine("radial_wavefunctions.png is a plot of the numerically calculated eigenfunctions.");
+
+            writer.WriteLine("\nanalytic_nᵢ.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.");
+            writer.WriteLine("radial_wavefunctions.png also contains the exact results for comparison.");
+
+            writer.WriteLine("\n------ Fix r_max to a reasonable value and calculate ε₀ for several different values of Δr ------");
+            writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
+
+            writer.WriteLine($"\nr_max is fixed to {fixed_rmax}");
+            writer.WriteLine("varying_dr.txt contains the data for the calculated ε₀");
+            writer.WriteLine("varying_dr.png is a plot of the resulting curve");
+
+            writer.WriteLine("\n------ Fix Δr to a reasonable value and calculate ε₀ for several different values of r_max ------");
+            writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
+
+            writer.WriteLine($"\nΔr is fixed to {fixed_dr}");
+            writer.WriteLine("varying_rmax.txt contains the data for the calculated ε₀");
+            writer.WriteLine("varying_rmax.png is a plot of the resulting curve");
 
 
-            writer.WriteLine("Convergence data written to varying_dr.txt and varying_rmax.txt.");
-            writer.WriteLine("Wavefunctions written to radial_n1.txt, radial_n2.txt, radial_n3.txt.");
-
-            writer.WriteLine("\n--- --- --- PART C --- --- ---\n");
-            writer.WriteLine("[Optional optimizations go here if implemented.]");
+            writer.WriteLine("\n------------ TASK C ------------\n");
+            writer.WriteLine("------ Optimize the Makefile such that it can run convergence calculations in parallel"); 
+            writer.WriteLine("------ And check the it does indeed run them in parallel by timing");
         }
     }
 
@@ -218,3 +245,4 @@ public class Program {
         return true;
     }
 }
+
