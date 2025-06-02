@@ -10,17 +10,24 @@ public class Program {
         double[] yCos = new double[n];
         double[] ySin = new double[n];
         double[] ySqrt = new double[n];
+        double[] yQuad = new double[n];
+        double[] yLog = new double[n];
         for (int i = 0; i < n; i++) {
             yCos[i] = Math.Cos(xs[i]);
             ySin[i] = Math.Sin(xs[i]);
             ySqrt[i] = Math.Sqrt(xs[i]);
+            yQuad[i] = xs[i] * xs[i];
+            yLog[i] = Math.Log(xs[i] + 1.0);
         }
 
         QuadraticSpline qs = new QuadraticSpline(xs, ySin);
+        QuadraticSpline qLog = new QuadraticSpline(xs, yLog);
         CubicSpline cs = new CubicSpline(xs, ySqrt);
 
+
         // Write quadratic spline coefficients to file for comparison
-        qs.WriteCoefficientsToFile("Computed_bi_and_ci.txt");
+        qs.WriteCoefficientsToFile("Computed_bi_and_ci_sin.txt");
+        qLog.WriteCoefficientsToFile("Computed_bi_and_ci_log.txt");
 
         using (StreamWriter writer = new StreamWriter("Out.txt")) {
 
@@ -41,14 +48,27 @@ public class Program {
                 }
             }
 
+            writer.WriteLine("\n--- Take the table: {x_i=0,1,...,9; y_i=x_i^2} ---");
+            writer.WriteLine("--- And plot its linear interpolant together with interpolant's anti-derivative ---\n");
+
+            writer.WriteLine("The data is in quad.txt and the plot is in quad.svg");
+            using (StreamWriter quadWriter = new StreamWriter("quad.txt")) {
+                quadWriter.WriteLine("# x\tspline(x)\tsplineInt(x)");
+                for (double z = 0; z <= 9; z += 0.1) {
+                    double val = LinearSpline.linterp(xs, yQuad, z);
+                    double integral = LinearSpline.linterpInteg(xs, yQuad, z);
+                    quadWriter.WriteLine($"{z}\t{val}\t{integral}");
+                }
+            }
+
             // --- TASK B ---
             writer.WriteLine("\n------------ TASK B ------------");
             
             writer.WriteLine("\n------ Make some indicative plots to prove that the quadratic spline ------");
             writer.WriteLine("------ And the integrator work as intended ------\n");
+
             writer.WriteLine("--- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---\n");
             writer.WriteLine("The data is in sin.txt and the plot is in sin.svg.");
-
             using (StreamWriter sinWriter = new StreamWriter("sin.txt")) {
                 sinWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");
                 for (double z = 0; z <= 9; z += 0.1) {
@@ -59,12 +79,32 @@ public class Program {
                 }
             }
 
+            writer.WriteLine("\n--- Using {x_i=0,1,...,9; y_i=ln(x_i+1)} ---\n");
+            writer.WriteLine("The data is in log.txt and the plot is in log.svg.");
+            using (StreamWriter logWriter = new StreamWriter("log.txt")) {
+                logWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");
+                for (double z = 0; z <= 9; z += 0.1) {
+                    double val = qLog.Evaluate(z);
+                    double integral = qLog.Integral(z);
+                    double deriv = qLog.Derivative(z);
+                    logWriter.WriteLine($"{z}\t{val}\t{integral}\t{deriv}");
+                }
+            }
+
+            
             writer.WriteLine("\n------ Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines ------");
             writer.WriteLine("------ And compare the results with the quadratic-spline program ------\n");
 
-            writer.WriteLine("The manually calculated values are in Manually_calculate_bi_and_ci.txt.");
-            writer.WriteLine("The program-computed values are in Computed_bi_and_ci.txt.");
-            writer.WriteLine("The manual and program-computed values are compared visually in the plot bi_and_ci_comparing.png.\n");
+            writer.WriteLine("\n For Sin(x):");
+            writer.WriteLine("The manually calculated values are in Manually_calculate_bi_and_ci_sin.txt.");
+            writer.WriteLine("The program-computed values are in Computed_bi_and_ci_sin.txt.");
+            writer.WriteLine("The manual and program-computed values are compared visually in the plot bi_and_ci_comparing.svg.\n");
+            
+            writer.WriteLine("\n For ln(x+1):");
+            writer.WriteLine("The manually calculated values are in Manually_calculate_bi_and_ci_log.txt.");
+            writer.WriteLine("The program-computed values are in Computed_bi_and_ci_log.txt.");
+            writer.WriteLine("The manual and program-computed values are compared visually in the plot bi_and_ci_comparing_log.svg.\n");
+
 
             // --- TASL C ---
             writer.WriteLine("\n------------ TASK C ------------\n");
