@@ -10,6 +10,9 @@ The course is structured around a series of programming assignments, including *
 
 The homework assignments are the following:  
 [1) Linear Equations](https://fedorov.sdfeu.org/prog/homeworks/lineq.htm)  
-[2) Eigenvalues / EVD (Eigenvalue Decomposition)](https://fedorov.sdfeu.org/prog/homeworks/eigenvalues.htm)
-[3) Least-Squares / Ordinary Least-Squares Fit](https://fedorov.sdfeu.org/prog/homeworks/least-squares.htm)
-[4) Splines](https://fedorov.sdfeu.org/prog/homeworks/splines.htm)
+[2) Eigenvalues / EVD (Eigenvalue Decomposition)](https://fedorov.sdfeu.org/prog/homeworks/eigenvalues.htm)  
+[3) Least-Squares / Ordinary Least-Squares Fit](https://fedorov.sdfeu.org/prog/homeworks/least-squares.htm)  
+[4) Splines](https://fedorov.sdfeu.org/prog/homeworks/splines.htm)  
+
+Points: (optimal: 6+3+1=10)  
+1) 6+3+1 = 10  
