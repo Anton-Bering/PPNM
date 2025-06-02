@@ -13,9 +13,13 @@ The homework assignments are the following:
 [2) Eigenvalues / EVD (Eigenvalue Decomposition)](https://fedorov.sdfeu.org/prog/homeworks/eigenvalues.htm)  
 [3) Least-Squares / Ordinary Least-Squares Fit](https://fedorov.sdfeu.org/prog/homeworks/least-squares.htm)  
 [4) Splines](https://fedorov.sdfeu.org/prog/homeworks/splines.htm)  
+[5) ODE](https://fedorov.sdfeu.org/prog/homeworks/ode.htm)  
+
 
 Points: (optimal: 6+3+1=10)  
 HW 1: 6+3+1 = 10  
 HW 2: 6+3+1 = 10   
 HW 3:  
 HW 4: 6+3+1 = 10   
+HW 5: 6+3+1 = 10  
+ 

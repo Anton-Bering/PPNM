@@ -12,10 +12,7 @@ Færdig, men navn på file kunne måske forbeder, og plot kunne gøres pænere f
 # Samling maulet udregnet og program regnet værdiger af b_i & c_i; fx. udregne: B_i=b_i_mauelt/b_i_program og C_i=c_i_mauelt/c_i_program 
 
 ## 5_ODE:
-
-# Gør sådan at oscillator_with_friction_plot.png bliver magen til det på https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.htm
-
-# Fix Planetary_orbits_plot.png (virker ikke nu)
+Færdig
 
 ## 2_eigenvalues_GFXX_kopi:
 
