@@ -18,10 +18,12 @@ class Program
 
     static void Main()
     {
-        Console.WriteLine("--- --- Part A --- ---\n");
-        Console.WriteLine("-- Calculate two-dimensional integrals with my Monte Carlo routine --\n");
+        Console.WriteLine("------------ TASK A ------------\n");
+        Console.WriteLine("------ Calculate two-dimensional integrals with my Monte Carlo routine ------");
+        Console.WriteLine("------ Plot the estimated error and the actual error as functions of the number of sampling points------");
+        Console.WriteLine("------ And check whether the actual error scales as N^(-1/2) ------\n");
 
-        Console.WriteLine("--- Calculating Unit Circle Area ---"); // Kode flyttet til UnitCircleCalculator.cs
+        Console.WriteLine("--- Area of Unit Circle ---"); // Kode flyttet til UnitCircleCalculator.cs
         UnitCircleCalculator.CalculateAndSaveResults(); // 
         Console.WriteLine("Data saved to: Estimate_the_area_of_a_unit_circle.txt"); // 
 
