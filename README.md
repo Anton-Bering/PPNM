@@ -14,6 +14,8 @@ The homework assignments are the following:
 [3) Least-Squares / Ordinary Least-Squares Fit](https://fedorov.sdfeu.org/prog/homeworks/least-squares.htm)  
 [4) Splines](https://fedorov.sdfeu.org/prog/homeworks/splines.htm)  
 [5) ODE](https://fedorov.sdfeu.org/prog/homeworks/ode.htm)  
+[6) Integration / Recursive Adaptive Integration](https://fedorov.sdfeu.org/prog/homeworks/quadratures.htm)  
+[7) Monte Carlo / Monte Carlo integration](https://fedorov.sdfeu.org/prog/homeworks/montecarlo.htm)  
 
 
 Points: (optimal: 6+3+1=10)  
@@ -23,3 +25,4 @@ HW 3:
 HW 4: 6+3+1 = 10   
 HW 5: 6+3+1 = 10  
  
+
