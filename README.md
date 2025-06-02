@@ -15,4 +15,4 @@ The homework assignments are the following:
 [4) Splines](https://fedorov.sdfeu.org/prog/homeworks/splines.htm)  
 
 Points: (optimal: 6+3+1=10)  
-1) 6+3+1 = 10  
+HW 1: 6+3+1 = 10  
