@@ -2,6 +2,8 @@
 
 ------ Prove that the implementation works as intended ------
 
+--- Generate a random symmetric matrix A (5x5) ---
+
 Symmetric matrix A:
      0.249      0.111      0.467      0.772      0.658 
      0.111      0.433      0.354      0.944      0.101 
@@ -9,61 +11,61 @@ Symmetric matrix A:
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
---- Perform the eigenvalue-decomposition A = V D Vᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---
+--- Perform the eigenvalue-decomposition A=VDVᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---
 
---- Check that Vᵀ A V = D ---
+--- Check that VᵀAV=D ---
 
 
-Matrix Vᵀ A V:
+Matrix VᵀAV:
    -1.0378 4.8572E-17 1.6601E-11  4.503E-12 1.0048E-14 
          0   -0.27446 2.7159E-11 -2.0817E-16 1.1102E-16 
 1.6601E-11 2.7159E-11    0.54037 -8.3267E-17 6.6449E-10 
  4.503E-12 -1.6653E-16 -1.1102E-16    0.64253 4.6683E-10 
 1.0242E-14          0 6.6449E-10 4.6683E-10     2.4554 
 
-TEST: Is Vᵀ A V = D?
-RESULT: Yes, Vᵀ A V = D
+TEST: Is VᵀAV=D?
+RESULT: Yes, VᵀAV=D
 
 Eigenvalue vector w from Jacobi:    -1.0378 -0.27446  0.54037  0.64253   2.4554
 
---- Check that V D Vᵀ = A ---
+--- Check that VDVᵀ=A ---
 
 
-Matrix V D Vᵀ:
+Matrix VDVᵀ:
      0.249      0.111      0.467      0.772      0.658 
      0.111      0.433      0.354      0.944      0.101 
      0.467      0.354      0.642      0.029      0.248 
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
-TEST: Is V D Vᵀ = A ?
-RESULT: Yes, V D Vᵀ = A
+TEST: Is VDVᵀ=A ?
+RESULT: Yes, VDVᵀ=A
 
---- Check that Vᵀ V = I ---
+--- Check that VᵀV=I ---
 
 
-Matrix Vᵀ V:
+Matrix VᵀV:
          1 -5.5511E-17 -1.8041E-16 -5.5511E-17 -1.1102E-16 
 -5.5511E-17          1 -1.9429E-16 1.9429E-16 -1.1102E-16 
 -1.8041E-16 -1.9429E-16          1 -2.7756E-17 5.5511E-17 
 -5.5511E-17 1.9429E-16 -2.7756E-17          1 1.3878E-16 
 -1.1102E-16 -1.1102E-16 5.5511E-17 1.3878E-16          1 
 
-TEST: Is Vᵀ V = I ?
-RESULT: Yes, Vᵀ V = I
+TEST: Is VᵀV=I ?
+RESULT: Yes, VᵀV= I
 
---- Check that V Vᵀ = I ---
+--- Check that VVᵀ=I ---
 
 
-Matrix V Vᵀ:
+Matrix VVᵀ:
          1 -1.6653E-16 1.3878E-17 1.3878E-16 1.3878E-16 
 -1.6653E-16          1 -5.5511E-17 -2.7756E-17 -8.3267E-17 
 1.3878E-17 -5.5511E-17          1 1.1102E-16 5.5511E-17 
 1.3878E-16 -2.7756E-17 1.1102E-16          1 5.5511E-17 
 1.3878E-16 -8.3267E-17 5.5511E-17 5.5511E-17          1 
 
-TEST: Is V Vᵀ = I ?
-RESULT: Yes, V Vᵀ = I
+TEST: Is VVᵀ=I ?
+RESULT: Yes, VVᵀ=I
 
 ------------ TASK B ------------
 
@@ -79,11 +81,11 @@ Numerically calculated lowest eigenvalues:
 ε_3 = 0.411759
 ε_4 = 0.829649
 
-radial_nᵢ.txt (for i = 1, 2, 3) contains the data for the numerically calculated eigenfunctions with n = 1, 2, 3, respectively.
-radial_wavefunctions.png is a plot of the numerically calculated eigenfunctions.
+numerically_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the numerically calculated eigenfunctions with n = 1, 2, 3, respectively.
+eigenfunctions.svg is a plot of the numerically calculated eigenfunctions.
 
-analytic_nᵢ.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.
-radial_wavefunctions.png also contains the exact results for comparison.
+analytic_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.
+eigenfunctions.svg also contains the exact results for comparison.
 
 ------ Fix r_max to a reasonable value and calculate ε₀ for several different values of Δr ------
 ------ And plot the resulting curve ------------------------------------------------------------
@@ -91,7 +93,7 @@ radial_wavefunctions.png also contains the exact results for comparison.
 
 r_max is fixed to 10
 varying_dr.txt contains the data for the calculated ε₀
-varying_dr.png is a plot of the resulting curve
+varying_dr.svg is a plot of the resulting curve
 
 ------ Fix Δr to a reasonable value and calculate ε₀ for several different values of r_max ------
 ------ And plot the resulting curve ------------------------------------------------------------
@@ -99,12 +101,15 @@ varying_dr.png is a plot of the resulting curve
 
 Δr is fixed to 0.3
 varying_rmax.txt contains the data for the calculated ε₀
-varying_rmax.png is a plot of the resulting curve
-
-Convergence data written to varying_dr.txt and varying_rmax.txt.
-Wavefunctions written to radial_n1.txt, radial_n2.txt, radial_n3.txt.
+varying_rmax.svg is a plot of the resulting curve
 
 ------------ TASK C ------------
 
------- Optimize the Makefile such that it can run convergence calculations in parallel
------- And check the it does indeed run them in parallel by timing
+------ Check that the number of operations for matrix diagonalization scales as O(n³) (by measuring the time it takes to diagonalize a random matrix of size n) ------
+------ Do the measurements in parallel --------------------------------------------------
+
+The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.
+The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.
+
+The measurements were performed in parallel, which is verified by the shell output from 'time make number_of_operations'.
+Since the total CPU time (user + sys) exceeds the real time, this confirms that the tasks were executed in parallel as required.

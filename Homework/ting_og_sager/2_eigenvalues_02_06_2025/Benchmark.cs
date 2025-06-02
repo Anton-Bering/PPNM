@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 
 public class Benchmark {
     public static void Main(string[] args) {
         double dr = 0.1;
         double rmax = 10.0;
+        bool varyRmax = false;
 
         // Parse optional command-line arguments
         for (int i = 0; i < args.Length - 1; i++) {
@@ -11,9 +13,12 @@ public class Benchmark {
             if (args[i] == "-rmax") rmax = double.Parse(args[i + 1]);
         }
 
+        // Check for flag to vary rmax
+        if (args.Contains("-varyrmax")) varyRmax = true;
+
         int npoints = (int)(rmax / dr) - 1;
         if (npoints < 2) {
-            Console.WriteLine("{0} NaN", dr);
+            Console.WriteLine("{0} NaN", varyRmax ? rmax : dr);
             return;
         }
 
@@ -23,7 +28,7 @@ public class Benchmark {
         jacobi.cyclic(H, ew, evec);
 
         double E0 = findMin(ew);
-        Console.WriteLine("{0} {1}", dr, E0);
+        Console.WriteLine("{0} {1}", varyRmax ? rmax : dr, E0);
     }
 
     static matrix buildHamiltonian(int n, double dr) {

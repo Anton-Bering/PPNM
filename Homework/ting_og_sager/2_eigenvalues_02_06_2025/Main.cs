@@ -11,7 +11,7 @@ public class Program {
             writer.WriteLine("------ Prove that the implementation works as intended ------\n");
 
             int sizeA = 5;
-            Console.WriteLine($"--- Generate a random symmetric matrix A ({sizeA}x{sizeA}) ---\n");
+            writer.WriteLine($"--- Generate a random symmetric matrix A ({sizeA}x{sizeA}) ---\n");
             writer.WriteLine("Symmetric matrix A:");
             matrix A = new matrix(sizeA, sizeA);
             Random rnd = new Random(1);
@@ -23,51 +23,51 @@ public class Program {
             }
             printMatrix(writer, A);
 
-            writer.WriteLine("\n--- Perform the eigenvalue-decomposition A = V D Vᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---\n");
+            writer.WriteLine("\n--- Perform the eigenvalue-decomposition A=VDVᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---\n");
 
-            writer.WriteLine("--- Check that Vᵀ A V = D ---\n");
+            writer.WriteLine("--- Check that VᵀAV=D ---\n");
             matrix A_copy = A.copy();
             vector w = new vector(sizeA);
             matrix V = new matrix(sizeA, sizeA);
             jacobi.cyclic(A, w, V);
 
             matrix VtAV = multiply(transpose(V), multiply(A_copy, V));
-            writer.WriteLine("\nMatrix Vᵀ A V:");
+            writer.WriteLine("\nMatrix VᵀAV:");
             printMatrix(writer, VtAV);
-            writer.WriteLine("\nTEST: Is Vᵀ A V = D?");
+            writer.WriteLine("\nTEST: Is VᵀAV=D?");
             writer.WriteLine(isDiagonalClose(VtAV, w)
-                ? "RESULT: Yes, Vᵀ A V = D"
-                : "RESULT: No, Vᵀ A V ≠ D");
+                ? "RESULT: Yes, VᵀAV=D"
+                : "RESULT: No, VᵀAV≠D");
 
             writer.WriteLine("\nEigenvalue vector w from Jacobi:   " + string.Join(" ", formatVector(w)));
 
-            writer.WriteLine("\n--- Check that V D Vᵀ = A ---\n");
+            writer.WriteLine("\n--- Check that VDVᵀ=A ---\n");
             matrix D = diagonalMatrix(w);
             matrix VDVt = multiply(multiply(V, D), transpose(V));
-            writer.WriteLine("\nMatrix V D Vᵀ:");
+            writer.WriteLine("\nMatrix VDVᵀ:");
             printMatrix(writer, VDVt);
-            writer.WriteLine("\nTEST: Is V D Vᵀ = A ?");
+            writer.WriteLine("\nTEST: Is VDVᵀ=A ?");
             writer.WriteLine(areMatricesClose(A_copy, VDVt)
-                ? "RESULT: Yes, V D Vᵀ = A"
-                : "RESULT: No, V D Vᵀ ≠ A");
+                ? "RESULT: Yes, VDVᵀ=A"
+                : "RESULT: No, VDVᵀ≠A");
 
-            writer.WriteLine("\n--- Check that Vᵀ V = I ---\n");
+            writer.WriteLine("\n--- Check that VᵀV=I ---\n");
             matrix VtV = multiply(transpose(V), V);
-            writer.WriteLine("\nMatrix Vᵀ V:");
+            writer.WriteLine("\nMatrix VᵀV:");
             printMatrix(writer, VtV);
-            writer.WriteLine("\nTEST: Is Vᵀ V = I ?");
+            writer.WriteLine("\nTEST: Is VᵀV=I ?");
             writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA))
-                ? "RESULT: Yes, Vᵀ V = I"
-                : "RESULT: No, Vᵀ V ≠ I");
+                ? "RESULT: Yes, VᵀV= I"
+                : "RESULT: No, VᵀV≠I");
 
-            writer.WriteLine("\n--- Check that V Vᵀ = I ---\n");
+            writer.WriteLine("\n--- Check that VVᵀ=I ---\n");
             matrix VVt = multiply(V, transpose(V));
-            writer.WriteLine("\nMatrix V Vᵀ:");
+            writer.WriteLine("\nMatrix VVᵀ:");
             printMatrix(writer, VVt);
-            writer.WriteLine("\nTEST: Is V Vᵀ = I ?");
+            writer.WriteLine("\nTEST: Is VVᵀ=I ?");
             writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA))
-                ? "RESULT: Yes, V Vᵀ = I"
-                : "RESULT: No, V Vᵀ ≠ I");
+                ? "RESULT: Yes, VVᵀ=I"
+                : "RESULT: No, VVᵀ≠I");
 
             writer.WriteLine("\n------------ TASK B ------------\n");
 
@@ -92,8 +92,8 @@ public class Program {
 
             double normConst = 1.0 / Math.Sqrt(fixed_dr);
             for (int k = 0; k < 3; k++) {
-                using (StreamWriter sw = new StreamWriter($"radial_n{(k + 1)}.txt"))
-                using (StreamWriter sa = new StreamWriter($"analytic_n{(k + 1)}.txt")) {
+                using (StreamWriter sw = new StreamWriter($"numerically_eigenfunctions_n{(k + 1)}.txt"))
+                using (StreamWriter sa = new StreamWriter($"analytic_eigenfunctions_n{(k + 1)}.txt")) {
                     for (int i = 0; i < npoints_main; i++) {
                         double r = fixed_dr * (i + 1);
                         double f = normConst * V_main[i, k];
@@ -142,31 +142,46 @@ public class Program {
                 }
             }
 
-            writer.WriteLine("\nradial_nᵢ.txt (for i = 1, 2, 3) contains the data for the numerically calculated eigenfunctions with n = 1, 2, 3, respectively.");
-            writer.WriteLine("radial_wavefunctions.png is a plot of the numerically calculated eigenfunctions.");
+            writer.WriteLine("\nnumerically_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the numerically calculated eigenfunctions with n = 1, 2, 3, respectively.");
+            writer.WriteLine("eigenfunctions.svg is a plot of the numerically calculated eigenfunctions.");
 
-            writer.WriteLine("\nanalytic_nᵢ.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.");
-            writer.WriteLine("radial_wavefunctions.png also contains the exact results for comparison.");
+            writer.WriteLine("\nanalytic_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.");
+            writer.WriteLine("eigenfunctions.svg also contains the exact results for comparison.");
 
             writer.WriteLine("\n------ Fix r_max to a reasonable value and calculate ε₀ for several different values of Δr ------");
             writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
 
             writer.WriteLine($"\nr_max is fixed to {fixed_rmax}");
             writer.WriteLine("varying_dr.txt contains the data for the calculated ε₀");
-            writer.WriteLine("varying_dr.png is a plot of the resulting curve");
+            writer.WriteLine("varying_dr.svg is a plot of the resulting curve");
 
             writer.WriteLine("\n------ Fix Δr to a reasonable value and calculate ε₀ for several different values of r_max ------");
             writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
 
             writer.WriteLine($"\nΔr is fixed to {fixed_dr}");
             writer.WriteLine("varying_rmax.txt contains the data for the calculated ε₀");
-            writer.WriteLine("varying_rmax.png is a plot of the resulting curve");
+            writer.WriteLine("varying_rmax.svg is a plot of the resulting curve");
 
 
             writer.WriteLine("\n------------ TASK C ------------\n");
             writer.WriteLine("------ Optimize the Makefile such that it can run convergence calculations in parallel"); 
             writer.WriteLine("------ And check the it does indeed run them in parallel by timing");
+
+            writer.WriteLine("The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.");
+            writer.WriteLine("The plot 'number_of_operations.svg' shows the data along with a fitted curve f(n) = a * N³.\n");
+
+            writer.WriteLine("The measurements were performed in parallel, which is verified by the following shell output from 'time make number_of_operations':");
+            writer.WriteLine();
+            // Indsæt resultatet fra din terminalkørsel her direkte:
+            writer.WriteLine("real    0m0.236s");
+            writer.WriteLine("user    0m0.720s");
+            writer.WriteLine("sys     0m0.290s");
+            writer.WriteLine();
+            writer.WriteLine("Since the total CPU time (user + sys) exceeds the real time, this confirms that the tasks were executed in parallel as required.");
         }
+            
+        }
+
     }
 
     static matrix buildHamiltonian(int n, double dr) {

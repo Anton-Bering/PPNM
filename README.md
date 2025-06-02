@@ -16,3 +16,6 @@ The homework assignments are the following:
 
 Points: (optimal: 6+3+1=10)  
 HW 1: 6+3+1 = 10  
+HW 2: 6+3+1 = 10   
+HW 3:  
+HW 4:  

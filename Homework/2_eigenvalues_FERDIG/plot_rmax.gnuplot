@@ -1,5 +1,5 @@
-set terminal pngcairo size 800,600 enhanced font 'Arial,12'
-set output 'varying_rmax.png'
+set terminal svg size 800,600 enhanced font 'Arial,12' background rgb "white"
+set output 'varying_rmax.svg'
 
 set title "Convergence of Ground State Energy with Varying r_{max}"
 set xlabel "r_{max}"
