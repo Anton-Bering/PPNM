@@ -4,39 +4,60 @@
 ------ Plot the estimated error and the actual error as functions of the number of sampling points------
 ------ And check whether the actual error scales as N^(-1/2) ------
 
---- Calculating Unit Circle Area ---
-Data saved to: Estimate_the_area_of_a_unit_circle.txt
+--- Area of Unit Circle ---
 
- Error scaling plotted in: area_of_a_unit_circle_error.plot 
-
+The file 'Estimate_the_area_of_a_unit_circle.txt' contains the Monte Carlo estimates of the unit circle area.
+After 100 samples, the estimated area is 3.280000.
+The plot 'area_of_a_unit_circle_error.plot' shows the estimated and actual error as a function of N.
+As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
 --- Calculating Gaussian Bell Integral ---
 
- Error scaling plotted in: gaussian_bell_integral_error.plot 
+The file 'Estimate_GaussianBell2D.txt' contains the Monte Carlo estimates of the area.
+After 100 samples, the estimated area is 3.785254.
+The plot 'Estimate_GaussianBell2D_error.plot' shows the estimated and actual error as a function of N.
+As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
+
+------ Calculating The Special 3D Integral ------
+------ The Special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255 ------
+The file 'Estimate_SpecialIntegral.txt' contains the results for the value of the Special 3D Integral.
+After 100 samples, the estimated value is 1.314891153.
+
+------ Calculating The less sungular 3D Integral ------
+------ The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085 ------
 
 
---- Calculating Special 3D Integral ---
-Part B: Quasi-Random Sequences vs Pseudorandom Monte Carlo
+The file 'Estimate_LessSungularIntegral.txt' contains the results for the value of the less sungular 3D Integral.
+After 100 samples, the estimated value is 0.003611380.
+The plot 'Estimate_LessSungularIntegral_error.plot' shows the estimated and actual error as a function of N.
+As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
+
+ ------------ TASK B ------------
+
+ ------ Compare the scaling of the error with my pseudo-random Monte-Carlo integrator ------
 Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
        N      MC est.err   MC actual err     QMC est.err  QMC actual err
+TJEK 1
 
 --- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
 Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
        N      MC est.err   MC actual err     QMC est.err  QMC actual err
-    1000   6.876939E-003   9.837473E-003   2.105490E-004   1.783078E-003
-   10000   2.215606E-003   7.286064E-004   2.932159E-005   2.253326E-004
-  100000   6.977080E-004   6.970367E-004   2.449113E-006   2.617998E-005
+    1000   6.859800E-003   3.522149E-003   2.105490E-004   1.783078E-003
+   10000   2.214544E-003   2.217531E-003   2.932159E-005   2.253326E-004
+  100000   7.000422E-004   2.916889E-004   2.449113E-006   2.617998E-005
 
 Results saved to: QuasiVsPseudoResults.txt
 (MC uses internal variance; QMC uses difference of two sequences.)
+TJEK 2
 
 (Estimated errors: MC uses internal variance; QMC uses difference of two sequences.)
 
+TJEK 3
 Part C: Recursive Stratified Sampling
 
 --- Part C: Recursive Stratified Sampling ---
 Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
-Plain MC:      result = 0.994871,  error estimate = 0.143818,  actual error = 0.005083
-Stratified MC: result = 1.001882,  error estimate = 0.003215,  actual error = 0.001927
+Plain MC:      result = 0.881836,  error estimate = 0.151837,  actual error = 0.118119
+Stratified MC: result = 0.044802,  error estimate = 0.004051,  actual error = 0.955152
 
 Results saved to: StratifiedSamplingResults.txt

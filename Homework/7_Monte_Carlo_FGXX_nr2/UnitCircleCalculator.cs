@@ -10,13 +10,15 @@ public static class UnitCircleCalculator
     private static readonly double trueArea = Math.PI;
     private const string DataFile = "Estimate_the_area_of_a_unit_circle.txt";
 
-    public static void CalculateAndSaveResults(int maxN = 100000)
+    public static void CalculateAndSaveResults(int maxN = 100)
     {
         // Hent eksisterende N-værdier fra fil
         HashSet<int> existingNs = ReadExistingData();
 
         // Generer alle N-værdier fra 1 til maxN
         var allNs = Enumerable.Range(1, maxN).ToList();
+
+
 
         using (var writer = new StreamWriter(DataFile, append: true))
         {

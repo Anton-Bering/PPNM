@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 
 public static class SpecialIntegralCalculator
 {
@@ -13,7 +14,12 @@ public static class SpecialIntegralCalculator
     public static void CalculateAndSaveResults(int maxN = 100)
     {
         HashSet<int> existingNs = ReadExistingData();
-        var allNs = Enumerable.Range(1, maxN).ToList();
+
+        // Logaritmisk fordelte N-værdier, fx: 10, 13, 17, ..., 100000
+        var allNs = Enumerable.Range(1, maxN)
+                              .Select(i => (int)Math.Round(Math.Pow(10, i * Math.Log10(maxN) / maxN)))
+                              .Distinct()
+                              .ToList();
 
         using (var writer = new StreamWriter(DataFile, append: true))
         {
@@ -26,7 +32,9 @@ public static class SpecialIntegralCalculator
 
                 var (result, error) = PlainMC.Integrate(SpecialIntegrand, a, b, N);
                 double actualError = Math.Abs(result - analyticalValue);
-                writer.WriteLine($"{N}\t{error:E6}\t{actualError:E6}\t{result:F9}");
+
+                writer.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                    "{0}\t{1:E6}\t{2:E6}\t{3:F9}", N, error, actualError, result));
 
                 if (N % 1000 == 0)
                     Console.WriteLine($"Processed N={N} for Special Integral");
@@ -51,7 +59,16 @@ public static class SpecialIntegralCalculator
 
     private static double SpecialIntegrand(double[] v)
     {
+        double cosx = Math.Cos(v[0]);
+        double cosy = Math.Cos(v[1]);
+        double cosz = Math.Cos(v[2]);
+        double denom = 1.0 - cosx * cosy * cosz;
+
+        // Undgå division med meget små tal (numerisk stabilitet)
+        if (denom < 1e-10)
+            return 0.0;
+
         double A = 1.0 / (Math.PI * Math.PI * Math.PI);
-        return A / (1.0 - Math.Cos(v[0]) * Math.Cos(v[1]) * Math.Cos(v[2]));
+        return A / denom;
     }
 }
