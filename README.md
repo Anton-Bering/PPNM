@@ -18,8 +18,11 @@ The homework assignments are the following:
 [7) Monte Carlo / Monte Carlo integration](https://fedorov.sdfeu.org/prog/homeworks/montecarlo.htm)  
 [8) roots / Root Finding](https://fedorov.sdfeu.org/prog/homeworks/roots.htm)  
 [9) Minimization](https://fedorov.sdfeu.org/prog/homeworks/minimum.htm)  
- 
+[10) neural network / Artificial Neural Networks](https://fedorov.sdfeu.org/prog/homeworks/neural-network.htm)  
 
+
+
+https://fedorov.sdfeu.org/prog/homeworks/neural-network.htm
 
 Points: (optimal: 6+3+1=10)  
 HW 1: 6+3+1 = 10  
