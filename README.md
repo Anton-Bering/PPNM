@@ -16,6 +16,9 @@ The homework assignments are the following:
 [5) ODE](https://fedorov.sdfeu.org/prog/homeworks/ode.htm)  
 [6) Integration / Recursive Adaptive Integration](https://fedorov.sdfeu.org/prog/homeworks/quadratures.htm)  
 [7) Monte Carlo / Monte Carlo integration](https://fedorov.sdfeu.org/prog/homeworks/montecarlo.htm)  
+[8) roots / Root Finding](https://fedorov.sdfeu.org/prog/homeworks/roots.htm)  
+[9) Minimization](https://fedorov.sdfeu.org/prog/homeworks/minimum.htm)  
+ 
 
 
 Points: (optimal: 6+3+1=10)  

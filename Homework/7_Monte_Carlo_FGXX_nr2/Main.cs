@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using static System.Math;
 using System.Linq;
+using System.Globalization;
 
 class Program
 {
@@ -140,18 +141,80 @@ class Program
         LessSungularIntegralCalculator.PrintLastEstimateSummary();
 
 
-        // --- Part B: Quasi vs Pseudo ---
+        // --- TASJ B: 
         Console.WriteLine("\n ------------ TASK B ------------");
-        Console.WriteLine("\n ------ Compare the scaling of the error with my pseudo-random Monte-Carlo integrator ------");
-        Console.WriteLine("Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)");
-        Console.WriteLine("{0,8}  {1,14}  {2,14}  {3,14}  {4,14}", "N", "MC est.err", "MC actual err", "QMC est.err", "QMC actual err");
-        Console.WriteLine("TJEK 1");
+
+        // Estimated the error by using two different sequences:
+        Console.WriteLine("\n------ Estimated the error by using two different sequences ------\n");
+        Console.WriteLine("Estimate_QMC_vs_MC.txt contains the data for the estimated errors.");
+        Console.WriteLine("Estimate_QMC_vs_MC_error.svg is a plot showing the estimated and actual error for MC and QMC as a function of N.");
+        Console.WriteLine("The QMC error is estimated as the absolute difference between two independent Halton sequence evaluations.");
+        // Data setup
+        double[] a2 = { 0.0, 0.0 }, b2 = { 1.0, 1.0 };
+        int[] Nlist = { 1000, 10000, 100000 };
+        double trueValue = 0.25;
+        // Save MC vs QMC results for plotting
+        string compFile = "Estimate_QMC_vs_MC.txt";
+        using (var writer = new StreamWriter(compFile))
+        {
+            writer.WriteLine("N\tMC est. err\tMC actual err\tQMC est. err\tQMC actual err");
+
+            foreach (int N in Nlist)
+            {
+                var (resMC, errMC) = PlainMC.Integrate(Fxy, a2, b2, N);
+                var (resQMC, errQMC) = QuasiRandomMC.Integrate(Fxy, a2, b2, N);
+
+                double actualErrMC = Math.Abs(resMC - trueValue);
+                double actualErrQMC = Math.Abs(resQMC - trueValue);
+
+                writer.WriteLine(string.Format(CultureInfo.InvariantCulture,
+                    "{0}\t{1:E6}\t{2:E6}\t{3:E6}\t{4:E6}",
+                    N, errMC, actualErrMC, errQMC, actualErrQMC));
+            }
+        }
+
+
+
+
+        // Compare the scaling of the error with your pseudo-random Monte-Carlo integrator:
+        Console.WriteLine("\n------ Compare the scaling of the error with my pseudo-random Monte-Carlo integrator ------\n");
+        Console.WriteLine("QuasiVsPseudoResults.txt contains the estimated and actual errors for both MC and QMC.");
+        Console.WriteLine("Estimate_QMC_vs_MC_error.svg is a log-log plot visualizing the error scaling as a function of N.");
+        Console.WriteLine("QMC achieves lower error and faster convergence compared to MC, especially for smaller sample sizes.");
         QuasiVsPseudoComparison.RunComparison();
-        Console.WriteLine("TJEK 2");
-        Console.WriteLine("\n(Estimated errors: MC uses internal variance; QMC uses difference of two sequences.)\n");
-        Console.WriteLine("TJEK 3");
-        // --- Part C: Stratified Sampling ---
-        Console.WriteLine("Part C: Recursive Stratified Sampling");
+        
+        
+        // ------------ TASK C ------------
+        Console.WriteLine("\n ------------ TASK C ------------");
+
+        Console.WriteLine("This task implements recursive stratified sampling, where the domain is adaptively subdivided based on estimated sub-variances.");
+        Console.WriteLine("The integrator distributes more points where the function varies most, improving accuracy in difficult regions.");
+        Console.WriteLine("The method is recursive and stops subdividing when the number of points is below a fixed threshold (nmin).\n");
+
+        double trueVal = 1000.0 * (1 - Math.Exp(-100.0)) / 100.0 * (1 - Math.Exp(-10.0)) / 10.0;
+        int[] NlistStrat = { 1000, 2000, 5000, 10000, 20000, 50000 };
+
+        string stratErrFile = "StratifiedSamplingErrors.txt";
+        using (var writer = new StreamWriter(stratErrFile))
+        {
+            writer.WriteLine("N\tPlain_actual_error\tStratified_actual_error");
+
+            foreach (int N in NlistStrat)
+            {
+                var (plainRes, plainErrDummy) = PlainMC.Integrate(PeakedFunction, new[] { 0.0, 0.0 }, new[] { 1.0, 1.0 }, N);
+                var (stratRes, stratErrDummy) = StratifiedMC.Integrate(PeakedFunction, new[] { 0.0, 0.0 }, new[] { 1.0, 1.0 }, N);
+
+                double errPlain = Math.Abs(plainRes - trueVal);
+                double errStrat = Math.Abs(stratRes - trueVal);
+
+                writer.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0}\t{1:E6}\t{2:E6}", N, errPlain, errStrat));
+            }
+        }
+
+        Console.WriteLine("StratifiedSamplingErrors.txt contains error data for plain vs stratified MC.");
+        Console.WriteLine("StratifiedSamplingError.svg shows the actual error as a function of N in log-log scale.\n");
+
+
         StratifiedSamplingComparison.RunComparison();
     }
 }
