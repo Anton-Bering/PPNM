@@ -64,7 +64,7 @@ RESULT: Yes, QR=A.
 
 --- Generate a random square matrix A (4x4)---
 
-Square matrix A:
+Matrix A:
      0.404      0.166      0.985      0.109 
      0.802      0.446      0.225      0.011 
      0.029      0.008      0.510      0.382 
@@ -123,7 +123,7 @@ RESULT: Yes, Ax=b.
 
 --- Generate a random square matrix A (4x4) ---
 
-Square matrix A:
+Matrix A:
      0.294      0.698      0.865      0.198 
      0.560      0.181      0.250      0.947 
      0.349      0.380      0.502      0.809 
@@ -147,7 +147,7 @@ Matrix R:
 
 --- Calculate the inverse B ---
 
-Inverse matrix B:
+Matrix B:
     1.5323     0.7079    -3.2991     1.8761 
     7.0554    76.3803   -43.2032   -42.9005 
    -4.8298   -62.4268    35.7929    34.4257 

@@ -12,7 +12,7 @@ public class Program {
 
             int sizeA = 5;
             writer.WriteLine($"--- Generate a random symmetric matrix A ({sizeA}x{sizeA}) ---\n");
-            writer.WriteLine("Symmetric matrix A:");
+            writer.WriteLine("Matrix A:");
             matrix A = new matrix(sizeA, sizeA);
             Random rnd = new Random(1);
             for (int i = 0; i < sizeA; i++)
@@ -23,7 +23,7 @@ public class Program {
             }
             printMatrix(writer, A);
 
-            writer.WriteLine("\n--- Perform the eigenvalue-decomposition A=VDVᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---\n");
+            writer.WriteLine("\n------ After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ, check the following: ------\n");
 
             writer.WriteLine("--- Check that VᵀAV=D ---\n");
             matrix A_copy = A.copy();
@@ -32,7 +32,7 @@ public class Program {
             jacobi.cyclic(A, w, V);
 
             matrix VtAV = multiply(transpose(V), multiply(A_copy, V));
-            writer.WriteLine("\nMatrix VᵀAV:");
+            writer.WriteLine("Matrix VᵀAV:");
             printMatrix(writer, VtAV);
             writer.WriteLine("\nTEST: Is VᵀAV=D?");
             writer.WriteLine(isDiagonalClose(VtAV, w)
@@ -44,7 +44,7 @@ public class Program {
             writer.WriteLine("\n--- Check that VDVᵀ=A ---\n");
             matrix D = diagonalMatrix(w);
             matrix VDVt = multiply(multiply(V, D), transpose(V));
-            writer.WriteLine("\nMatrix VDVᵀ:");
+            writer.WriteLine("Matrix VDVᵀ:");
             printMatrix(writer, VDVt);
             writer.WriteLine("\nTEST: Is VDVᵀ=A ?");
             writer.WriteLine(areMatricesClose(A_copy, VDVt)
@@ -53,7 +53,7 @@ public class Program {
 
             writer.WriteLine("\n--- Check that VᵀV=I ---\n");
             matrix VtV = multiply(transpose(V), V);
-            writer.WriteLine("\nMatrix VᵀV:");
+            writer.WriteLine("Matrix VᵀV:");
             printMatrix(writer, VtV);
             writer.WriteLine("\nTEST: Is VᵀV=I ?");
             writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA))
@@ -62,7 +62,7 @@ public class Program {
 
             writer.WriteLine("\n--- Check that VVᵀ=I ---\n");
             matrix VVt = multiply(V, transpose(V));
-            writer.WriteLine("\nMatrix VVᵀ:");
+            writer.WriteLine("Matrix VVᵀ:");
             printMatrix(writer, VVt);
             writer.WriteLine("\nTEST: Is VVᵀ=I ?");
             writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA))
@@ -71,8 +71,8 @@ public class Program {
 
             writer.WriteLine("\n------------ TASK B ------------\n");
 
-            writer.WriteLine("\n------ Calculate numerically the lowest eigenvalues of the hydrogen atom ------");
-            writer.WriteLine("------ And compare them with the exact results --------------------------------\n");
+            writer.WriteLine("------ Calculate numerically the lowest egenvalues and eigenfunctions of the s-wave states in the hydrogen atom ------");
+            writer.WriteLine("------ And compare them with the exact results -----------------------------------------------------------------------\n");
             
             double[] drs = Enumerable.Range(1, 100).Select(i => i * 0.01).ToArray();
             double[] rmaxs = Enumerable.Range(8, 33).Select(i => i * 0.5).ToArray();
@@ -151,7 +151,7 @@ public class Program {
             writer.WriteLine("\n------ Fix r_max to a reasonable value and calculate ε₀ for several different values of Δr ------");
             writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
 
-            writer.WriteLine($"\nr_max is fixed to {fixed_rmax}");
+            writer.WriteLine($"r_max is fixed to {fixed_rmax}");
             writer.WriteLine("varying_dr.txt contains the data for the calculated ε₀");
             writer.WriteLine("varying_dr.svg is a plot of the resulting curve");
 

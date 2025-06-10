@@ -130,7 +130,7 @@ public class MainClass {
                 A_sq[i, j] = rndB.NextDouble();
         }
         Console.WriteLine($"--- Generate a random square matrix A ({N2}x{N2})---\n");
-        Console.WriteLine($"Square matrix A:");
+        Console.WriteLine($"Matrix A:");
         Console.WriteLine(FormatMatrix(A_sq));
         Console.WriteLine($"\n--- Generate a random vector b ({N2})---\n");
         Console.WriteLine($"Vector b:");
@@ -178,7 +178,7 @@ public class MainClass {
                 Ainv[i, j] = rndC.NextDouble();
 
         Console.WriteLine($"--- Generate a random square matrix A ({N2}x{N2}) ---\n");
-        Console.WriteLine($"Square matrix A:");
+        Console.WriteLine($"Matrix A:");
         Console.WriteLine(FormatMatrix(Ainv));
         
         Console.WriteLine("--- Factorize A into QR ---\n");
@@ -190,7 +190,7 @@ public class MainClass {
 
         Console.WriteLine("\n--- Calculate the inverse B ---\n");
         var B = qrInv.inverse();
-        Console.WriteLine("Inverse matrix B:");
+        Console.WriteLine("Matrix B:");
         Console.WriteLine(FormatMatrix(B, 4));
 
         var AB = matrix.Multiply(Ainv, B);

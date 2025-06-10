@@ -4,17 +4,16 @@
 
 --- Generate a random symmetric matrix A (5x5) ---
 
-Symmetric matrix A:
+Matrix A:
      0.249      0.111      0.467      0.772      0.658 
      0.111      0.433      0.354      0.944      0.101 
      0.467      0.354      0.642      0.029      0.248 
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
---- Perform the eigenvalue-decomposition A=VDVᵀ, where V contains eigenvectors and D is a diagonal matrix with eigenvalues ---
+------ After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ, check the following: ------
 
 --- Check that VᵀAV=D ---
-
 
 Matrix VᵀAV:
    -1.0378 4.8572E-17 1.6601E-11  4.503E-12 1.0048E-14 
@@ -30,7 +29,6 @@ Eigenvalue vector w from Jacobi:    -1.0378 -0.27446  0.54037  0.64253   2.4554
 
 --- Check that VDVᵀ=A ---
 
-
 Matrix VDVᵀ:
      0.249      0.111      0.467      0.772      0.658 
      0.111      0.433      0.354      0.944      0.101 
@@ -42,7 +40,6 @@ TEST: Is VDVᵀ=A ?
 RESULT: Yes, VDVᵀ=A
 
 --- Check that VᵀV=I ---
-
 
 Matrix VᵀV:
          1 -5.5511E-17 -1.8041E-16 -5.5511E-17 -1.1102E-16 
@@ -56,7 +53,6 @@ RESULT: Yes, VᵀV= I
 
 --- Check that VVᵀ=I ---
 
-
 Matrix VVᵀ:
          1 -1.6653E-16 1.3878E-17 1.3878E-16 1.3878E-16 
 -1.6653E-16          1 -5.5511E-17 -2.7756E-17 -8.3267E-17 
@@ -69,9 +65,8 @@ RESULT: Yes, VVᵀ=I
 
 ------------ TASK B ------------
 
-
------- Calculate numerically the lowest eigenvalues of the hydrogen atom ------
------- And compare them with the exact results --------------------------------
+------ Calculate numerically the lowest egenvalues and eigenfunctions of the s-wave states in the hydrogen atom ------
+------ And compare them with the exact results -----------------------------------------------------------------------
 
 
 Numerically calculated lowest eigenvalues:
@@ -89,7 +84,6 @@ eigenfunctions.svg also contains the exact results for comparison.
 
 ------ Fix r_max to a reasonable value and calculate ε₀ for several different values of Δr ------
 ------ And plot the resulting curve ------------------------------------------------------------
-
 
 r_max is fixed to 10
 varying_dr.txt contains the data for the calculated ε₀
