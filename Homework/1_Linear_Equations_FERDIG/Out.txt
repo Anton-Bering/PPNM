@@ -145,7 +145,7 @@ Matrix R:
      0.000      0.000      0.000      0.287 
 
 
---- Calculate the inverse B ---
+--- Calculate B, which is the inverse of A ---
 
 Matrix B:
     1.5323     0.7079    -3.2991     1.8761 

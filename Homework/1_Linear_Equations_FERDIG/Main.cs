@@ -188,7 +188,7 @@ public class MainClass {
         Console.WriteLine("\nMatrix R:");
         Console.WriteLine(FormatMatrix(qrInv.R));
 
-        Console.WriteLine("\n--- Calculate the inverse B ---\n");
+        Console.WriteLine("\n--- Calculate B, which is the inverse of A ---\n");
         var B = qrInv.inverse();
         Console.WriteLine("Matrix B:");
         Console.WriteLine(FormatMatrix(B, 4));
