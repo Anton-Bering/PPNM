@@ -11,7 +11,32 @@ Matrix A:
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
------- After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ, check the following: ------
+------ After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ ------
+
+
+Vector w (vector of the eigenvalues):
+ -1.0378 -0.27446  0.54037  0.64253   2.4554
+
+Matrix V (matrix of the corresponding eigenvector-columns):
+   0.32311   -0.77239    0.33074   0.044536    0.43317 
+   0.47579   0.082757   -0.77263    0.19609    0.36243 
+  -0.22176    0.20706    0.23436    0.88485    0.26471 
+  -0.72821   -0.11135   -0.25898   -0.25804    0.56891 
+    0.2996     0.5842    0.41431    -0.3317    0.53598 
+
+Matrix Vᵀ (transpose of V):
+   0.32311    0.47579   -0.22176   -0.72821     0.2996 
+  -0.77239   0.082757    0.20706   -0.11135     0.5842 
+   0.33074   -0.77263    0.23436   -0.25898    0.41431 
+  0.044536    0.19609    0.88485   -0.25804    -0.3317 
+   0.43317    0.36243    0.26471    0.56891    0.53598 
+
+Matrix D (diagonal matrix of eigenvalues):
+   -1.0378          0          0          0          0 
+         0   -0.27446          0          0          0 
+         0          0    0.54037          0          0 
+         0          0          0    0.64253          0 
+         0          0          0          0     2.4554 
 
 --- Check that VᵀAV=D ---
 
@@ -22,7 +47,7 @@ Matrix VᵀAV:
  4.503E-12 -1.6653E-16 -1.1102E-16    0.64253 4.6683E-10 
 1.0242E-14          0 6.6449E-10 4.6683E-10     2.4554 
 
-TEST: Is VᵀAV=D?
+TEST: Is VᵀAV=D (within a tolerance of 1e-6)?
 RESULT: Yes, VᵀAV=D
 
 Eigenvalue vector w from Jacobi:    -1.0378 -0.27446  0.54037  0.64253   2.4554
@@ -36,7 +61,7 @@ Matrix VDVᵀ:
      0.772      0.944      0.029       0.32       0.99 
      0.658      0.101      0.248       0.99      0.682 
 
-TEST: Is VDVᵀ=A ?
+TEST: Is VDVᵀ=A (within a tolerance of 1e-6)?
 RESULT: Yes, VDVᵀ=A
 
 --- Check that VᵀV=I ---
@@ -48,7 +73,7 @@ Matrix VᵀV:
 -5.5511E-17 1.9429E-16 -2.7756E-17          1 1.3878E-16 
 -1.1102E-16 -1.1102E-16 5.5511E-17 1.3878E-16          1 
 
-TEST: Is VᵀV=I ?
+TEST: Is VᵀV=I (within a tolerance of 1e-6)?
 RESULT: Yes, VᵀV= I
 
 --- Check that VVᵀ=I ---
@@ -60,7 +85,7 @@ Matrix VVᵀ:
 1.3878E-16 -2.7756E-17 1.1102E-16          1 5.5511E-17 
 1.3878E-16 -8.3267E-17 5.5511E-17 5.5511E-17          1 
 
-TEST: Is VVᵀ=I ?
+TEST: Is VVᵀ=I (within a tolerance of 1e-6)?
 RESULT: Yes, VVᵀ=I
 
 ------------ TASK B ------------

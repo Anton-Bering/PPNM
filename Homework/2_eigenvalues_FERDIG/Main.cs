@@ -23,18 +23,31 @@ public class Program {
             }
             printMatrix(writer, A);
 
-            writer.WriteLine("\n------ After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ, check the following: ------\n");
+            writer.WriteLine("\n------ After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ ------\n");
 
-            writer.WriteLine("--- Check that VᵀAV=D ---\n");
             matrix A_copy = A.copy();
             vector w = new vector(sizeA);
             matrix V = new matrix(sizeA, sizeA);
             jacobi.cyclic(A, w, V);
 
+            writer.WriteLine("\nVector w (vector of the eigenvalues):");
+            writer.WriteLine(string.Join(" ", formatVector(w)));
+            writer.WriteLine("\nMatrix V (matrix of the corresponding eigenvector-columns):");
+            printMatrix(writer, V);
+            writer.WriteLine("\nMatrix Vᵀ (transpose of V):");
+            matrix V_T = transpose(V);
+            printMatrix(writer, V_T);
+            writer.WriteLine("\nMatrix D (diagonal matrix of eigenvalues):");
+            matrix D = diagonalMatrix(w);
+            printMatrix(writer, D);
+
+
+            writer.WriteLine("\n--- Check that VᵀAV=D ---\n");
+
             matrix VtAV = multiply(transpose(V), multiply(A_copy, V));
             writer.WriteLine("Matrix VᵀAV:");
             printMatrix(writer, VtAV);
-            writer.WriteLine("\nTEST: Is VᵀAV=D?");
+            writer.WriteLine("\nTEST: Is VᵀAV=D (within a tolerance of 1e-6)?");
             writer.WriteLine(isDiagonalClose(VtAV, w)
                 ? "RESULT: Yes, VᵀAV=D"
                 : "RESULT: No, VᵀAV≠D");
@@ -42,11 +55,11 @@ public class Program {
             writer.WriteLine("\nEigenvalue vector w from Jacobi:   " + string.Join(" ", formatVector(w)));
 
             writer.WriteLine("\n--- Check that VDVᵀ=A ---\n");
-            matrix D = diagonalMatrix(w);
+            // matrix D = diagonalMatrix(w);
             matrix VDVt = multiply(multiply(V, D), transpose(V));
             writer.WriteLine("Matrix VDVᵀ:");
             printMatrix(writer, VDVt);
-            writer.WriteLine("\nTEST: Is VDVᵀ=A ?");
+            writer.WriteLine("\nTEST: Is VDVᵀ=A (within a tolerance of 1e-6)?");
             writer.WriteLine(areMatricesClose(A_copy, VDVt)
                 ? "RESULT: Yes, VDVᵀ=A"
                 : "RESULT: No, VDVᵀ≠A");
@@ -55,7 +68,7 @@ public class Program {
             matrix VtV = multiply(transpose(V), V);
             writer.WriteLine("Matrix VᵀV:");
             printMatrix(writer, VtV);
-            writer.WriteLine("\nTEST: Is VᵀV=I ?");
+            writer.WriteLine("\nTEST: Is VᵀV=I (within a tolerance of 1e-6)?");
             writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA))
                 ? "RESULT: Yes, VᵀV= I"
                 : "RESULT: No, VᵀV≠I");
@@ -64,7 +77,7 @@ public class Program {
             matrix VVt = multiply(V, transpose(V));
             writer.WriteLine("Matrix VVᵀ:");
             printMatrix(writer, VVt);
-            writer.WriteLine("\nTEST: Is VVᵀ=I ?");
+            writer.WriteLine("\nTEST: Is VVᵀ=I (within a tolerance of 1e-6)?");
             writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA))
                 ? "RESULT: Yes, VVᵀ=I"
                 : "RESULT: No, VVᵀ≠I");
@@ -172,6 +185,17 @@ public class Program {
 
             writer.WriteLine("The measurements were performed in parallel, which is verified by the shell output from 'time make number_of_operations'.");
             writer.WriteLine("Since the total CPU time (user + sys) exceeds the real time, this confirms that the tasks were executed in parallel as required.");
+
+            string timefile = "number_of_operations_time.txt";
+            if (File.Exists(timefile)) {
+                writer.WriteLine("\nMeasured wall-clock timing of parallel execution (from GNU time):");
+                foreach (var line in File.ReadAllLines(timefile))
+                    writer.WriteLine(line);
+            }
+
+
+
+
         }
 
     }
