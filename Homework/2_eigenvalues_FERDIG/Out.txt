@@ -124,11 +124,14 @@ varying_rmax.svg is a plot of the resulting curve
 
 ------------ TASK C ------------
 
------- Check that the number of operations for matrix diagonalization scales as O(n³) (by measuring the time it takes to diagonalize a random matrix of size n) ------
------- Do the measurements in parallel --------------------------------------------------
+------ Check that the number of operations for matrix diagonalization scales as O(n³) ------
+------ Do the measurements in parallel -----------------------------------------------------
 
 The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.
 The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.
 
-The measurements were performed in parallel, which is verified by the shell output from 'time make number_of_operations'.
-Since the total CPU time (user + sys) exceeds the real time, this confirms that the tasks were executed in parallel as required.
+
+Measured wall-clock timing of parallel execution (from GNU time):
+real: 0.40
+user: 1.53
+sys: 0.41

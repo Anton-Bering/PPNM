@@ -177,14 +177,11 @@ public class Program {
 
 
             writer.WriteLine("\n------------ TASK C ------------\n");
-            writer.WriteLine("------ Check that the number of operations for matrix diagonalization scales as O(n³) (by measuring the time it takes to diagonalize a random matrix of size n) ------"); 
-            writer.WriteLine("------ Do the measurements in parallel --------------------------------------------------\n");
+            writer.WriteLine("------ Check that the number of operations for matrix diagonalization scales as O(n³) ------"); 
+            writer.WriteLine("------ Do the measurements in parallel -----------------------------------------------------\n");
 
             writer.WriteLine("The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.");
             writer.WriteLine("The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.\n");
-
-            writer.WriteLine("The measurements were performed in parallel, which is verified by the shell output from 'time make number_of_operations'.");
-            writer.WriteLine("Since the total CPU time (user + sys) exceeds the real time, this confirms that the tasks were executed in parallel as required.");
 
             string timefile = "number_of_operations_time.txt";
             if (File.Exists(timefile)) {

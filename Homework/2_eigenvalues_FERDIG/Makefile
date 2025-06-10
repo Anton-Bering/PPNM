@@ -34,11 +34,12 @@ NumberOfOperations.exe: NumberOfOperations.cs Jacobi.cs Matrix.cs Vector.cs
 
 number_of_operations: NumberOfOperations.exe
 	@echo "n   seconds" > number_of_operations.txt
-	@/usr/bin/time -f "real: %e\nuser: %U\nsys: %S" -o number_of_operations_time.txt sh -c '\
-		for n in 30 40 50 60 70 80 90 100 110 120; do \
-			mono NumberOfOperations.exe $$n >> number_of_operations.txt; \
-		done'
-	@echo "NumberOfOperations test complete. Results in number_of_operations.txt"
+	@/usr/bin/time -f "real: %e\nuser: %U\nsys: %S" \
+		-o number_of_operations_time.txt \
+		sh -c 'for n in 30 40 50 60 70 80 90 100 110 120; do \
+			( mono NumberOfOperations.exe $$n >> number_of_operations.txt ) & \
+		done; wait'
+	@echo "NumberOfOperations test complete. Results in number_of_operations.txt and number_of_operations_time.txt"
 
 
 plot_number_of_operations: number_of_operations.svg
