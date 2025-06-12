@@ -1,0 +1,77 @@
+------------ Task A: Ordinary least‑squares fit by QR‑decomposition ------------
+
+------  Make sure that your QR‑decomposition routines work for tall matrices ------
+
+Matrix A:
+[      -0.5027     -0.7785     -0.0660      0.5432 ]
+[       0.3150     -0.1344     -0.2918      0.8877 ]
+[      -0.7975      0.2849     -0.9427     -0.5039 ]
+[      -0.3598      0.9795      0.3642      0.3098 ]
+[      -0.4345      0.2307      0.4085      0.4036 ]
+[       0.8996     -0.8132     -0.6782     -0.2361 ]
+
+Matrix Q:
+[      -0.3456     -0.7589      0.2314      0.2721 ]
+[       0.2166      0.0175     -0.2229      0.8895 ]
+[      -0.5483     -0.0851     -0.8195     -0.0815 ]
+[      -0.2474      0.5880      0.0150      0.3015 ]
+[      -0.2988      0.0092      0.2978      0.1918 ]
+[       0.6185     -0.2660     -0.3692     -0.0185 ]
+
+TEST: Does Q have the same dimension as A (6×4)?
+RESULT: Yes
+
+Matrix R:
+[       1.4544     -0.7305     -0.1551     -0.0624 ]
+[       0.0000      1.3586      0.5235     -0.1051 ]
+[       0.0000      0.0000      1.1998      0.5529 ]
+[       0.0000      0.0000      0.0000      1.1537 ]
+
+TEST: Is R square (4×4)?
+RESULT: Yes
+
+TEST: Is R upper‑triangular?
+RESULT: Yes
+
+Matrix Q^T Q:
+[       1.0000      0.0000      0.0000      0.0000 ]
+[       0.0000      1.0000      0.0000      0.0000 ]
+[       0.0000      0.0000      1.0000      0.0000 ]
+[       0.0000      0.0000      0.0000      1.0000 ]
+
+TEST: Is Q^T Q ≈ I (|⋅|<1e‑12)?
+RESULT: Yes
+
+Matrix Q R:
+[      -0.5027     -0.7785     -0.0660      0.5432 ]
+[       0.3150     -0.1344     -0.2918      0.8877 ]
+[      -0.7975      0.2849     -0.9427     -0.5039 ]
+[      -0.3598      0.9795      0.3642      0.3098 ]
+[      -0.4345      0.2307      0.4085      0.4036 ]
+[       0.8996     -0.8132     -0.6782     -0.2361 ]
+
+TEST: Is Q R ≈ A (|⋅|<1e‑12)?
+RESULT: Yes
+
+
+------ Investigate the law of radioactive decay of 224‑Ra ("ThX") ------
+
+ln(a) = 4.958665 ± 0.014655
+λ     = 0.170624 ± 0.002963
+T_1/2 = ln(2)/λ = 4.0624 ± 0.0705 days  (modern value: 3.6319 days)
+
+TEST: Is |T_fit − T_modern|/T_modern < 5 %?
+RESULT: No
+
+Deviation = 11.85 %
+
+------------ Task B: Uncertainties of the fitting coefficients ------------
+
+TEST: Is the modern half‑life within the 1σ uncertainty band?
+RESULT: No
+
+
+------------ Task C: Evaluation of the quality of the uncertainties on the fit coefficients ------------
+
+See best_fit_with_changed_coefficients.svg for the comparison plot.
+

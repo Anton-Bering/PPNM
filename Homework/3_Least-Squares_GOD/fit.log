@@ -1,0 +1,28 @@
+
+
+*******************************************************************************
+Thu Jun 12 18:15:40 2025
+
+
+FIT:    data read from "Rutherford_and_Soddys_ThX_log.txt" using 1:2
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+*******************************************************************************
+Thu Jun 12 18:42:20 2025
+
+
+FIT:    data read from "Rutherford_and_Soddys_ThX_log.txt" using 1:2
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
