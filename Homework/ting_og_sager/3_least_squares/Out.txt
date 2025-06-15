@@ -1,9 +1,0 @@
-Fit results for ln(y) = c0 + c1 * t (exponential decay model):
-c0 = 4.95866 ± 0.03540
-c1 = -0.17062 ± 0.00716
-
-Derived parameters for y = a * exp(-λ t):
-a = e^{c0} = 142.404 ± 5.041 (initial activity)
-λ = -c1 = 0.17062 ± 0.00716 (decay constant 1/day)
-T_1/2 = ln(2)/λ = 4.06 ± 0.17 days (half-life)
-Modern known T_1/2 ≈ 3.63 days

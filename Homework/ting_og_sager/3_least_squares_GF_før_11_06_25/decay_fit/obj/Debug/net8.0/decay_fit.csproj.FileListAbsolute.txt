@@ -1,6 +1,0 @@
-/home/anton/28_04_25_PPNN/repos/PPNM/Homework/3_least_squares_GF/decay_fit/obj/Debug/net8.0/decay_fit.csproj.AssemblyReference.cache
-/home/anton/28_04_25_PPNN/repos/PPNM/Homework/3_least_squares_GF/decay_fit/obj/Debug/net8.0/decay_fit.GeneratedMSBuildEditorConfig.editorconfig
-/home/anton/28_04_25_PPNN/repos/PPNM/Homework/3_least_squares_GF/decay_fit/obj/Debug/net8.0/decay_fit.AssemblyInfoInputs.cache
-/home/anton/28_04_25_PPNN/repos/PPNM/Homework/3_least_squares_GF/decay_fit/obj/Debug/net8.0/decay_fit.AssemblyInfo.cs
-/home/anton/28_04_25_PPNN/repos/PPNM/Homework/3_least_squares_GF/decay_fit/obj/Debug/net8.0/decay_fit.csproj.CoreCompileInputs.cache
-/home/anton/28_04_25_PPNN/repos/PPNM/Homework/3_least_squares_GF/decay_fit/obj/Debug/net8.0/decay_fit.sourcelink.json
