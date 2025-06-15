@@ -21,12 +21,4 @@ The homework assignments are the following:
 [10) neural network / Artificial Neural Networks](https://fedorov.sdfeu.org/prog/homeworks/neural-network.htm)  
 
 
-Points: (optimal: 6+3+1=10)  
-HW 1: 6+3+1 = 10  
-HW 2: 6+3+1 = 10   
-HW 3:  
-HW 4: 6+3+1 = 10   
-HW 5: 6+3+1 = 10  
-HW 6  
-HW 7: 6+3+1 = 10   
 
