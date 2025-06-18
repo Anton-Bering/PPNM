@@ -37,15 +37,32 @@ Higgs_fit_and_experimental_data.svg contain the plot of fitting data and the exp
 
 ------------ TASK C: Central instead of forward finite difference approximation for the derivatives ------------
 
+------ Find a minimum of the Rosenbrock's valley function ------
+
+Minimum: (x = 1.000057, y = 1.000113)
+
+------ Find a minimum of the Himmelblau's function ------
+
+Minimum: (x = 3.000000, y = 2.000000)
+
+------ Record the number of steps it takes for the algorithm to reach the minimum ------
+
+Steps for the Rosenbrock's valley function: 14
+Steps for the Himmelblau's function:       5
+
 ------ compare the resulting algorithm with the one in Part A ------
 
 --- Rosenbrock's valley function ---
 
-With forward difference (Task A):   minimum at (1.000053, 1.000106) in 14 steps
-With central difference (Task C):   minimum at (1.000057, 1.000113) in 14 steps
+    Minimum        	: (1.000053, 1.000106)  vs  (1.000057, 1.000113)
+    Newton steps        : 14  vs  14
+    Function evaluations: 205 vs 319
+    Conclusion          : The forward difference approximations is cheaper
 
 --- Himmelblau's function ---
 
-With forward difference (Task A):   minimum at (3.000000, 2.000000) in 5 steps
-With central difference (Task C):   minimum at (3.000000, 2.000000) in 5 steps
+    Minimum        	: (3.000000, 2.000000)  vs  (3.000000, 2.000000)
+    Newton steps        : 5  vs  5
+    Function evaluations: 79 vs 121
+    Conclusion          : The forward difference approximations is cheaper
 

@@ -1,6 +1,6 @@
 CS      = mcs              
 CSFLAGS = -optimize+ -warn:4
-SRC     = Main.cs linalg.cs minimizer.cs functions.cs
+SRC     = Main.cs linalg.cs minimizer.cs functions.cs counter.cs
 BIN     = Main.exe
 
 OUTTXT  = Out.txt

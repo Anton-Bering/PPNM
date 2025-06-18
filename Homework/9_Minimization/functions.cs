@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using static Counter;
 
 public static class functions
 {
 	// Rosenbrock 
 	public static double Rosenbrock(vector v)
 	{
+		feval++; // Add for task C
 		double x=v[0], y=v[1];
 		return (1-x)*(1-x)+100*Math.Pow(y-x*x,2);
 	}
@@ -13,6 +15,7 @@ public static class functions
 	// Himmelblau
 	public static double Himmelblau(vector v)
 	{
+		feval++; // Add for task C
 		double x=v[0], y=v[1];
 		return Math.Pow(x*x+y-11,2)+Math.Pow(x+y*y-7,2);
 	}
@@ -24,6 +27,7 @@ public static class functions
 	
 	public static double Deviation(vector p,List<double> E,List<double> s,List<double> ds)
 	{
+		feval++; // Add for task C
 		double m=p[0], G=p[1], A=p[2];
 		if(G<=0||A<=0) return 1e300;               
 		double sum=0;
