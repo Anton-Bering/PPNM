@@ -4,173 +4,156 @@ using System.IO;
 
 public class NeuralNetwork
 {
-    private int n;           // number of hidden neurons
-    private double[] a;      // centers (a_i)
-    private double[] b;      // width parameters (b_i)
-    private double[] w;      // weights (w_i)
+    private readonly int n;
+    private readonly double[] a, b, w;
 
-    private static double Activation(double x) => x * Math.Exp(-x * x);
-    private static double ActivationPrime(double x) => (1 - 2 * x * x) * Math.Exp(-x * x);
-    private static double ActivationDoublePrime(double x) => (4 * x * x * x - 6 * x) * Math.Exp(-x * x);
-    private static double ActivationTriple(double x) => (-8 * Math.Pow(x, 4) + 24 * x * x - 6) * Math.Exp(-x * x);
-    private static double ActivationIntegral(double x) => 0.5 * (1 - Math.Exp(-x * x));
+    private static double φ(double u)  => u * Math.Exp(-u * u);
+    private static double φ1(double u) => (1 - 2 * u * u) * Math.Exp(-u * u);
+    private static double φ2(double u) => (4 * u * u * u - 6 * u) * Math.Exp(-u * u);
+    private static double φ3(double u) => (-8 * Math.Pow(u, 4) + 24 * u * u - 6) * Math.Exp(-u * u);
+    private static double Φ(double u)  => 0.5 * (1 - Math.Exp(-u * u));
 
-    public NeuralNetwork(int nHidden, double inputMin = -1.0, double inputMax = 1.0)
+    public NeuralNetwork(int nHidden, double xMin = -1, double xMax = 1)
     {
         n = nHidden;
         a = new double[n];
         b = new double[n];
         w = new double[n];
-        Random rnd = new Random();
-        double range = inputMax - inputMin;
+        Random rng = new Random();
+        double L = xMax - xMin;
         for (int i = 0; i < n; i++)
         {
-            a[i] = inputMin + rnd.NextDouble() * range;
-            b[i] = 0.1 * range + rnd.NextDouble() * (0.4 * range);
-            if (b[i] <= 0) b[i] = 0.1 * range;
-            w[i] = (rnd.NextDouble() - 0.5);
+            a[i] = xMin + rng.NextDouble() * L;
+            b[i] = 0.1 * L + rng.NextDouble() * 0.4 * L;
+            w[i] = rng.NextDouble() - 0.5;
         }
     }
 
     public double Response(double x)
     {
-        double sum = 0.0;
+        double s = 0;
         for (int i = 0; i < n; i++)
         {
             double u = (x - a[i]) / b[i];
-            sum += w[i] * Activation(u);
+            s += w[i] * φ(u);
         }
-        return sum;
+        return s;
     }
 
     public double Derivative(double x)
     {
-        double sum = 0.0;
+        double s = 0;
         for (int i = 0; i < n; i++)
         {
             double u = (x - a[i]) / b[i];
-            sum += w[i] * ActivationPrime(u) / b[i];
+            s += w[i] * φ1(u) / b[i];
         }
-        return sum;
+        return s;
     }
 
     public double SecondDerivative(double x)
     {
-        double sum = 0.0;
+        double s = 0;
         for (int i = 0; i < n; i++)
         {
             double u = (x - a[i]) / b[i];
-            sum += w[i] * ActivationDoublePrime(u) / (b[i] * b[i]);
+            s += w[i] * φ2(u) / (b[i] * b[i]);
         }
-        return sum;
+        return s;
     }
 
     public double AntiDerivative(double x)
     {
-        double sum = 0.0;
+        double s = 0;
         for (int i = 0; i < n; i++)
         {
             double u = (x - a[i]) / b[i];
-            sum += w[i] * b[i] * ActivationIntegral(u);
+            s += w[i] * b[i] * Φ(u);
         }
-        return sum;
+        return s;
     }
 
     public double ComputeCost(double[] xs, double[] ys)
     {
-        double total = 0.0;
+        double tot = 0;
         for (int k = 0; k < xs.Length; k++)
         {
-            double err = Response(xs[k]) - ys[k];
-            total += err * err;
+            double e = Response(xs[k]) - ys[k];
+            tot += e * e;
         }
-        return total;
+        return tot;
     }
 
     public void Train(double[] xs, double[] ys, int epochs, double learningRate)
     {
-        int N = xs.Length;
-        for (int iter = 0; iter < epochs; iter++)
+        int M = xs.Length;
+        for (int epoch = 0; epoch < epochs; epoch++)
         {
-            double[] grad_a = new double[n];
-            double[] grad_b = new double[n];
-            double[] grad_w = new double[n];
-
-            for (int k = 0; k < N; k++)
+            double[] da = new double[n], db = new double[n], dw = new double[n];
+            for (int k = 0; k < M; k++)
             {
-                double x = xs[k];
-                double y_target = ys[k];
-                double y_pred = 0.0;
-                double[] f_u = new double[n];
-                double[] fprime_u = new double[n];
+                double x = xs[k], t = ys[k];
+                double y = Response(x);
+                double err = y - t;
 
                 for (int i = 0; i < n; i++)
                 {
                     double u = (x - a[i]) / b[i];
-                    double f_val = Activation(u);
-                    y_pred += w[i] * f_val;
-                    f_u[i] = f_val;
-                    fprime_u[i] = ActivationPrime(u);
-                }
+                    double φu = φ(u);
+                    double φ1u = φ1(u);
 
-                double error = y_pred - y_target;
-                for (int i = 0; i < n; i++)
-                {
-                    double u = (x - a[i]) / b[i];
-                    grad_w[i] += 2 * error * f_u[i];
-                    grad_a[i] += 2 * error * (-w[i] * fprime_u[i] / b[i]);
-                    grad_b[i] += 2 * error * (-w[i] * u * fprime_u[i] / b[i]);
+                    dw[i] += 2 * err * φu;
+                    da[i] += 2 * err * (-w[i] * φ1u / b[i]);
+                    db[i] += 2 * err * (-w[i] * u * φ1u / b[i]);
                 }
             }
-
             for (int i = 0; i < n; i++)
             {
-                a[i] -= learningRate * grad_a[i];
-                b[i] -= learningRate * grad_b[i];
-                w[i] -= learningRate * grad_w[i];
+                a[i] -= learningRate * da[i];
+                b[i] -= learningRate * db[i];
+                w[i] -= learningRate * dw[i];
                 if (b[i] <= 1e-9) b[i] = 1e-9;
             }
         }
     }
 
-    public double ComputeCostDifferential(Func<double, double, double, double, double> phiFunc,
-                                         double aDom, double bDom, double cPoint,
-                                         double y_c, double yprime_c,
-                                         double alpha, double beta)
+    public double ComputeCostDifferential(
+        Func<double, double, double, double, double> Φeq,
+        double aDom, double bDom, double c,
+        double y_c, double y1_c, double alpha, double beta)
     {
         int M = 100;
         double h = (bDom - aDom) / M;
-        double integralSum = 0.0;
+        double sum = 0;
         for (int j = 0; j < M; j++)
         {
             double x = aDom + (j + 0.5) * h;
             double y = Response(x);
             double y1 = Derivative(x);
             double y2 = SecondDerivative(x);
-            double phiVal = phiFunc(y2, y1, y, x);
-            integralSum += phiVal * phiVal;
+            double φv = Φeq(y2, y1, y, x);
+            sum += φv * φv;
         }
-        double integralTerm = (bDom - aDom) * integralSum / M;
-        double bcTerm = alpha * Math.Pow(Response(cPoint) - y_c, 2)
-                      + beta * Math.Pow(Derivative(cPoint) - yprime_c, 2);
-        return integralTerm + bcTerm;
+        double intTerm = sum * (bDom - aDom) / M;
+        double bcTerm = alpha * Math.Pow(Response(c) - y_c, 2)
+                      + beta * Math.Pow(Derivative(c) - y1_c, 2);
+        return intTerm + bcTerm;
     }
 
-    public void TrainDifferentialEquation(Func<double, double, double, double, double> phiFunc,
-                                          double aDom, double bDom, double cPoint,
-                                          double y_c, double yprime_c,
-                                          double alpha, double beta,
-                                          int epochs, double learningRate)
+    public void TrainDifferentialEquation(
+        Func<double, double, double, double, double> Φeq,
+        double aDom, double bDom, double c,
+        double y_c, double y1_c, double alpha, double beta,
+        int epochs, double learningRate,
+        string costFilename = "differential_equation_cost.txt")
     {
         int M = 100;
         double h = (bDom - aDom) / M;
-        List<double> costHistory = new List<double>();
+        var costHistory = new List<double>();
 
-        for (int iter = 0; iter < epochs; iter++)
+        for (int ep = 0; ep < epochs; ep++)
         {
-            double[] grad_a = new double[n];
-            double[] grad_b = new double[n];
-            double[] grad_w = new double[n];
+            double[] da = new double[n], db = new double[n], dw = new double[n];
 
             for (int j = 0; j < M; j++)
             {
@@ -178,81 +161,85 @@ public class NeuralNetwork
                 double y = Response(x);
                 double y1 = Derivative(x);
                 double y2 = SecondDerivative(x);
-                double phiVal = phiFunc(y2, y1, y, x);
-                if (phiVal == 0.0) continue;
+                double φv = Φeq(y2, y1, y, x);
+                if (φv == 0) continue;
 
                 double eps = 1e-6;
-                double phi_y = (phiFunc(y2, y1, y + eps, x) - phiVal) / eps;
-                double phi_y1 = (phiFunc(y2, y1 + eps, y, x) - phiVal) / eps;
-                double phi_y2 = (phiFunc(y2 + eps, y1, y, x) - phiVal) / eps;
+                double Φy = (Φeq(y2, y1, y + eps, x) - φv) / eps;
+                double Φy1 = (Φeq(y2, y1 + eps, y, x) - φv) / eps;
+                double Φy2 = (Φeq(y2 + eps, y1, y, x) - φv) / eps;
 
                 for (int i = 0; i < n; i++)
                 {
                     double u = (x - a[i]) / b[i];
-                    double dy_da = -w[i] * ActivationPrime(u) / b[i];
-                    double dy_db = -w[i] * u * ActivationPrime(u) / b[i];
-                    double dy_dw = Activation(u);
+                    double φu = φ(u);
+                    double φ1u = φ1(u);
+                    double φ2u = φ2(u);
+                    double φ3u = φ3(u);
 
-                    double dy1_da = -w[i] * ActivationDoublePrime(u) / (b[i] * b[i]);
-                    double dy1_db = -w[i] / (b[i] * b[i]) * (ActivationPrime(u) + u * ActivationDoublePrime(u));
-                    double dy1_dw = ActivationPrime(u) / b[i];
+                    double dF_da = -w[i] * φ1u / b[i];
+                    double dF_db = -w[i] * u * φ1u / b[i];
+                    double dF_dw = φu;
 
-                    double dy2_da = -w[i] * ActivationTriple(u) / (b[i] * b[i] * b[i]);
-                    double dy2_db = -w[i] / (b[i] * b[i] * b[i]) * (2 * ActivationDoublePrime(u) + u * ActivationTriple(u));
-                    double dy2_dw = ActivationDoublePrime(u) / (b[i] * b[i]);
+                    double dF1_da = -w[i] * φ2u / (b[i] * b[i]);
+                    double dF1_db = -w[i] / (b[i] * b[i]) * (φ1u + u * φ2u);
+                    double dF1_dw = φ1u / b[i];
 
-                    double commonFactor = 2 * phiVal;
-                    grad_a[i] += commonFactor * (phi_y * dy_da + phi_y1 * dy1_da + phi_y2 * dy2_da);
-                    grad_b[i] += commonFactor * (phi_y * dy_db + phi_y1 * dy1_db + phi_y2 * dy2_db);
-                    grad_w[i] += commonFactor * (phi_y * dy_dw + phi_y1 * dy1_dw + phi_y2 * dy2_dw);
+                    double dF2_da = -w[i] * φ3u / (b[i] * b[i] * b[i]);
+                    double dF2_db = -w[i] / (b[i] * b[i] * b[i]) * (2 * φ2u + u * φ3u);
+                    double dF2_dw = φ2u / (b[i] * b[i]);
+
+                    double cf = 2 * φv;
+                    da[i] += cf * (Φy * dF_da + Φy1 * dF1_da + Φy2 * dF2_da);
+                    db[i] += cf * (Φy * dF_db + Φy1 * dF1_db + Φy2 * dF2_db);
+                    dw[i] += cf * (Φy * dF_dw + Φy1 * dF1_dw + Φy2 * dF2_dw);
                 }
             }
 
-            double weight = (bDom - aDom) / M;
+            double wInt = (bDom - aDom) / M;
             for (int i = 0; i < n; i++)
             {
-                grad_a[i] *= weight;
-                grad_b[i] *= weight;
-                grad_w[i] *= weight;
+                da[i] *= wInt; db[i] *= wInt; dw[i] *= wInt;
             }
 
-            double bcError_y = Response(cPoint) - y_c;
-            double bcError_y1 = Derivative(cPoint) - yprime_c;
+            double bcE_y = Response(c) - y_c;
+            double bcE_y1 = Derivative(c) - y1_c;
 
             for (int i = 0; i < n; i++)
             {
-                double u_c = (cPoint - a[i]) / b[i];
-                double dF_da = -w[i] * ActivationPrime(u_c) / b[i];
-                double dF_db = -w[i] * u_c * ActivationPrime(u_c) / b[i];
-                double dF_dw = Activation(u_c);
+                double u_c = (c - a[i]) / b[i];
+                double φu = φ(u_c);
+                double φ1u = φ1(u_c);
+                double φ2u = φ2(u_c);
 
-                double dF1_da = -w[i] * ActivationDoublePrime(u_c) / (b[i] * b[i]);
-                double dF1_db = -w[i] / (b[i] * b[i]) * (ActivationPrime(u_c) + u_c * ActivationDoublePrime(u_c));
-                double dF1_dw = ActivationPrime(u_c) / b[i];
+                double dF_da = -w[i] * φ1u / b[i];
+                double dF_db = -w[i] * u_c * φ1u / b[i];
+                double dF_dw = φu;
 
-                grad_a[i] += 2 * alpha * bcError_y * dF_da + 2 * beta * bcError_y1 * dF1_da;
-                grad_b[i] += 2 * alpha * bcError_y * dF_db + 2 * beta * bcError_y1 * dF1_db;
-                grad_w[i] += 2 * alpha * bcError_y * dF_dw + 2 * beta * bcError_y1 * dF1_dw;
+                double dF1_da = -w[i] * φ2u / (b[i] * b[i]);
+                double dF1_db = -w[i] / (b[i] * b[i]) * (φ1u + u_c * φ2u);
+                double dF1_dw = φ1u / b[i];
+
+                da[i] += 2 * (alpha * bcE_y * dF_da + beta * bcE_y1 * dF1_da);
+                db[i] += 2 * (alpha * bcE_y * dF_db + beta * bcE_y1 * dF1_db);
+                dw[i] += 2 * (alpha * bcE_y * dF_dw + beta * bcE_y1 * dF1_dw);
             }
 
             for (int i = 0; i < n; i++)
             {
-                a[i] -= learningRate * grad_a[i];
-                b[i] -= learningRate * grad_b[i];
-                w[i] -= learningRate * grad_w[i];
+                a[i] -= learningRate * da[i];
+                b[i] -= learningRate * db[i];
+                w[i] -= learningRate * dw[i];
                 if (b[i] <= 1e-9) b[i] = 1e-9;
             }
 
-            double currentCost = ComputeCostDifferential(phiFunc, aDom, bDom, cPoint, y_c, yprime_c, alpha, beta);
-            costHistory.Add(currentCost);
+            costHistory.Add(ComputeCostDifferential(Φeq, aDom, bDom, c, y_c, y1_c, alpha, beta));
         }
 
-        using (StreamWriter writer = new StreamWriter("cost_data.txt"))
+        using (var wCost = new StreamWriter(costFilename))
         {
             for (int i = 0; i < costHistory.Count; i++)
-            {
-                writer.WriteLine($"{i} {costHistory[i]}");
-            }
+                wCost.WriteLine($"{i} {costHistory[i]}");
         }
     }
 }

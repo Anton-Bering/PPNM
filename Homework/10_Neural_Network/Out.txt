@@ -1,35 +1,85 @@
---- --- Part A: Function Approximation --- ---
+------------ TASK A: Function Approximation ------------
 
-Approximate: g(x)=Cos(5*x-1)*Exp(-x*x)
-Initial cost = 29.250191, Final cost = 0.000695
-Sample predictions vs actual (after training):
-    x        F(x) (pred)    g(x) (actual)    error
- -1.00        0.356722        0.353227        0.003495
- -0.50       -0.727045       -0.729313        0.002268
-  0.00        0.536526        0.540302       -0.003777
-  0.50        0.053270        0.055090       -0.001820
-  1.00       -0.242822       -0.240462       -0.002360
+------ Train the network to approximate some function ------
+------ And sampled at several points on [-1,1] ------
 
-Wrote plot_data.txt
- --- --- Part B: Derivatives and Antiderivative --- ---
+--- Function to approximate: g(x)=Cos(5*x-1)*Exp(-x*x) ---
 
-At x = 0.00:
-  F(x) = 0.536526,    g(x) = 0.540302
-  F'(x) = 4.205863,   g'(x) = 4.207355
-  F''(x) = -14.684434,  g''(x) = -14.588162
-  ∫F(x) dx (antiderivative) = -0.384080  (constant of integration omitted)
+Initial cost = 13.481213, Final cost = 0.000002
 
-Wrote derivatives_data.txt
---- --- Part C: Solving a Differential Equation with ANN --- ---
+Netwerk (g_n) vs exact value (g_e):
+  x:         g_n(x):        g_e(x):      error:
+ -1.00       0.353271       0.353227     0.000044
+ -0.50      -0.729365      -0.729313    -0.000051
+  0.00       0.540472       0.540302     0.000170
+  0.50       0.054863       0.055090    -0.000227
+  1.00      -0.241186      -0.240462    -0.000724
 
-Initial cost = 81.301852, Final cost = 0.000670
-Boundary check: F(0) = -0.000073 (target 0.00),  F'(0) = 0.999774 (target 1.00)
-Sample solution values vs actual sin(x):
-    x        F(x) (pred)    sin(x) (actual)   error
-  0.00       -0.000073        0.000000       -0.000073
-  0.52        0.501202        0.500000        0.001202
-  0.79        0.708706        0.707107        0.001599
-  1.57        1.003547        1.000000        0.003547
-  3.14        0.003554        0.000000        0.003554
-Wrote solution_data.txt
-Wrote residual_data.txt
+Data saved as function_g.txt
+Plot saved as function_g.svg
+
+------------ TASK B: Derivatives and Anti-derivative ------------
+
+------ Train the network to give first and second derivatives ------
+------ And also the anti-derivative ------
+
+Netwerk (g_n') vs exact value (g_e'):
+  x:         g_n'(x):       g_e'(x):     error:
+ -1.00       0.182761       0.192498  -0.009736
+ -0.50      -2.097076      -2.095264  -0.001811
+  0.00       4.208519       4.207355   0.001164
+  0.50      -3.940408      -3.939340  -0.001068
+  1.00       1.824421       1.872984  -0.048563
+
+Netwerk (g_n'') vs exact value (g_e''):
+  x:         g_n''(x):      g_e''(x):     error:
+ -1.00      -9.764600     -10.180043   0.415443
+ -0.50      16.253351      16.230241   0.023111
+  0.00     -14.637499     -14.588162  -0.049336
+  0.50       6.412860       6.336154   0.076706
+  1.00      -1.290572      -0.037614  -1.252957
+
+Netwerk (∫dx g_n) vs exact value (∫dx g_e ≈ numerically integrated):
+  x:         ∫dx g_n(x):        ∫dx g_e(x):      error:
+ -1.00           0.000000           0.000000   0.000000
+ -0.50          -0.028911          -0.028912   0.000001
+  0.00          -0.234198          -0.234206   0.000008
+  0.50           0.111609           0.111596   0.000013
+  1.00          -0.074501          -0.074514   0.000014
+
+Data saved as derivatives_and_anti_derivative_g.txt
+Plot saved as first_derivatives_g.svg
+Plot saved as second_derivatives_g.svg
+Plot saved as anti_derivative.svg
+
+------------ TASK C: Differential Equation Solution Approximation ------------
+
+------ Solving y'' + y = 0 ------
+
+Initial cost = 78.843927, Final cost = 0.000156
+Boundary check: Φ_n(0) = -0.000393 (target 0.00), Φ_n'(0) = 1.001041 (target 1.00)
+Sample solution values vs sin(x):
+    x        Φ_n(x)    Φ_e=sin(x)   error
+  0.00      -0.000393         0.000000   -0.000393
+  0.52       0.500302         0.500000    0.000302
+  0.79       0.707709         0.707107    0.000602
+  1.57       1.000515         1.000000    0.000515
+  3.14       0.000036         0.000000    0.000036
+
+Data saved as differential_equation_phi1.txt
+Data saved as differential_equation_residual_phi1.txt
+
+------ Solving y'' + sin(x)y' + cos(x)y = x ------
+
+Initial cost = 325.501127, Final cost = 9.045749
+Boundary check: Φ_n(0) = -0.069633 (target 0.00), Φ_n'(0) = 1.154196 (target 1.00)
+Sample solution values:
+    x        Φ_n(x)
+  0.00      -0.069633
+  0.52       0.443714
+  0.79       0.612218
+  1.57       0.802694
+  3.14       2.237603
+
+Data saved as differential_equation_phi2.txt
+Data saved as differential_equation_residual_phi2.txt
