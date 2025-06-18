@@ -1,10 +1,26 @@
-all: Out.txt
+CS      = mcs              
+CSFLAGS = -optimize+ -warn:4
+SRC     = Main.cs linalg.cs minimizer.cs functions.cs
+BIN     = Main.exe
 
-main.exe: Main.cs Newton.cs Functions.cs Utils.cs
-	mcs -out:main.exe Main.cs Newton.cs Functions.cs Utils.cs
+OUTTXT  = Out.txt
+FITTXT  = Higgs_fit.txt
+PLOTFIG = Higgs_fit_and_experimental_data.svg
 
-Out.txt: main.exe higgs.data.txt
-	mono main.exe < higgs.data.txt > Out.txt 2> log
+.PHONY: all clean
+
+all: $(OUTTXT) $(PLOTFIG)
+
+$(BIN): $(SRC)
+	$(CS) $(CSFLAGS) -out:$(BIN) $(SRC)
+
+$(OUTTXT) $(FITTXT): $(BIN) cross_section_experiment.txt
+	@echo " --- Running program to produce $(OUTTXT) and $(FITTXT) ---"
+	mono $(BIN) < cross_section_experiment.txt
+
+$(PLOTFIG): plot.gpi $(FITTXT) cross_section_experiment.txt
+	@echo " --- Drawing plot with gnuplot ---"
+	gnuplot plot.gpi
 
 clean:
-	rm -f main.exe Out.txt log
+	rm -f $(BIN) $(OUTTXT) $(FITTXT) $(PLOTFIG) *.svg *.dll
