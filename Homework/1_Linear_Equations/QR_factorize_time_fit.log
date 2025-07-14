@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Mon Jul 14 09:30:11 2025
+Mon Jul 14 09:31:09 2025
 
 
 FIT:    data read from 'QR_factorize_time.txt' using 1:2
@@ -14,17 +14,17 @@ function used for fitting: f(x)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a            
-   0 6.3928091017e+16   0.00e+00  5.52e+07    1.000000e+00
-   5 4.2162115907e-01   0.00e+00  5.52e+02    6.435495e-09
+   0 6.3928091126e+16   0.00e+00  5.52e+07    1.000000e+00
+   5 7.2472616529e-03  -4.79e-11  5.52e+02    5.583482e-09
 
 After 5 iterations the fit converged.
-final sum of squares of residuals : 0.421621
-rel. change during last iteration : 0
+final sum of squares of residuals : 0.00724726
+rel. change during last iteration : -4.78725e-16
 
 degrees of freedom    (FIT_NDF)                        : 20
-rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.145193
-variance of residuals (reduced chisquare) = WSSR/ndf   : 0.0210811
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0190358
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000362363
 
 Final set of parameters            Asymptotic Standard Error
 =======================            ==========================
-a               = 6.4355e-09       +/- 5.742e-10    (8.923%)
+a               = 5.58348e-09      +/- 7.529e-11    (1.348%)
