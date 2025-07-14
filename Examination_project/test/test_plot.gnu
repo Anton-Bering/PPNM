@@ -1,6 +1,0 @@
-set terminal pngcairo size 800,600 enhanced font 'Verdana,10'
-set output 'test_plot.png'
-set title 'Auto-generated plot'
-set xlabel 'X'
-set ylabel 'Y'
-plot 'test.txt' using 1:2 with linespoints title 'Data'

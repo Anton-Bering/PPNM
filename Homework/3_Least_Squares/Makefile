@@ -1,62 +1,59 @@
-###############################################################################
-#                               Project settings                              #
-###############################################################################
+## Makefile – Ordinary Least‑Squares Fit ##
 
-SRC      := Main.cs Matrix.cs QRDecomposition.cs LSFit.cs Utils.cs
-EXE      := fit.exe            # binær fil der bliver lavet
-OUT      := Out.txt
-GNUSCR   := plot.gpi
-PLOTS    := Rutherford_and_Soddys_ThX.svg best_fit_with_changed_coefficients.svg
-
-###############################################################################
-#                           Vælg C#‑kompiler automatisk                       #
-###############################################################################
-
-# Finder først csc (fra dotnet‑sdk). Hvis den ikke findes, bruger vi mcs (Mono)
 CS := $(shell command -v csc 2>/dev/null || command -v mcs 2>/dev/null)
-
 ifndef CS
-$(error Ingen C#‑kompiler fundet. Installer enten dotnet‑sdk eller mono‑complete.)
+$(error Ingen C#‑kompiler fundet. Installer dotnet‑sdk eller mono‑complete.)
 endif
 
-# --- compile‑ og run‑indstillinger afhænger af, hvilken compiler vi fandt ----
-ifeq ($(notdir $(CS)),mcs)                # -------- Mono / mcs --------------
-  # prøv at finde System.ValueTuple.dll
-  VALUE_TUPLE := $(shell find /usr/lib/mono -name System.ValueTuple.dll 2>/dev/null | head -n1)
-  ifneq ($(VALUE_TUPLE),)
-    REF := -r:$(VALUE_TUPLE)
-  else
-    $(warning System.ValueTuple.dll blev ikke fundet – installer pakken libmono-system-valuetuple4.0-cil)
-    REF :=
-  endif
-  CFLAGS := $(REF) -warn:4 -optimize+ -out:$(EXE)
-  RUN    := mono $(EXE)
-else                                      # -------- .NET / csc --------------
-  CFLAGS := -langversion:latest -optimize+ -out:$(EXE)
-  RUN    := ./$(EXE)
+ifeq ($(notdir $(CS)),mcs)
+    RUN     = mono $(EXE)
+    CSTARGET= -target:exe
+else
+    RUN     = ./$(EXE)
+    CSTARGET= -target:exe -langversion:latest
 endif
 
-###############################################################################
-#                               Make‑regler                                   #
-###############################################################################
+EXE     := main.exe
+OUT     := Out.txt
+GNUPLOT := plot.gpi
 
-# Standard‑target – lav alt
+# Filer, som hovedprogrammet genererer under kørslen
+DATA    := Rutherford_and_Soddys_ThX.txt \
+          Rutherford_and_Soddys_ThX_log.txt \
+          bestfit_curves.txt
+
+# Plot‑filer produceret af plot.gpi
+PLOTS   := Rutherford_and_Soddys_ThX.svg \
+          best_fit_with_changed_coefficients.svg
+
+# Kildekoden til denne opgave
+SRC     := Main.cs LSFit.cs QRDecomposition.cs Utils.cs
+GENERAL := ../../General/general_Vector_and_Matrix.cs \
+		  ../../General/HW_points.cs
+
+CSFILES := $(SRC) $(GENERAL)
+
+.PHONY: all run plots clean
+
 all: $(OUT) $(PLOTS)
 
-# Kompilér kildekoden
-$(EXE): $(SRC)
-	$(CS) $(CFLAGS) $(SRC)
+$(EXE): $(CSFILES)
+	$(CS) $(CSTARGET) -out:$@ $(CSFILES)
 
-# Kør programmet, det skriver Out.txt + hjælpedatafiler til plots
-$(OUT): $(EXE)
-	$(RUN) > /dev/null
+# Kør programmet for at generere Out.txt og datatabeller
+$(OUT) $(DATA): $(EXE)
+	$(RUN)
 
-# Lav plots efter at data‑filerne er genereret
-$(PLOTS): $(OUT) $(GNUSCR)
-	gnuplot $(GNUSCR)
+# Ét kald til gnuplot producerer begge .svg‑filer
+$(PLOTS): $(DATA) $(GNUPLOT)
+	@gnuplot $(GNUPLOT)
 
-# Ryd op
+run: $(EXE)
+	$(RUN)
+	@echo "------------------------------------------------"
+	@cat $(OUT)
+
+RM ?= rm
+
 clean:
-	rm -f $(EXE) $(OUT) $(PLOTS) *.txt *.svg *.exe *.o
-
-.PHONY: all clean
+	-$(RM) -f $(EXE) *.dll $(OUT) $(DATA) $(PLOTS)

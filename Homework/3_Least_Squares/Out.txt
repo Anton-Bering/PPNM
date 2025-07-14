@@ -1,77 +1,86 @@
------------- Task A: Ordinary least‑squares fit by QR‑decomposition ------------
+------------ TASK A ------------
 
-------  Make sure that your QR‑decomposition routines work for tall matrices ------
+--- Fit the data from Rutherford and Soddy with an exponential function ---
+
+Rutherford_and_Soddys_ThX.txt contains the original experimental data.
+Rutherford_and_Soddys_ThX_log.txt contains the logarithmic data used for the fit.
+bestfit_curves.txt contains the sampled best‑fit curve and ±1σ variations.
+
+--- Plot the experimental data and your best fit ---
+
+Rutherford_and_Soddys_ThX.svg shows the data with error bars and the best‑fit line.
+
+--- Half‑life of ThX and comparison with modern value ---
+
+Half‑life from the fit: 4.0624 ± 0.0705 days
+Modern recommended value: 3.6319 days
+
+------------ TASK B ------------
+
+------ Estimate the uncertainty of the half‑life value for ThX ------
+
+1σ uncertainty on the half‑life: ±0.0705 days
+
+------ Does the fitted value agree with the modern value within that uncertainty? ------
+
+No  – the modern value lies outside the confidence interval.
+
+------------ TASK C ------------
+
+------ Plot your best fit together with the fits where you change the fit coefficients ------
+------ by the estimated uncertainties δc in different combinations                     ------
+
+bestfit_curves.txt contains the numerical table.
+best_fit_with_changed_coefficients.svg shows the three curves plotted together.
+
+==========================================================================
+
+Below follow the detailed numerical checks required by the assignment.
 
 Matrix A:
-[      -0.5027     -0.7785     -0.0660      0.5432 ]
-[       0.3150     -0.1344     -0.2918      0.8877 ]
-[      -0.7975      0.2849     -0.9427     -0.5039 ]
-[      -0.3598      0.9795      0.3642      0.3098 ]
-[      -0.4345      0.2307      0.4085      0.4036 ]
-[       0.8996     -0.8132     -0.6782     -0.2361 ]
+[    -0.502663   -0.778512   -0.065979    0.543208 ]
+[     0.315038   -0.134435   -0.291832    0.887725 ]
+[    -0.797467    0.284911   -0.942726   -0.503942 ]
+[    -0.359780    0.979534    0.364246    0.309776 ]
+[    -0.434542    0.230693    0.408503    0.403593 ]
+[     0.899557   -0.813223   -0.678186   -0.236058 ]
 
 Matrix Q:
-[      -0.3456     -0.7589      0.2314      0.2721 ]
-[       0.2166      0.0175     -0.2229      0.8895 ]
-[      -0.5483     -0.0851     -0.8195     -0.0815 ]
-[      -0.2474      0.5880      0.0150      0.3015 ]
-[      -0.2988      0.0092      0.2978      0.1918 ]
-[       0.6185     -0.2660     -0.3692     -0.0185 ]
-
-TEST: Does Q have the same dimension as A (6×4)?
-RESULT: Yes
+[    -0.345610   -0.758858    0.231435    0.272092 ]
+[     0.216607    0.017513   -0.222865    0.889546 ]
+[    -0.548305   -0.085101   -0.819467   -0.081499 ]
+[    -0.247370    0.587989    0.015047    0.301511 ]
+[    -0.298773    0.009159    0.297843    0.191783 ]
+[     0.618498   -0.266026   -0.369198   -0.018507 ]
 
 Matrix R:
-[       1.4544     -0.7305     -0.1551     -0.0624 ]
-[       0.0000      1.3586      0.5235     -0.1051 ]
-[       0.0000      0.0000      1.1998      0.5529 ]
-[       0.0000      0.0000      0.0000      1.1537 ]
-
-TEST: Is R square (4×4)?
-RESULT: Yes
+[     1.454422   -0.730485   -0.155118   -0.062350 ]
+[     0.000000    1.358587    0.523514   -0.105146 ]
+[     0.000000    0.000000    1.199837    0.552859 ]
+[     0.000000    0.000000    0.000000    1.153717 ]
 
 TEST: Is R upper‑triangular?
 RESULT: Yes
 
-Matrix Q^T Q:
-[       1.0000      0.0000      0.0000      0.0000 ]
-[       0.0000      1.0000      0.0000      0.0000 ]
-[       0.0000      0.0000      1.0000      0.0000 ]
-[       0.0000      0.0000      0.0000      1.0000 ]
-
-TEST: Is Q^T Q ≈ I (|⋅|<1e‑12)?
+TEST: Is QᵀQ ≈ I?
 RESULT: Yes
 
-Matrix Q R:
-[      -0.5027     -0.7785     -0.0660      0.5432 ]
-[       0.3150     -0.1344     -0.2918      0.8877 ]
-[      -0.7975      0.2849     -0.9427     -0.5039 ]
-[      -0.3598      0.9795      0.3642      0.3098 ]
-[      -0.4345      0.2307      0.4085      0.4036 ]
-[       0.8996     -0.8132     -0.6782     -0.2361 ]
-
-TEST: Is Q R ≈ A (|⋅|<1e‑12)?
+TEST: Does Q·R reproduce A (‖QR−A‖<1e‑12)?
 RESULT: Yes
 
 
------- Investigate the law of radioactive decay of 224‑Ra ("ThX") ------
+------------ Detailed decay‑fit output ------------
 
-ln(a) = 4.958665 ± 0.014655
-λ     = 0.170624 ± 0.002963
-T_1/2 = ln(2)/λ = 4.0624 ± 0.0705 days  (modern value: 3.6319 days)
-
-TEST: Is |T_fit − T_modern|/T_modern < 5 %?
-RESULT: No
-
-Deviation = 11.85 %
-
------------- Task B: Uncertainties of the fitting coefficients ------------
-
-TEST: Is the modern half‑life within the 1σ uncertainty band?
-RESULT: No
+ln(A)  = 4.958665 ± 0.014655
+λ      = 0.170624 ± 0.002963
+T½     = 4.0624 ± 0.0705 days
+Modern value comparison OK?  No
 
 
------------- Task C: Evaluation of the quality of the uncertainties on the fit coefficients ------------
+------------ POINTS: received from tasks A, B, and C ------------
 
-See best_fit_with_changed_coefficients.svg for the comparison plot.
+Task A completed → 6 points😊
+Task B completed → 3 points😄
+Task C completed → 1 point 😎
 
+In total, this exercise results in 10 points 🎉🎉🎉

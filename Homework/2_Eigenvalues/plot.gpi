@@ -1,0 +1,72 @@
+### plot 1; eigenfunctions.svg ###
+
+set terminal svg size 1000,700 enhanced font 'Arial,12' background rgb "white"
+set output 'eigenfunctions.svg'
+
+set title "Hydrogen Atom s-wave Functions (Numerical vs Analytical)"
+set xlabel "r [Bohr radii]"
+set ylabel "f(r)"
+set grid
+set key outside
+set style data lines
+set datafile separator whitespace
+
+plot \
+  "numerically_eigenfunctions_n1.txt"    using 1:2 title "Numerical n=1"    lc rgb "blue", \
+  "analytic_eigenfunctions_n1.txt"  using 1:2 title "Analytical n=1"   lc rgb "blue" dt 2, \
+  "numerically_eigenfunctions_n2.txt"    using 1:2 title "Numerical n=2"    lc rgb "red", \
+  "analytic_eigenfunctions_n2.txt"  using 1:2 title "Analytical n=2"   lc rgb "red" dt 2, \
+  "numerically_eigenfunctions_n3.txt"    using 1:2 title "Numerical n=3"    lc rgb "green", \
+  "analytic_eigenfunctions_n3.txt"  using 1:2 title "Analytical n=3"   lc rgb "green" dt 2
+
+### Plot 2; varying_dr.svg ### 
+
+set terminal svg size 800,600 enhanced font 'Arial,12' background rgb "white"
+set output 'varying_dr.svg'
+
+set title "Convergence of Ground State Energy with Varying Δr"
+set xlabel "Δr"
+set ylabel "ε₀"
+set grid
+set datafile separator ","
+set style data linespoints
+
+plot "varying_dr.txt" using 1:2 title "E₀ vs Δr" lc rgb "blue" pt 7 ps 1.5
+
+### Plot 3; varying_rmax.svg ### 
+
+set terminal svg size 800,600 enhanced font 'Arial,12' background rgb "white"
+set output 'varying_rmax.svg'
+
+set title "Convergence of Ground State Energy with Varying r_{max}"
+set xlabel "r_{max}"
+set ylabel "ε₀"
+set grid
+set datafile separator ","
+set style data linespoints
+
+plot "varying_rmax.txt" using 1:2 title "E₀ vs r_{max}" lc rgb "dark-red" pt 7 ps 1.5
+
+### Plot 4; number_of_operations.svg ###
+
+set terminal svg size 800,600 enhanced font 'Arial,12' background rgb "white"
+set output 'number_of_operations.svg'
+
+set title "Jacobi Diagonalization Time vs Matrix Size"
+set xlabel "Matrix size n"
+set ylabel "Time (seconds)"
+set grid
+set key top left
+set style data linespoints
+set datafile separator whitespace
+
+# Fit a cubic function
+f(n) = a * n**3
+fit f(x) 'number_of_operations.txt' using 1:2 via a
+
+# Add a label with fitted a
+set label sprintf("f(n) = %.2e * n^3", a) at graph 0.05, 0.9 font ",12" tc rgb "black"
+
+plot \
+  'number_of_operations.txt' using 1:2 title 'Measured time' lc rgb 'blue', \
+  f(x) title 'O(n^3) fit' lc rgb 'red' lt 2

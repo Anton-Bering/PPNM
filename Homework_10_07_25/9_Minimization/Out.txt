@@ -1,0 +1,68 @@
+------------ TASK A: Newton's method with numerical gradient ------------
+------------ And numerical Hessian matrix ------------
+------------ And back-tracking linesearch ------------
+
+------ Find a minimum of the Rosenbrock's valley function ------
+
+The Rosenbrock's valley function: f(x,y) = (1-x)^2 + 100(y-x^2)^2
+
+Minimum: (x = 1.000053, y = 1.000106)
+
+------ Find a minimum of the Himmelblau's function ------
+
+The Himmelblau's function: f(x,y) = (x^2+y-11)^2 + (x+y^2-7)^2
+
+Minimum: (x = 3.000000, y = 2.000000)
+
+------ Record the number of steps it takes for the algorithm to reach the minimum ------
+
+Steps for the Rosenbrock's valley function: 14
+Steps for the Himmelblau's function:       5
+
+------------ TASK B: Higgs boson discovery ------------
+
+cross_section_experiment.txt contain the cross-section data from the experiment involving Higgs.
+
+------ Fit the Breit-Wigner function to the data ------
+
+--- Determine the mass and the width of the Higgs boson ------
+
+By fitting to the Breit-Wigner function one finds:
+mass  : 124.693 GeV
+width : 2.493 GeV
+--- Plot fit together with the experimental data ---
+
+Higgs_fit.txt contain the fitting data.
+Higgs_fit_and_experimental_data.svg contain the plot of fitting data and the experimental data
+
+------------ TASK C: Central instead of forward finite difference approximation for the derivatives ------------
+
+------ Find a minimum of the Rosenbrock's valley function ------
+
+Minimum: (x = 1.000057, y = 1.000113)
+
+------ Find a minimum of the Himmelblau's function ------
+
+Minimum: (x = 3.000000, y = 2.000000)
+
+------ Record the number of steps it takes for the algorithm to reach the minimum ------
+
+Steps for the Rosenbrock's valley function: 14
+Steps for the Himmelblau's function:       5
+
+------ compare the resulting algorithm with the one in Part A ------
+
+--- Rosenbrock's valley function ---
+
+    Minimum        	: (1.000053, 1.000106)  vs  (1.000057, 1.000113)
+    Newton steps        : 14  vs  14
+    Function evaluations: 205 vs 319
+    Conclusion          : The forward difference approximations is cheaper
+
+--- Himmelblau's function ---
+
+    Minimum        	: (3.000000, 2.000000)  vs  (3.000000, 2.000000)
+    Newton steps        : 5  vs  5
+    Function evaluations: 79 vs 121
+    Conclusion          : The forward difference approximations is cheaper
+

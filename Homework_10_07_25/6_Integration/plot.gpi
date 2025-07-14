@@ -1,0 +1,22 @@
+# ---------- plot.gpi ----------
+set terminal svg size 640,480 dynamic background rgb "white"
+set output outfile
+set grid
+
+if (exists("loglog") && loglog) {
+    # --- log‑log plot for erf(1) konvergens ---------------------------
+    set logscale xy
+    set xlabel "acc"
+    set ylabel "|Δ erf(1)|"
+    set title "Convergence of erf(1)"
+    set format y "10^{%T}"
+    plot datafile using 1:2 with lines lw 2 title "|Δ|"
+} else {
+    # --- plot af selve fejlfunktionen ---------------------------------
+    set xlabel "z"
+    set ylabel "erf(z)"
+    set title "Error function  erf(z)"
+    # Tegn implementeringen som linje og tabellerede værdier som punkter
+    plot datafile using 1:2 with lines lw 2 title "implementation", \
+         tabfile  using 1:2 with points pt 7 ps 1 title "tabulated"
+}

@@ -41,7 +41,9 @@ public class MainClass {
         }
 
 
-        Console.WriteLine("------------ TASK A ------------\n");
+        Console.WriteLine("------------ TASK A: Solving linear equations using QR-decomposition ------------");
+        Console.WriteLine("------------ by modified Gram-Schmidt orthogonalization              ------------\n");
+
         Console.WriteLine("------ Check that \"decomp\" works as intended ------\n");
 
         
@@ -79,7 +81,7 @@ public class MainClass {
         // Console.WriteLine(isUpperTriangular ? "True\n" : "False\n");
 
         // Check Q^T * Q = I
-        Console.WriteLine("--- Check that QᵀQ=I, where I is the identity matrix ---\n");
+        Console.WriteLine("--- Check that QᵀQ≈I, where I is the identity matrix ---\n");
         var maxErr = 0.0;
         Console.WriteLine("Matrix QᵀQ:");
         for (int i = 0; i < m; i++) {
@@ -94,12 +96,12 @@ public class MainClass {
             Console.WriteLine();
         }
         // Console.WriteLine("\nIs QᵀQ=1 ? (within a tolerance of 1e-12)");
-        Console.WriteLine("\nTEST: Is QᵀQ=I (within a tolerance of 1e-12)?");
-        Console.WriteLine(maxErr < 1e-12 ? "RESULT: Yes, QᵀQ=I.\n" : "RESULT: No, QᵀQ ≠ 1.\n");
+        Console.WriteLine("\nTEST: Is QᵀQ≈I (within a tolerance of 1e-12)?");
+        Console.WriteLine(maxErr < 1e-12 ? "RESULT: Yes, QᵀQ≈I.\n" : "RESULT: No, QᵀQ ≠ 1.\n");
         // Console.WriteLine(maxErr < 1e-12 ? "True\n" : "False\n");
 
         // Check A = Q*R
-        Console.WriteLine("--- Check that QR=A ---\n");
+        Console.WriteLine("--- Check that QR≈A ---\n");
         Console.WriteLine("Matrix QR:");
         var QR = new matrix(n, m);
         for (int i = 0; i < n; i++)
@@ -114,8 +116,8 @@ public class MainClass {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
                 qrErr = Math.Max(qrErr, Math.Abs(QR[i, j] - A[i, j]));
-        Console.WriteLine("\nTEST: Is QR=A (within a tolerance of 1e-12)?");
-        Console.WriteLine(qrErr < 1e-12 ? "RESULT: Yes, QR=A.\n" : "RESULT: No, QR≠A.\n");
+        Console.WriteLine("\nTEST: Is QR≈A (within a tolerance of 1e-12)?");
+        Console.WriteLine(qrErr < 1e-12 ? "RESULT: Yes, QR≈A.\n" : "RESULT: No, QR≠A.\n");
         // Console.WriteLine(qrErr < 1e-12 ? "True\n" : "False\n");
  
         // --- Check solve ---
@@ -132,11 +134,11 @@ public class MainClass {
         Console.WriteLine($"--- Generate a random square matrix A ({N2}x{N2})---\n");
         Console.WriteLine($"Matrix A:");
         Console.WriteLine(FormatMatrix(A_sq));
-        Console.WriteLine($"\n--- Generate a random vector b ({N2})---\n");
+        Console.WriteLine($"\n--- Generate a random vector b ({N2}) ---\n");
         Console.WriteLine($"Vector b:");
         Console.WriteLine(FormatVector(b));
 
-        Console.WriteLine("\n--- Factorize A into QR---\n");
+        Console.WriteLine("\n--- Factorize A into QR ---\n");
         var qrSolve = new QR(A_sq);
         Console.WriteLine("Matrix Q:");
         Console.WriteLine(FormatMatrix(qrSolve.Q));
@@ -149,7 +151,7 @@ public class MainClass {
         Console.WriteLine("\n Vector x:");
         Console.WriteLine(FormatVector(x));
 
-        Console.WriteLine("\n--- Check that Ax=b ---\n");
+        Console.WriteLine("\n--- Check that Ax≈b ---\n");
         Console.WriteLine("Vector Ax:");
         var Ax = new vector(N2);
         for (int i = 0; i < N2; i++) {
@@ -163,12 +165,12 @@ public class MainClass {
         double solveErr = 0;
         for (int i = 0; i < N2; i++)
             solveErr = Math.Max(solveErr, Math.Abs(Ax[i] - b[i]));
-        Console.WriteLine("TEST: Is Ax=b (within a tolerance of 1e-12)?");
-        Console.WriteLine(solveErr < 1e-12 ? "RESULT: Yes, Ax=b.\n" : "RESULT: No, Ax≠b.\n");
+        Console.WriteLine("TEST: Is Ax≈b (within a tolerance of 1e-12)?");
+        Console.WriteLine(solveErr < 1e-12 ? "RESULT: Yes, Ax≈b.\n" : "RESULT: No, Ax≠b.\n");
         // Console.WriteLine(solveErr < 1e-12 ? "True\n" : "False\n");
 
-        // ---------- PART B ----------
-        Console.WriteLine("------------ TASK B ------------\n");
+        // ---------- TASK B ----------
+        Console.WriteLine("------------ TASK B: Matrix inverse by Gram-Schmidt QR factorization ------------\n");
         Console.WriteLine("------ Check that \"inverse\" works as intended ------\n");
 
         var rndC = new Random(3);
@@ -194,7 +196,7 @@ public class MainClass {
         Console.WriteLine(FormatMatrix(B, 4));
 
         var AB = matrix.Multiply(Ainv, B);
-        Console.WriteLine("\n--- Check that AB=I, where I is the identity matrix ---\n");
+        Console.WriteLine("\n--- Check that AB≈I, where I is the identity matrix ---\n");
         Console.WriteLine("Matrix AB:");
         Console.WriteLine(FormatMatrix(AB, 4));
 
@@ -204,19 +206,23 @@ public class MainClass {
                 double expected = (i == j) ? 1.0 : 0.0;
                 maxDiff = Math.Max(maxDiff, Math.Abs(AB[i, j] - expected));
             }
-        Console.WriteLine("\nTEST: Is AB=I (within a tolerance of 1e-12)?");
-        Console.WriteLine(maxDiff < 1e-12 ? "RESULT: Yes, AB=I.\n" : "RESULT: No, AB≠I.\n");
+        Console.WriteLine("\nTEST: Is AB≈I (within a tolerance of 1e-12)?");
+        Console.WriteLine(maxDiff < 1e-12 ? "RESULT: Yes, AB≈I.\n" : "RESULT: No, AB≠I.\n");
         // Console.WriteLine(maxDiff < 1e-12 ? "True\n" : "False\n");
 
-        // ---------- PART C ----------
-        Console.WriteLine("\n------------ TASK C ------------\n");
+        // ---------- TASK C ----------
+        Console.WriteLine("\n------------ TASK C: Operations count for QR-decomposition ------------\n");
         Console.WriteLine("------ Measure the time it takes to QR-factorize a random NxN matrix as function of N ------\n");
         
         Console.WriteLine("QR_factorize_time.txt contains the data on how long it takes to QR-factorize a random NxN matrix.");
-        Console.WriteLine("QR_factorize_time_plot.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.");
-        Console.WriteLine("The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time_plot.svg.");
+        Console.WriteLine("QR_factorize_time.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.");
+        Console.WriteLine("The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time.svg.");
 
-        
+        // ---------- Points from task A, B, and C ----------
+        int HW_POINTS_A = 1;
+        int HW_POINTS_B = 1;
+        int HW_POINTS_C = 1;
+        HW_points.HW_POINTS(HW_POINTS_A, HW_POINTS_B, HW_POINTS_C);  
          
     }
 }

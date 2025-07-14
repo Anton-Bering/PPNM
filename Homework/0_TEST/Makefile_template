@@ -1,0 +1,58 @@
+## Makefile – template ##
+
+CS := $(shell command -v csc 2>/dev/null || command -v mcs 2>/dev/null)
+ifndef CS
+$(error Ingen C#-kompiler fundet. Installer dotnet-sdk eller mono-complete.)
+endif
+
+ifeq ($(notdir $(CS)),mcs)
+    RUN     = mono $(EXE)
+    CSTARGET= -target:exe
+else
+    
+    RUN     = ./$(EXE)
+    CSTARGET= -target:exe -langversion:latest
+endif
+
+EXE     := main.exe
+OUT     := Out.txt
+GNUPLOT := plot.gpi
+
+DATA 	:= sin_data.txt cos_data.txt
+PLOTS   := sin_plot.svg cos_plot.svg
+
+SRC     := Main.cs
+GENERAL := ../../General/general_Vector_and_Matrix.cs \
+           ../../General/HW_points.cs
+
+CSFILES := $(SRC) $(GENERAL)
+
+.PHONY: all run plots clean
+
+all: $(OUT) $(PLOTS)
+
+$(EXE): $(CSFILES)
+	$(CS) $(CSTARGET) -out:$@ $(CSFILES)
+
+$(OUT) $(DATA): $(EXE)
+	$(RUN)
+
+sin_plot.svg: sin_data.txt $(GNUPLOT)
+	@gnuplot -e "set terminal svg background 'white'; \
+	            set output '$@';                      \
+	            load '$(GNUPLOT)'"
+
+cos_plot.svg: cos_data.txt $(GNUPLOT)
+	@gnuplot -e "set terminal svg background 'white'; \
+	            set output '$@';                      \
+	            load '$(GNUPLOT)'"
+
+run: $(EXE)
+	$(RUN)
+	@echo "------------------------------------------------"
+	@cat $(OUT)
+
+RM ?= rm
+
+clean:
+	-$(RM) -f $(EXE) *.dll $(OUT) $(DATA) $(PLOTS)

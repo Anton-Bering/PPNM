@@ -1,0 +1,75 @@
+# plot.gpi
+
+# Plot for u'' = -u
+set terminal svg size 900,600 enhanced font 'Arial,16' background rgb "white"
+set output 'sho_plot.svg'
+set title "u'' = -u (Numerical vs Analytical)"
+set xlabel 'x'
+set ylabel 'u(x)'
+set grid
+plot 'sho_data.txt' with lines title 'Numerical', sin(x) with lines dashtype 2 title 'Analytical'
+
+# Plot for dy/dx = y
+set output 'exp_plot.svg'
+set title "dy/dx = y (Numerical vs Analytical)"
+set xlabel 'x'
+set ylabel 'y(x)'
+set grid
+plot 'exp_data.txt' with lines title 'Numerical', exp(x) with lines dashtype 2 title 'Analytical'
+
+# Plot for y'' = 6x
+set output 'poly_plot.svg'
+set title "y'' = 6x (Numerical vs Analytical)"
+set xlabel 'x'
+set ylabel 'y(x)'
+set grid
+plot 'poly_data.txt' with lines title 'Numerical', x**3 with lines dashtype 2 title 'Analytical'
+
+# Plot for oscillator with friction (y and y')
+set output 'oscillator_with_friction_plot.svg'
+set title "Damped harmonic oscillator"
+set xlabel 't'
+set ylabel 'value'
+set grid
+plot \
+  'oscillator_with_friction.txt' using 1:2 with lines lw 2 linecolor rgb 'blue' title "y(t)", \
+  '' using 1:3 with lines lw 2 linecolor rgb 'green' title "y'(t)"
+
+
+
+# Plot for Lotka-Volterra
+set output 'lotka_volterra_plot.svg'
+set title "Lotka-Volterra system"
+set xlabel 't'
+set ylabel 'population'
+set grid
+plot 'lotka_volterra.txt' using 1:2 with lines title 'Prey', '' using 1:3 with lines title 'Predator'
+
+# Plot for planetary orbits
+set output 'Planetary_orbits_plot.svg'
+set title 'Planetary orbits: Newtonian and Relativistic'
+set xlabel 'x'
+set ylabel 'y'
+set grid
+set size ratio -1
+set xrange [-2:2]
+set yrange [-2:2]
+plot \
+  'Newtonian_circular_motion.txt' using (1/$2)*cos($1):(1/$2)*sin($1) with lines title 'Circular', \
+  'Newtonian_elliptical_motion.txt' using (1/$2)*cos($1):(1/$2)*sin($1) with lines title 'Elliptical', \
+  'Relativistic_motion.txt' using (1/$2)*cos($1):(1/$2)*sin($1) with lines title 'Relativistic', \
+  '-' using 1:2 with points pt 7 ps 2 lc rgb 'gold' notitle
+0 0
+e
+
+
+# Plot for three-body
+set output 'three_body_problem_plot.svg'
+set title 'Three-body figure-8 orbit'
+set xlabel 'x'
+set ylabel 'y'
+set grid
+plot \
+  'three_body_problem.txt' using 2:3 with lines title 'Body 1', \
+  '' using 4:5 with lines title 'Body 2', \
+  '' using 6:7 with lines title 'Body 3'

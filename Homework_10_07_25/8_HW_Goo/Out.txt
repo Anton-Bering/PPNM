@@ -1,0 +1,69 @@
+------------ TASK A: Newton's method with numerical Jacobian and back-tracking line-search ------------
+------ Check the root-finding routine using some simple one- and two-dimensional equations ------
+
+--- Find the extremum(s) of the Rosenbrock's valley function ---
+The Rosenbrock's valley function is: f(x,y) = (1-x)^2 + 100(y-x^2)^2
+The extremum(s) is found to be: (x,y) =         1          1 
+
+--- Find the minimum(s) of the Himmelblau's function ---
+The Himmelblau's function is: f(x,y) = (x^2 + y-11)^2 + (x + y^2 -7)^2
+The minimum(s) are found to be:
+Start: (4,3) -> Minimum:     3.0000     2.0000 
+Start: (-3,3) -> Minimum:    -2.8051     3.1313 
+Start: (-4,-3) -> Minimum:    -3.7793    -3.2832 
+Start: (4,-2) -> Minimum:     3.5844    -1.8481 
+
+------------ Bound states of hydrogen atom with shooting method for boundary value problems ------------
+
+------ Find the lowest root, E_0, of the equation M(E)=0 ------
+This is done for r_max=8, r_min=0.001, acc=0.0001, eps=0.0001
+The lowest root is found to be:
+E_0 = -0.49996511 Hartree (Exact: -0.5 Hartree)
+
+------ Plot the resulting wave-function and compare with the exact result ------
+wave_function.svg contains a plot of the resulting wave-function along with the exact result for comparison.
+
+------ Investigate convergence with respect to the r_max ------
+r_max      E_0
+3.0        -0.42393846
+4.0        -0.48324847
+5.0        -0.49640472
+6.0        -0.49926888
+7.0        -0.49985225
+8.0        -0.49996510
+9.0        -0.49998610
+10.0       -0.49999017
+
+------ Investigate convergence with respect to the r_min ------
+r_min      E_0
+0.1        -0.50181599
+0.05       -0.50020564
+0.025      -0.49999607
+0.0125     -0.49996916
+0.00625    -0.49996567
+0.003125   -0.49996519
+0.001563   -0.49996511
+0.0007813  -0.49996509
+0.0003906  -0.49996509
+0.0001953  -0.49996508
+
+------ Investigate convergence with respect to the acc and eps of the ODE solver ------
+acc/eps    E_0
+0.01       -0.49961007
+0.001      -0.49990368
+0.0001     -0.49996510
+1e-05      -0.49997404
+1e-06      -0.49997501
+
+------------ TASK C: Quadratic interpolation line-search ------------
+
+------ Optimize the implementation by only allocating one matrix in the beginning and then updating it at each step ------
+The `RootFinding.Newton_Optimized` method and its helper `Jacobian` overload have been implemented.
+The Jacobian matrix is now allocated once and updated in-place at each iteration, reducing memory allocation overhead.
+
+------ Implement the quadratic interpolation line-search as described in the book ------
+The `RootFinding.Newton_Optimized` method now uses a quadratic interpolation line search instead of simple backtracking.
+This can lead to faster convergence by choosing a more optimal step size `lambda`.
+
+--- Testing the optimized solver on Rosenbrock's function ---
+The extremum found with the optimized solver is: (x,y) =         1          1 

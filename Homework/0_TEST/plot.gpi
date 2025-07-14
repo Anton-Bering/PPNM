@@ -1,0 +1,11 @@
+set terminal svg background "white"
+set xlabel "x"
+set ylabel "y"
+
+# plot for sin
+set output "sin_plot.svg"
+plot "sin_data.txt" using 1:2 with lines title "sin(x)"
+
+# plot for cos
+set output "cos_plot.svg"
+plot "cos_data.txt" using 1:2 with lines title "cos(x)"

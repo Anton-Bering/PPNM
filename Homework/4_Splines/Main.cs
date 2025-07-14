@@ -122,6 +122,12 @@ public class Program {
                     sqrtWriter.WriteLine($"{z}\t{val}\t{integral}\t{deriv}");
                 }
             }
+
+            // --- POINTS from task A, B, and C  ---
+            int HW_POINTS_A = 1;
+            int HW_POINTS_B = 1;
+            int HW_POINTS_C = 1;
+            HW_points.HW_POINTS(HW_POINTS_A, HW_POINTS_B, HW_POINTS_C);
         }
     }
 } 

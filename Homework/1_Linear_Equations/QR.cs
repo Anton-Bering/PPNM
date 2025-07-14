@@ -3,7 +3,7 @@ public class QR {
     public matrix Q;
     public matrix R;
 
-    // Constructor: perform QR decomposition of A using modified Gram-Schmidt
+    // Perform QR decomposition of A:
     public QR(matrix A) {
         int n = A.size1;
         int m = A.size2;
@@ -45,7 +45,7 @@ public class QR {
         }
     }
 
-    // Solve for x in the equation QR*x = b (i.e., A*x = b) using the computed Q and R
+    // Solve for x in the equation QR*x = b
     public vector solve(vector b) {
         int n = Q.size1;
         int m = R.size1;  // R is m×m
@@ -61,7 +61,7 @@ public class QR {
             }
             y[i] = sum;
         }
-        // Back-substitution to solve R*x = y (R is upper-triangular)
+        // to solve R*x = y
         vector x = new vector(m);
         for (int i = m - 1; i >= 0; i--) {
             double sum = y[i];
@@ -73,7 +73,7 @@ public class QR {
         return x;
     }
 
-    // Compute the determinant of the original matrix A using R (product of diagonal entries)
+    // Compute the determinant of A:
     public double det() {
         int m = R.size1;
         double product = 1.0;
@@ -83,7 +83,7 @@ public class QR {
         return product;
     }
 
-    // Compute the inverse of the original matrix A (assuming A is square) using Q and R
+    // Compute the inverse of A:
     public matrix inverse() {
         int n = Q.size1;
         int m = R.size1;
@@ -94,8 +94,8 @@ public class QR {
         // Solve A*x = e_j for each basis vector e_j to get columns of A^{-1}
         for (int j = 0; j < n; j++) {
             vector e = new vector(n);
-            e[j] = 1.0;               // j-th standard basis vector
-            vector x = this.solve(e); // Solve for x (j-th column of inverse)
+            e[j] = 1.0;               
+            vector x = this.solve(e);
             for (int i = 0; i < n; i++) {
                 inv[i, j] = x[i];
             }

@@ -6,7 +6,7 @@ using System.Linq;
 public class Program {
     public static void Main(string[] args) {
         using (StreamWriter writer = new StreamWriter("Out.txt")) {
-            writer.WriteLine("------------ TASK A ------------\n");
+            writer.WriteLine("------------ TASK A: Jacobi diagonalization with cyclic sweeps ------------\n");
 
             writer.WriteLine("------ Prove that the implementation works as intended ------\n");
 
@@ -34,7 +34,7 @@ public class Program {
             writer.WriteLine(string.Join(" ", formatVector(w)));
             writer.WriteLine("\nMatrix V (matrix of the corresponding eigenvector-columns):");
             printMatrix(writer, V);
-            writer.WriteLine("\nMatrix Vᵀ (transpose of V):");
+            writer.WriteLine("\nMatrix Vᵀ:");
             matrix V_T = transpose(V);
             printMatrix(writer, V_T);
             writer.WriteLine("\nMatrix D (diagonal matrix of eigenvalues):");
@@ -42,50 +42,51 @@ public class Program {
             printMatrix(writer, D);
 
 
-            writer.WriteLine("\n--- Check that VᵀAV=D ---\n");
+            writer.WriteLine("\n--- Check that VᵀAV≈D ---\n");
 
             matrix VtAV = multiply(transpose(V), multiply(A_copy, V));
             writer.WriteLine("Matrix VᵀAV:");
             printMatrix(writer, VtAV);
-            writer.WriteLine("\nTEST: Is VᵀAV=D (within a tolerance of 1e-6)?");
+            writer.WriteLine("\nTEST: Is VᵀAV≈D (within a tolerance of 1e-6)?");
             writer.WriteLine(isDiagonalClose(VtAV, w)
-                ? "RESULT: Yes, VᵀAV=D"
+                ? "RESULT: Yes, VᵀAV≈D"
                 : "RESULT: No, VᵀAV≠D");
 
             writer.WriteLine("\nEigenvalue vector w from Jacobi:   " + string.Join(" ", formatVector(w)));
 
-            writer.WriteLine("\n--- Check that VDVᵀ=A ---\n");
+            writer.WriteLine("\n--- Check that VDVᵀ≈A ---\n");
             // matrix D = diagonalMatrix(w);
             matrix VDVt = multiply(multiply(V, D), transpose(V));
             writer.WriteLine("Matrix VDVᵀ:");
             printMatrix(writer, VDVt);
-            writer.WriteLine("\nTEST: Is VDVᵀ=A (within a tolerance of 1e-6)?");
+            writer.WriteLine("\nTEST: Is VDVᵀ≈A (within a tolerance of 1e-6)?");
             writer.WriteLine(areMatricesClose(A_copy, VDVt)
-                ? "RESULT: Yes, VDVᵀ=A"
+                ? "RESULT: Yes, VDVᵀ≈A"
                 : "RESULT: No, VDVᵀ≠A");
 
-            writer.WriteLine("\n--- Check that VᵀV=I ---\n");
+            writer.WriteLine("\n--- Check that VᵀV≈I ---\n");
             matrix VtV = multiply(transpose(V), V);
             writer.WriteLine("Matrix VᵀV:");
             printMatrix(writer, VtV);
-            writer.WriteLine("\nTEST: Is VᵀV=I (within a tolerance of 1e-6)?");
+            writer.WriteLine("\nTEST: Is VᵀV≈I (within a tolerance of 1e-6)?");
             writer.WriteLine(areMatricesClose(VtV, matrix.id(sizeA))
                 ? "RESULT: Yes, VᵀV= I"
                 : "RESULT: No, VᵀV≠I");
 
-            writer.WriteLine("\n--- Check that VVᵀ=I ---\n");
+            writer.WriteLine("\n--- Check that VVᵀ≈I ---\n");
             matrix VVt = multiply(V, transpose(V));
             writer.WriteLine("Matrix VVᵀ:");
             printMatrix(writer, VVt);
-            writer.WriteLine("\nTEST: Is VVᵀ=I (within a tolerance of 1e-6)?");
+            writer.WriteLine("\nTEST: Is VVᵀ≈I (within a tolerance of 1e-6)?");
             writer.WriteLine(areMatricesClose(VVt, matrix.id(sizeA))
-                ? "RESULT: Yes, VVᵀ=I"
+                ? "RESULT: Yes, VVᵀ≈I"
                 : "RESULT: No, VVᵀ≠I");
 
-            writer.WriteLine("\n------------ TASK B ------------\n");
-
-            writer.WriteLine("------ Calculate numerically the lowest egenvalues and eigenfunctions of the s-wave states in the hydrogen atom ------");
-            writer.WriteLine("------ And compare them with the exact results -----------------------------------------------------------------------\n");
+            writer.WriteLine("\n------------ TASK B: Hydrogen atom, s-wave radial Schrödinger equation on a grid ------------\n");
+            
+            writer.WriteLine("------ Calculate numerically the lowest egenvalues and eigenfunctions ------");
+            writer.WriteLine("------ of the s-wave states in the hydrogen atom                      ------");
+            writer.WriteLine("------ and compare them with the exact results                        ------\n");
             
             double[] drs = Enumerable.Range(1, 100).Select(i => i * 0.01).ToArray();
             double[] rmaxs = Enumerable.Range(8, 33).Select(i => i * 0.5).ToArray();
@@ -161,24 +162,24 @@ public class Program {
             writer.WriteLine("\nanalytic_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.");
             writer.WriteLine("eigenfunctions.svg also contains the exact results for comparison.");
 
-            writer.WriteLine("\n------ Fix r_max to a reasonable value and calculate ε₀ for several different values of Δr ------");
-            writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
+            writer.WriteLine("\n------ Fix r_max and calculate ε₀ for several different values of Δr ------");
+            writer.WriteLine("------ and plot the resulting curve                                  ------\n");
 
-            writer.WriteLine($"r_max is fixed to {fixed_rmax}");
-            writer.WriteLine("varying_dr.txt contains the data for the calculated ε₀");
-            writer.WriteLine("varying_dr.svg is a plot of the resulting curve");
+            writer.WriteLine($"r_max is fixed to {fixed_rmax}.");
+            writer.WriteLine("varying_dr.txt contains the data for the calculated ε₀.");
+            writer.WriteLine("varying_dr.svg is a plot of the resulting curve.");
 
-            writer.WriteLine("\n------ Fix Δr to a reasonable value and calculate ε₀ for several different values of r_max ------");
-            writer.WriteLine("------ And plot the resulting curve ------------------------------------------------------------\n");
+            writer.WriteLine("\n------ Fix Δr and calculate ε₀ for several different values of r_max ------");
+            writer.WriteLine("------ and plot the resulting curve                                  ------\n");
 
-            writer.WriteLine($"\nΔr is fixed to {fixed_dr}");
-            writer.WriteLine("varying_rmax.txt contains the data for the calculated ε₀");
-            writer.WriteLine("varying_rmax.svg is a plot of the resulting curve");
+            writer.WriteLine($"\nΔr is fixed to {fixed_dr}.");
+            writer.WriteLine("varying_rmax.txt contains the data for the calculated ε₀.");
+            writer.WriteLine("varying_rmax.svg is a plot of the resulting curve.");
 
 
-            writer.WriteLine("\n------------ TASK C ------------\n");
+            writer.WriteLine("\n------------ TASK C: Scaling and optimization ------------\n");
             writer.WriteLine("------ Check that the number of operations for matrix diagonalization scales as O(n³) ------"); 
-            writer.WriteLine("------ Do the measurements in parallel -----------------------------------------------------\n");
+            writer.WriteLine("------ do the measurements in parallel                                                ------\n");
 
             writer.WriteLine("The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.");
             writer.WriteLine("The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.\n");
@@ -190,8 +191,11 @@ public class Program {
                     writer.WriteLine(line);
             }
 
-
-
+            // ---------- Points from task A, B, and C ----------
+            int HW_POINTS_A = 1;
+            int HW_POINTS_B = 1;
+            int HW_POINTS_C = 1;
+            HW_points.HW_POINTS(HW_POINTS_A, HW_POINTS_B, HW_POINTS_C); 
 
         }
 

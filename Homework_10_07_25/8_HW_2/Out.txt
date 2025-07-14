@@ -1,0 +1,24 @@
+------------ TASK A: Newton's method with numerical Jacobian and back-tracking line-search ------------
+
+------ Check the root-finding routine using some simple one- and two-dimensional equations ------
+
+Root of x^3 - 2 = 0              : x = 1.25992105
+
+Root of system {x^2+y^2=4, x=y} : (x,y) = (1.41421363, 1.41421363)
+
+
+--- Find the extremum(s) of Rosenbrock's valley function ---
+
+The extremum is found at: (x,y) = (0.99999998, 0.99999996)
+
+--- Find the minimum(s) of the Himmelblau's function ---
+
+One minimum is found at: (x,y) = (3.00000000, 2.00000000)
+
+
+------------ Bound states of hydrogen atom with shooting method for boundary value problems ------------
+
+------ Find the lowest root, E_0, of the equation M(E)=0 ------
+
+This is done for r_max = 8
+

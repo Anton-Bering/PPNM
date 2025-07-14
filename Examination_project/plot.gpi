@@ -1,0 +1,8 @@
+# plots the optimisation path saved by Main.cs for Rosenbrock function
+a = 1; unset key
+set terminal svg size 600,450 background "white"
+set output 'rosen_path.svg'
+set xrange [-3:3]; set yrange [-2:4]
+set title 'Quasi–Newton path on Rosenbrock surface'
+set xlabel 'x'; set ylabel 'y'
+plot 'path_rosenbrock.dat' using 1:2 with linespoints lt 1 lw 2 pt 7 ps 0.5

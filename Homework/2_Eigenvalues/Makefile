@@ -1,52 +1,81 @@
-all: main.exe run plot plot_eigenfunctions number_of_operations plot_number_of_operations
+# ---------- Makefile for Homework 2: Eigenvalues (Jacobi-metoden) ----------
 
-main.exe: Main.cs Jacobi.cs Matrix.cs Vector.cs
-	mcs -optimize -target:exe -out:main.exe Main.cs Jacobi.cs Matrix.cs Vector.cs
+# Vælg C#-kompiler
+CS := $(shell command -v csc 2>/dev/null || command -v mcs 2>/dev/null)
+ifndef CS
+$(error Ingen C#-kompiler fundet. Installer dotnet-sdk eller mono-complete.)
+endif
 
-run: main.exe
-	mono main.exe
+CSNAME := $(notdir $(CS))
 
-# === PLOTS FOR CONVERGENCE ===
-plot: varying_dr.svg varying_rmax.svg
+ifeq ($(CSNAME),mcs)              # ---------- Mono ----------
+CSTARGET   = -target:exe
+RUN_MAIN   = mono main.exe
+RUN_TIMING = mono numberops.exe
+else                              # ---------- dotnet-csc ----
+CSTARGET   = -target:exe -langversion:latest
+RUN_MAIN   = ./main.exe
+RUN_TIMING = ./numberops.exe
+endif
 
-varying_dr.svg: varying_dr.txt
-	gnuplot plot_dr.gnuplot
+# ---------------------------------------------------------------------------
+# Fælles kildefiler (ligger i ../../General/)
+COMMON_DIR := ../../General
+COMMON_SRC := $(COMMON_DIR)/general_Vector_and_Matrix.cs \
+              $(COMMON_DIR)/HW_points.cs
 
-varying_rmax.svg: varying_rmax.txt
-	gnuplot plot_rmax.gnuplot
+# Lokale kildefiler
+CS_COMMON   := Jacobi.cs $(COMMON_SRC)
+SRC_MAIN    := Main.cs $(CS_COMMON)
+SRC_TIMING  := NumberOfOperations.cs $(CS_COMMON)
 
-# === PLOT OF NUMERICAL vs ANALYTICAL WAVEFUNCTIONS ===
-plot_eigenfunctions: eigenfunctions.svg
+# Eksekverbare filer
+EXE_MAIN    := main.exe
+EXE_TIMING  := numberops.exe
 
-eigenfunctions.svg: analytic_eigenfunctions_n1.txt analytic_eigenfunctions_n2.txt analytic_eigenfunctions_n3.txt numerically_eigenfunctions_n1.txt numerically_eigenfunctions_n2.txt numerically_eigenfunctions_n3.txt
-	gnuplot plot_eigenfunctions.gnuplot
+# Uddata-filer
+OUT             := Out.txt
+TIMING_FILE     := number_of_operations.txt
+GNUPLOT_SCRIPT  := plot.gpi
+SVG             := eigenfunctions.svg
 
-# === Ensure output files exist before plotting ===
-analytic_eigenfunctions_n1.txt analytic_eigenfunctions_n2.txt analytic_eigenfunctions_n3.txt: main.exe
-	mono main.exe
+# ---------------------------------------------------------------------------
+.PHONY: all run timing plots clean
 
-numerically_eigenfunctions_n1.txt numerically_eigenfunctions_n2.txt numerically_eigenfunctions_n3.txt: main.exe
-	mono main.exe
+all: $(OUT) $(SVG)
 
-# === TASK C.2: Check O(n^3) scaling ===
-NumberOfOperations.exe: NumberOfOperations.cs Jacobi.cs Matrix.cs Vector.cs
-	mcs -optimize -target:exe -out:NumberOfOperations.exe NumberOfOperations.cs Jacobi.cs Matrix.cs Vector.cs
+# ---------- Kompilér ----------
+$(EXE_MAIN): $(SRC_MAIN)
+	$(CS) $(CSTARGET) -out:$@ $^
 
-number_of_operations: NumberOfOperations.exe
-	@echo "n   seconds" > number_of_operations.txt
-	@/usr/bin/time -f "real: %e\nuser: %U\nsys: %S" \
-		-o number_of_operations_time.txt \
-		sh -c 'for n in 30 40 50 60 70 80 90 100 110 120; do \
-			( mono NumberOfOperations.exe $$n >> number_of_operations.txt ) & \
-		done; wait'
-	@echo "NumberOfOperations test complete. Results in number_of_operations.txt and number_of_operations_time.txt"
+$(EXE_TIMING): $(SRC_TIMING)
+	$(CS) $(CSTARGET) -out:$@ $^
 
+# ---------- Kør hovedprogram ----------
+$(OUT): $(EXE_MAIN)
+	$(RUN_MAIN)
 
-plot_number_of_operations: number_of_operations.svg
+# ---------- Lav timing-data til O(n³)-plottet ----------
+$(TIMING_FILE): $(EXE_TIMING)
+	@echo "# n   seconds" > $@
+	@for n in 100 140 180 220 260 300 ; do \
+		$(RUN_TIMING) $$n >> $@ ; \
+	done
+	@echo "Skrev timing-data til $@"
 
-number_of_operations.svg: number_of_operations.txt
-	gnuplot plot_number_of_operations.gnuplot
+timing: $(TIMING_FILE)  # praktisk alias
 
-# === CLEAN ===
+# ---------- Plot ----------
+$(SVG): $(GNUPLOT_SCRIPT) $(OUT) $(TIMING_FILE)
+	@gnuplot $(GNUPLOT_SCRIPT)
+
+plots: $(SVG)
+
+# ---------- Hjælpe-mål ----------
+run: $(EXE_MAIN)
+	$(RUN_MAIN) && echo "--------------------------------" && cat $(OUT)
+
 clean:
-	rm -f main.exe Out.txt varying_*.txt varying_*.svg numerically_eigenfunctions_n*.txt analytic_eigenfunctions_n*.txt eigenfunctions.svg number_of_operations.txt number_of_operations.svg NumberOfOperations.exe fit.log
+	-rm -f *.exe *.dll $(OUT) $(SVG) $(TIMING_FILE) \
+	       numerically_eigenfunctions_*.txt analytic_eigenfunctions_*.txt \
+	       varying_dr.txt varying_rmax.txt

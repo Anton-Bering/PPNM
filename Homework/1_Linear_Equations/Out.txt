@@ -1,4 +1,5 @@
------------- TASK A ------------
+------------ TASK A: Solving linear equations using QR-decomposition ------------
+------------ by modified Gram-Schmidt orthogonalization              ------------
 
 ------ Check that "decomp" works as intended ------
 
@@ -35,7 +36,7 @@ Matrix R:
 TEST: Is R upper-triangular?
 RESULT: Yes, R is upper-triangular.
 
---- Check that QᵀQ=I, where I is the identity matrix ---
+--- Check that QᵀQ≈I, where I is the identity matrix ---
 
 Matrix QᵀQ:
          1          0  3.331E-16 -5.551E-17 
@@ -43,10 +44,10 @@ Matrix QᵀQ:
  3.331E-16  1.665E-16          1 -6.939E-17 
 -5.551E-17  1.943E-16 -6.939E-17          1 
 
-TEST: Is QᵀQ=I (within a tolerance of 1e-12)?
-RESULT: Yes, QᵀQ=I.
+TEST: Is QᵀQ≈I (within a tolerance of 1e-12)?
+RESULT: Yes, QᵀQ≈I.
 
---- Check that QR=A ---
+--- Check that QR≈A ---
 
 Matrix QR:
      0.249      0.111      0.467      0.772 
@@ -57,8 +58,8 @@ Matrix QR:
      0.950      0.093      0.161      0.382 
 
 
-TEST: Is QR=A (within a tolerance of 1e-12)?
-RESULT: Yes, QR=A.
+TEST: Is QR≈A (within a tolerance of 1e-12)?
+RESULT: Yes, QR≈A.
 
 ------ Check that "solve" works as intended ------
 
@@ -71,7 +72,7 @@ Matrix A:
      0.703      0.235      0.731      0.089 
 
 
---- Generate a random vector b (4)---
+--- Generate a random vector b (4) ---
 
 Vector b:
      0.771
@@ -80,7 +81,7 @@ Vector b:
      0.279
 
 
---- Factorize A into QR---
+--- Factorize A into QR ---
 
 Matrix Q:
      0.354     -0.145      0.731     -0.565 
@@ -106,7 +107,7 @@ Solving QRx=b leads to:
      0.988
 
 
---- Check that Ax=b ---
+--- Check that Ax≈b ---
 
 Vector Ax:
      0.771
@@ -114,10 +115,10 @@ Vector Ax:
      0.765
      0.279
 
-TEST: Is Ax=b (within a tolerance of 1e-12)?
-RESULT: Yes, Ax=b.
+TEST: Is Ax≈b (within a tolerance of 1e-12)?
+RESULT: Yes, Ax≈b.
 
------------- TASK B ------------
+------------ TASK B: Matrix inverse by Gram-Schmidt QR factorization ------------
 
 ------ Check that "inverse" works as intended ------
 
@@ -154,7 +155,7 @@ Matrix B:
    -0.9760     2.5650     0.7341    -2.0247 
 
 
---- Check that AB=I, where I is the identity matrix ---
+--- Check that AB≈I, where I is the identity matrix ---
 
 Matrix AB:
     1.0000     0.0000     0.0000     0.0000 
@@ -163,14 +164,22 @@ Matrix AB:
     0.0000     0.0000     0.0000     1.0000 
 
 
-TEST: Is AB=I (within a tolerance of 1e-12)?
-RESULT: Yes, AB=I.
+TEST: Is AB≈I (within a tolerance of 1e-12)?
+RESULT: Yes, AB≈I.
 
 
------------- TASK C ------------
+------------ TASK C: Operations count for QR-decomposition ------------
 
 ------ Measure the time it takes to QR-factorize a random NxN matrix as function of N ------
 
 QR_factorize_time.txt contains the data on how long it takes to QR-factorize a random NxN matrix.
-QR_factorize_time_plot.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.
-The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time_plot.svg.
+QR_factorize_time.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.
+The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time.svg.
+
+------------ POINTS: received from tasks A, B, and C ------------
+
+Task A completed → 6 points😊
+Task B completed → 3 points😄
+Task C completed → 1 point 😎
+
+In total, this exercise results in 10 points 🎉🎉🎉

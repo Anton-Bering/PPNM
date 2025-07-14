@@ -131,12 +131,12 @@
 <g fill="none" color="#FFFFFF" stroke="black" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<g transform="translate(197.60,456.40)" stroke="none" fill="black" font-family="Arial" font-size="16.00"  text-anchor="end">
+	<g transform="translate(253.60,53.21)" stroke="none" fill="black" font-family="Arial" font-size="16.00"  text-anchor="end">
 		<text><tspan font-family="Arial" >best fit</tspan></text>
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<path stroke='rgb(148,   0, 211)'  d='M208.80,451.20 L265.60,451.20 M96.80,30.89 L101.61,33.73 L106.42,36.57 L111.23,39.41 L116.04,42.24 L120.85,45.08
+	<path stroke='rgb(148,   0, 211)'  d='M264.80,48.01 L321.60,48.01 M96.80,30.89 L101.61,33.73 L106.42,36.57 L111.23,39.41 L116.04,42.24 L120.85,45.08
 		L125.66,47.92 L130.47,50.76 L135.28,53.60 L140.09,56.44 L144.90,59.28 L149.71,62.12 L154.52,64.96 L159.33,67.80
 		L164.14,70.64 L168.95,73.47 L173.76,76.31 L178.57,79.15 L183.38,81.99 L188.19,84.83 L193.00,87.67 L197.81,90.51
 		L202.62,93.35 L207.43,96.19 L212.24,99.03 L217.05,101.87 L221.86,104.71 L226.67,107.54 L231.48,110.38 L236.29,113.22
@@ -157,16 +157,16 @@
 		L779.81,434.04 L784.62,436.88 L789.43,439.72 L794.24,442.56 L799.05,445.40 L803.86,448.24 L808.67,451.08 L813.48,453.92
 		L818.29,456.76  '/></g>
 	</g>
-	<g id="gnuplot_plot_2" ><title>+1σ</title>
+	<g id="gnuplot_plot_2" ><title>low (c−δc)</title>
 <g fill="none" color="#FFFFFF" stroke="rgb(148,   0, 211)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<g transform="translate(197.60,480.40)" stroke="none" fill="black" font-family="Arial" font-size="16.00"  text-anchor="end">
-		<text><tspan font-family="Arial" >+1σ</tspan></text>
+	<g transform="translate(253.60,77.21)" stroke="none" fill="black" font-family="Arial" font-size="16.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >low (c−δc)</tspan></text>
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<path stroke='rgb(  0, 158, 115)' stroke-dasharray='2.5,4.0'  d='M208.80,475.20 L265.60,475.20 M96.80,33.33 L101.61,36.22 L106.42,39.10 L111.23,41.99 L116.04,44.88 L120.85,47.77
+	<path stroke='rgb(  0, 158, 115)' stroke-dasharray='2.5,4.0'  d='M264.80,72.01 L321.60,72.01 M96.80,33.33 L101.61,36.22 L106.42,39.10 L111.23,41.99 L116.04,44.88 L120.85,47.77
 		L125.66,50.66 L130.47,53.55 L135.28,56.43 L140.09,59.32 L144.90,62.21 L149.71,65.10 L154.52,67.99 L159.33,70.88
 		L164.14,73.76 L168.95,76.65 L173.76,79.54 L178.57,82.43 L183.38,85.32 L188.19,88.21 L193.00,91.10 L197.81,93.98
 		L202.62,96.87 L207.43,99.76 L212.24,102.65 L217.05,105.54 L221.86,108.43 L226.67,111.31 L231.48,114.20 L236.29,117.09
@@ -187,14 +187,14 @@
 		L779.81,443.48 L784.62,446.37 L789.43,449.26 L794.24,452.15 L799.05,455.04 L803.86,457.92 L808.67,460.81 L813.48,463.70
 		L818.29,466.59  '/></g>
 	</g>
-	<g id="gnuplot_plot_3" ><title>-1σ</title>
+	<g id="gnuplot_plot_3" ><title>high (c+δc)</title>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<g transform="translate(197.60,504.40)" stroke="none" fill="black" font-family="Arial" font-size="16.00"  text-anchor="end">
-		<text><tspan font-family="Arial" >-1σ</tspan></text>
+	<g transform="translate(253.60,101.21)" stroke="none" fill="black" font-family="Arial" font-size="16.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >high (c+δc)</tspan></text>
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<path stroke='rgb( 86, 180, 233)' stroke-dasharray='2.5,4.0'  d='M208.80,499.20 L265.60,499.20 M96.80,28.45 L101.61,31.24 L106.42,34.03 L111.23,36.82 L116.04,39.61 L120.85,42.40
+	<path stroke='rgb( 86, 180, 233)' stroke-dasharray='2.5,4.0'  d='M264.80,96.01 L321.60,96.01 M96.80,28.45 L101.61,31.24 L106.42,34.03 L111.23,36.82 L116.04,39.61 L120.85,42.40
 		L125.66,45.19 L130.47,47.98 L135.28,50.77 L140.09,53.56 L144.90,56.35 L149.71,59.14 L154.52,61.93 L159.33,64.72
 		L164.14,67.51 L168.95,70.30 L173.76,73.09 L178.57,75.88 L183.38,78.67 L188.19,81.46 L193.00,84.25 L197.81,87.04
 		L202.62,89.83 L207.43,92.62 L212.24,95.41 L217.05,98.20 L221.86,100.99 L226.67,103.77 L231.48,106.56 L236.29,109.35
