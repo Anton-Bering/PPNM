@@ -51,10 +51,9 @@ public static class VectorAndMatrix
     /* ------------------------------------------------------------------
        2.  Pretty-printing
        ------------------------------------------------------------------ */
-    public static string PrintMatrix(double[,] M, string name = "", int dec = 5)
+    public static string PrintMatrix(double[,] M, int dec = 5)
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Matrix {name}:");
         int n = M.GetLength(0), m = M.GetLength(1);
         string fmt = "{0," + (dec + 8).ToString() + ":F" + dec + "}";
 
@@ -67,10 +66,9 @@ public static class VectorAndMatrix
         return sb.ToString();
     }
 
-    public static string PrintVector(double[] v, string name = "", int dec = 5)
+    public static string PrintVector(double[] v, int dec = 5)
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"Vector {name}:");
         string fmt = "{0," + (dec + 8).ToString() + ":F" + dec + "}";
         foreach (double x in v) sb.AppendFormat(fmt + "\n", x);
         return sb.ToString();
@@ -190,13 +188,13 @@ public static class VectorAndMatrix
        ------------------------------------------------------------------ */
     public static void CheckUpperTriangular(double[,] A, string name = "A", double tol = 1e-12)
         => Console.WriteLine(IsUpperTriangular(A, tol)
-            ? $"TEST: Is {name} upper‑triangular? RESULT: Yes."
-            : $"TEST: Is {name} upper‑triangular? RESULT: No.");
+            ? $"CheckUpperTriangular {name}: OK"
+            : $"CheckUpperTriangular {name}: FAILED");
 
     public static void CheckIdentityMatrix(double[,] A, string name = "A", double tol = 1e-12)
         => Console.WriteLine(IsIdentityMatrix(A, tol)
-            ? $"TEST: is {name} the identity matrix (within a tolerance of {tol})? \nRESULT: Yes."
-            : $"TEST: is {name} the identity matrix (within a tolerance of {tol})? \nRESULT: No.");
+            ? $"CheckIdentityMatrix {name}: OK"
+            : $"CheckIdentityMatrix {name}: FAILED");
 
     public static void CheckMatrixEqual(double[,] A, double[,] B,
                                         string aName = "A", string bName = "B",
@@ -209,8 +207,8 @@ public static class VectorAndMatrix
                 if (Math.Abs(A[i, j] - B[i, j]) > tol) ok = false;
 
         Console.WriteLine(ok
-            ? $"TEST: is {aName}={bName} (within a tolerance of {tol})?\nRESULT: Yes."
-            : $"TEST: is {aName}={bName} (within a tolerance of {tol})?\nRESULT: No.");
+            ? $"CheckMatrixEqual {aName} vs {bName}: OK"
+            : $"CheckMatrixEqual {aName} vs {bName}: FAILED");
     }
 
     public static void CheckVectorEqual(double[] a, double[] b,
@@ -227,8 +225,8 @@ public static class VectorAndMatrix
             if (Math.Abs(a[i] - b[i]) > tol) ok = false;
 
         Console.WriteLine(ok
-            ? $"TEST: is {aName}={bName} (within a tolerance of {tol})?\nRESULT: OK"
-            : $"TEST: is {aName}={bName} (within a tolerance of {tol})?\nRESULT: No");
+            ? $"CheckVectorEqual {aName} vs {bName}: OK"
+            : $"CheckVectorEqual {aName} vs {bName}: FAILED");
     }
 
     /* ------------------------------------------------------------------
