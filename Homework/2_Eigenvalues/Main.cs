@@ -177,8 +177,6 @@ public static class Program
         Console.WriteLine("The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N."); // HERHER: tjek at det sker
         Console.WriteLine("The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.\n"); // HERHER: Tjek at det faktisk sker
 
-        Console.WriteLine("Timing data are written by NumberOfOperations.exe to number_of_operations.txt.");
-
         /* HERHER: OBS: jeg havde det her i en tidlige udgave:
         string timefile = "number_of_operations_time.txt";
         if (File.Exists(timefile)) {
