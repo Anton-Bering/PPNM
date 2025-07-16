@@ -53,7 +53,7 @@ $(EXE_TIMING): $(SRC_TIMING)
 
 # ---------- Kør hovedprogram ----------
 $(OUT): $(EXE_MAIN)
-	$(RUN_MAIN)
+	$(RUN_MAIN) > $@
 
 # ---------- Lav timing-data til O(n³)-plottet ----------
 $(TIMING_FILE): $(EXE_TIMING)
@@ -73,9 +73,9 @@ plots: $(SVG)
 
 # ---------- Hjælpe-mål ----------
 run: $(EXE_MAIN)
-	$(RUN_MAIN) && echo "--------------------------------" && cat $(OUT)
+	$(RUN_MAIN) > $(OUT) && echo "--------------------------------" && cat $(OUT)
 
 clean:
 	-rm -f *.exe *.dll $(OUT) $(SVG) $(TIMING_FILE) \
 	       numerically_eigenfunctions_*.txt analytic_eigenfunctions_*.txt \
-	       varying_dr.txt varying_rmax.txt
+	       varying_dr.txt varying_rmax.txt *svg *log

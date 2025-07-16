@@ -1,99 +1,114 @@
------------- TASK A: Jacobi diagonalization with cyclic sweeps ------------
+------------ TASK A: Jacobi diagonalization with cyclic sweeps ------------
 
 ------ Prove that the implementation works as intended ------
 
 --- Generate a random symmetric matrix A (5x5) ---
 
 Matrix A:
-     0.249      0.111      0.467      0.772      0.658 
-     0.111      0.433      0.354      0.944      0.101 
-     0.467      0.354      0.642      0.029      0.248 
-     0.772      0.944      0.029       0.32       0.99 
-     0.658      0.101      0.248       0.99      0.682 
-
------- After applying your routine to perform the eigenvalue decomposition, A = VDVᵀ ------
+      0.03649      0.47965      0.39525      0.22889      0.36992
+      0.47965      0.06158      0.65868      0.28116      0.41028
+      0.39525      0.65868      0.04234      0.59004      0.44242
+      0.22889      0.28116      0.59004      0.72005      0.65858
+      0.36992      0.41028      0.44242      0.65858      0.09208
 
 
-Vector w (vector of the eigenvalues):
- -1.0378 -0.27446  0.54037  0.64253   2.4554
+--- Apply your routine to perform the eigenvalue-decomposition, A=VDVᵀ ---
+--- (where V is the orthogonal matrix of eigenvectors                  ---
+--- and D is the diagonal matrix with the corresponding eigenvalues)   ---
 
-Matrix V (matrix of the corresponding eigenvector-columns):
-   0.32311   -0.77239    0.33074   0.044536    0.43317 
-   0.47579   0.082757   -0.77263    0.19609    0.36243 
-  -0.22176    0.20706    0.23436    0.88485    0.26471 
-  -0.72821   -0.11135   -0.25898   -0.25804    0.56891 
-    0.2996     0.5842    0.41431    -0.3317    0.53598 
+The orthogonal matrix V of eigenvectors:
+
+Matrix V:
+      0.07296      0.59005      0.57115      0.45843      0.33189
+     -0.66178     -0.17644     -0.35977      0.48843      0.40364
+      0.69969      0.00101     -0.51140      0.19072      0.46101
+     -0.23165      0.33543     -0.07278     -0.71344      0.56527
+      0.11618     -0.71288      0.52682     -0.07687      0.44144
+
+
+The diagonal matrix D with the corresponding eigenvalues:
+
+Matrix D:
+     -0.66132      0.00000      0.00000      0.00000      0.00000
+      0.00000     -0.42307      0.00000      0.00000      0.00000
+      0.00000      0.00000     -0.30750      0.00000      0.00000
+      0.00000      0.00000      0.00000      0.29371      0.00000
+      0.00000      0.00000      0.00000      0.00000      2.05072
+
+
+The vector w of the eigenvalues:
+
+Vector w:
+     -0.66132
+     -0.42307
+     -0.30750
+      0.29371
+      2.05072
+
+
+The matrix Vᵀ (which is the transpose of V)
 
 Matrix Vᵀ:
-   0.32311    0.47579   -0.22176   -0.72821     0.2996 
-  -0.77239   0.082757    0.20706   -0.11135     0.5842 
-   0.33074   -0.77263    0.23436   -0.25898    0.41431 
-  0.044536    0.19609    0.88485   -0.25804    -0.3317 
-   0.43317    0.36243    0.26471    0.56891    0.53598 
+      0.07296     -0.66178      0.69969     -0.23165      0.11618
+      0.59005     -0.17644      0.00101      0.33543     -0.71288
+      0.57115     -0.35977     -0.51140     -0.07278      0.52682
+      0.45843      0.48843      0.19072     -0.71344     -0.07687
+      0.33189      0.40364      0.46101      0.56527      0.44144
 
-Matrix D (diagonal matrix of eigenvalues):
-   -1.0378          0          0          0          0 
-         0   -0.27446          0          0          0 
-         0          0    0.54037          0          0 
-         0          0          0    0.64253          0 
-         0          0          0          0     2.4554 
 
 --- Check that VᵀAV≈D ---
 
 Matrix VᵀAV:
-   -1.0378 4.8572E-17 1.6601E-11  4.503E-12 1.0048E-14 
-         0   -0.27446 2.7159E-11 -2.0817E-16 1.1102E-16 
-1.6601E-11 2.7159E-11    0.54037 -8.3267E-17 6.6449E-10 
- 4.503E-12 -1.6653E-16 -1.1102E-16    0.64253 4.6683E-10 
-1.0242E-14          0 6.6449E-10 4.6683E-10     2.4554 
+     -0.66132      0.00000      0.00000      0.00000      0.00000
+      0.00000     -0.42307      0.00000      0.00000      0.00000
+      0.00000      0.00000     -0.30750      0.00000      0.00000
+      0.00000      0.00000      0.00000      0.29371      0.00000
+      0.00000      0.00000      0.00000      0.00000      2.05072
 
-TEST: Is VᵀAV≈D (within a tolerance of 1e-6)?
-RESULT: Yes, VᵀAV≈D
-
-Eigenvalue vector w from Jacobi:    -1.0378 -0.27446  0.54037  0.64253   2.4554
+TEST: is VᵀAV=D (within a tolerance of 1E-12)?
+RESULT: No.
 
 --- Check that VDVᵀ≈A ---
 
 Matrix VDVᵀ:
-     0.249      0.111      0.467      0.772      0.658 
-     0.111      0.433      0.354      0.944      0.101 
-     0.467      0.354      0.642      0.029      0.248 
-     0.772      0.944      0.029       0.32       0.99 
-     0.658      0.101      0.248       0.99      0.682 
+      0.03649      0.47965      0.39525      0.22889      0.36992
+      0.47965      0.06158      0.65868      0.28116      0.41028
+      0.39525      0.65868      0.04234      0.59004      0.44242
+      0.22889      0.28116      0.59004      0.72005      0.65858
+      0.36992      0.41028      0.44242      0.65858      0.09208
 
-TEST: Is VDVᵀ≈A (within a tolerance of 1e-6)?
-RESULT: Yes, VDVᵀ≈A
+TEST: is VDVᵀ=A (within a tolerance of 1E-12)?
+RESULT: No.
 
 --- Check that VᵀV≈I ---
 
 Matrix VᵀV:
-         1 -5.5511E-17 -1.8041E-16 -5.5511E-17 -1.1102E-16 
--5.5511E-17          1 -1.9429E-16 1.9429E-16 -1.1102E-16 
--1.8041E-16 -1.9429E-16          1 -2.7756E-17 5.5511E-17 
--5.5511E-17 1.9429E-16 -2.7756E-17          1 1.3878E-16 
--1.1102E-16 -1.1102E-16 5.5511E-17 1.3878E-16          1 
+      1.00000      0.00000      0.00000      0.00000      0.00000
+      0.00000      1.00000      0.00000      0.00000      0.00000
+      0.00000      0.00000      1.00000      0.00000      0.00000
+      0.00000      0.00000      0.00000      1.00000      0.00000
+      0.00000      0.00000      0.00000      0.00000      1.00000
 
-TEST: Is VᵀV≈I (within a tolerance of 1e-6)?
-RESULT: Yes, VᵀV= I
+TEST: is VᵀV the identity matrix (within a tolerance of 1E-12)? 
+RESULT: Yes.
 
 --- Check that VVᵀ≈I ---
 
 Matrix VVᵀ:
-         1 -1.6653E-16 1.3878E-17 1.3878E-16 1.3878E-16 
--1.6653E-16          1 -5.5511E-17 -2.7756E-17 -8.3267E-17 
-1.3878E-17 -5.5511E-17          1 1.1102E-16 5.5511E-17 
-1.3878E-16 -2.7756E-17 1.1102E-16          1 5.5511E-17 
-1.3878E-16 -8.3267E-17 5.5511E-17 5.5511E-17          1 
+      1.00000      0.00000      0.00000      0.00000      0.00000
+      0.00000      1.00000      0.00000      0.00000      0.00000
+      0.00000      0.00000      1.00000      0.00000      0.00000
+      0.00000      0.00000      0.00000      1.00000      0.00000
+      0.00000      0.00000      0.00000      0.00000      1.00000
 
-TEST: Is VVᵀ≈I (within a tolerance of 1e-6)?
-RESULT: Yes, VVᵀ≈I
+TEST: is VVᵀ the identity matrix (within a tolerance of 1E-12)? 
+RESULT: Yes.
 
------------- TASK B: Hydrogen atom, s-wave radial Schrödinger equation on a grid ------------
+------------ TASK B: Hydrogen atom, s-wave radial Schrödinger equation on a grid -----------
 
 ------ Calculate numerically the lowest egenvalues and eigenfunctions ------
 ------ of the s-wave states in the hydrogen atom                      ------
 ------ and compare them with the exact results                        ------
-
 
 Numerically calculated lowest eigenvalues:
 ε_0 = -0.489228
@@ -131,3 +146,4 @@ varying_rmax.svg is a plot of the resulting curve.
 The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.
 The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.
 
+Timing data are written by NumberOfOperations.exe to number_of_operations.txt.

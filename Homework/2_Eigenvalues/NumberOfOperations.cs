@@ -1,34 +1,29 @@
 using System;
+using System.Diagnostics;
 
-public class NumberOfOperations {
-    public static void Main(string[] args) {
-        if (args.Length < 1) {
+public static class NumberOfOperations
+{
+    public static void Main(string[] args)
+    {
+        if (args.Length < 1)
+        {
             Console.WriteLine("n   seconds");
             return;
         }
 
-        int n = int.Parse(args[0]);
-        matrix A = new matrix(n, n);
-        Random rand = new Random();
+        int n   = int.Parse(args[0]);
 
-        // Generate a random symmetric matrix
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                double val = rand.NextDouble();
-                A[i, j] = val;
-                A[j, i] = val;
-            }
-        }
+        /* Random symmetric matrix */
+        double[,] A = VectorAndMatrix.RandomMatrix(n, n);
+        VectorAndMatrix.Symmetrize(A);
 
-        vector w = new vector(n);
-        matrix V = new matrix(n, n);
+        double[]  w = new double[n];
+        double[,] V = new double[n, n];
 
-        // Time just the diagonalization
-        var watch = System.Diagnostics.Stopwatch.StartNew();
+        var watch = Stopwatch.StartNew();
         jacobi.cyclic(A, w, V);
         watch.Stop();
 
-        double seconds = watch.Elapsed.TotalSeconds;
-        Console.WriteLine("{0} {1:F6}", n, seconds);
+        Console.WriteLine($"{n} {watch.Elapsed.TotalSeconds:F6}");
     }
 }
