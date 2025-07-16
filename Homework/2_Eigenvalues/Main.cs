@@ -188,7 +188,7 @@ public static class Program
         */
 
         /* ------------ Homework points ------------*/
-        int HW_POINTS_A = 1, HW_POINTS_B = 1, HW_POINTS_C = 0; // HERHER: lav om til 1 når du har lavet opgaven færdig
+        int HW_POINTS_A = 1, HW_POINTS_B = 1, HW_POINTS_C = 1; // HERHER: lav om til 1 når du har lavet opgaven færdig
         HW_points.HW_POINTS(HW_POINTS_A, HW_POINTS_B, HW_POINTS_C);
     
     }

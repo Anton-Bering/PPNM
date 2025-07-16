@@ -68,7 +68,7 @@ $(OUT) $(MAIN_PLOT_DATA) : $(EXE_MAIN)
 #	@echo "Skrev timing-data til $@"
 
 # Lavet om så det køre i parlel (TASK C:)
-Ns := $(shell seq 100 40 300)
+Ns := $(shell seq 50 5 300)
 $(TIMING_FILE): $(EXE_TIMING)
 	@echo "# n   seconds" > $@
 	@for N in $(Ns); do \
