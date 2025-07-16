@@ -1,104 +1,97 @@
 using System;
-public class QR {
-    public matrix Q;
-    public matrix R;
 
-    // Perform QR decomposition of A:
-    public QR(matrix A) {
-        int n = A.size1;
-        int m = A.size2;
-        if (n < m) {
-            throw new ArgumentException("QR decomposition requires n >= m");
-        }
-        // Copy A into Q and initialize R
-        Q = A.copy();
-        R = new matrix(m, m);
-        // Modified Gram-Schmidt orthogonalization
-        for (int j = 0; j < m; j++) {
-            // Orthogonalize column j against previous columns
-            for (int i = 0; i < j; i++) {
-                // Compute projection coefficient (dot product of col_i and col_j)
-                double dot = 0;
-                for (int k = 0; k < n; k++) {
-                    dot += Q[k, i] * Q[k, j];
-                }
+/// <summary>
+/// QR‑decomposition by modified Gram–Schmidt, rewritten to use the
+/// static utility library <c>VectorAndMatrix</c> (double[,] / double[]).
+/// </summary>
+public sealed class QR
+{
+    public double[,] Q { get; }   // n×m (orthonormal columns)
+    public double[,] R { get; }   // m×m (upper‑triangular)
+
+    /*------------------------------------------------------------*/
+    public QR(double[,] A)
+    {
+        int n = A.GetLength(0);
+        int m = A.GetLength(1);
+        if (n < m) throw new ArgumentException("QR decomposition requires n ≥ m");
+
+        Q = (double[,])A.Clone();         // work‑copy of A
+        R = new double[m, m];
+
+        /* modified Gram–Schmidt ---------------------------------*/
+        for (int j = 0; j < m; j++)
+        {
+            /* subtract projections on earlier orthonormal columns */
+            for (int i = 0; i < j; i++)
+            {
+                double dot = 0.0;
+                for (int k = 0; k < n; k++) dot += Q[k, i] * Q[k, j];
                 R[i, j] = dot;
-                // Subtract the projection from column j
-                for (int k = 0; k < n; k++) {
-                    Q[k, j] -= dot * Q[k, i];
-                }
+                for (int k = 0; k < n; k++) Q[k, j] -= dot * Q[k, i];
             }
-            // Compute norm of the j-th column of Q
-            double norm = 0;
-            for (int k = 0; k < n; k++) {
-                norm += Q[k, j] * Q[k, j];
-            }
+
+            /* normalise current column -------------------------*/
+            double norm = 0.0;
+            for (int k = 0; k < n; k++) norm += Q[k, j] * Q[k, j];
             norm = Math.Sqrt(norm);
+            if (norm == 0.0)
+                throw new InvalidOperationException("Matrix has linearly dependent (or zero) columns.");
+
             R[j, j] = norm;
-            if (norm == 0) {
-                throw new InvalidOperationException("Matrix has linearly dependent or zero column");
-            }
-            // Normalize the j-th column of Q
-            for (int k = 0; k < n; k++) {
-                Q[k, j] /= norm;
-            }
+            for (int k = 0; k < n; k++) Q[k, j] /= norm;
         }
     }
 
-    // Solve for x in the equation QR*x = b
-    public vector solve(vector b) {
-        int n = Q.size1;
-        int m = R.size1;  // R is m×m
-        if (b.size != n) {
-            throw new ArgumentException("Vector length must match matrix row count");
-        }
-        // Compute y = Q^T * b
-        vector y = new vector(m);
-        for (int i = 0; i < m; i++) {
-            double sum = 0;
-            for (int k = 0; k < n; k++) {
-                sum += Q[k, i] * b[k];
-            }
+    /*------------------------------------------------------------*/
+    /// <summary>Solve <c>A x = b</c> where A == Q R.</summary>
+    public double[] solve(double[] b)
+    {
+        int n = Q.GetLength(0);
+        int m = R.GetLength(0);
+        if (b.Length != n) throw new ArgumentException("Vector length must equal matrix row count.");
+
+        /* y = Qᴴ b (Q is real orthogonal ⇒ Qᴴ == Qᵀ) */
+        var y = new double[m];
+        for (int i = 0; i < m; i++)
+        {
+            double sum = 0.0;
+            for (int k = 0; k < n; k++) sum += Q[k, i] * b[k];
             y[i] = sum;
         }
-        // to solve R*x = y
-        vector x = new vector(m);
-        for (int i = m - 1; i >= 0; i--) {
-            double sum = y[i];
-            for (int j = i + 1; j < m; j++) {
-                sum -= R[i, j] * x[j];
-            }
-            x[i] = sum / R[i, i];
-        }
-        return x;
+
+        /* back‑substitution: R x = y ---------------------------*/
+        return VectorAndMatrix.SolveUpperTriangular(R, y);
     }
 
-    // Compute the determinant of A:
-    public double det() {
-        int m = R.size1;
-        double product = 1.0;
-        for (int i = 0; i < m; i++) {
-            product *= R[i, i];
-        }
-        return product;
+    /*------------------------------------------------------------*/
+    public double det()
+    {
+        /* For square A, det(A) = Π diag(R)  (because det(Q)=±1) */
+        int m = R.GetLength(0);
+        double p = 1.0;
+        for (int i = 0; i < m; i++) p *= R[i, i];
+        return p;
     }
 
-    // Compute the inverse of A:
-    public matrix inverse() {
-        int n = Q.size1;
-        int m = R.size1;
-        if (n != m) {
-            throw new InvalidOperationException("Matrix must be square to compute inverse");
-        }
-        matrix inv = new matrix(n, n);
-        // Solve A*x = e_j for each basis vector e_j to get columns of A^{-1}
-        for (int j = 0; j < n; j++) {
-            vector e = new vector(n);
-            e[j] = 1.0;               
-            vector x = this.solve(e);
-            for (int i = 0; i < n; i++) {
-                inv[i, j] = x[i];
-            }
+    /*------------------------------------------------------------*/
+    public double[,] inverse()
+    {
+        int n = Q.GetLength(0);
+        int m = R.GetLength(0);
+        if (n != m) throw new InvalidOperationException("Inverse requires a square matrix.");
+
+        var inv = new double[n, n];
+        var e   = new double[n];
+
+        /* Solve A x_j = e_j  — one RHS per unit vector ----------*/
+        for (int j = 0; j < n; j++)
+        {
+            Array.Clear(e, 0, n);
+            e[j] = 1.0;
+
+            var x = solve(e);
+            for (int i = 0; i < n; i++) inv[i, j] = x[i];
         }
         return inv;
     }
