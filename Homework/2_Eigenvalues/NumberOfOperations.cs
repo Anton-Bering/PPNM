@@ -5,11 +5,13 @@ public static class NumberOfOperations
 {
     public static void Main(string[] args)
     {
-        if (args.Length < 1)
+        /* Udkometer da jeg ikke længer brugre Stopwatch men time.. 
+        if (args.Length < 1) 
         {
             Console.WriteLine("n   seconds");
             return;
         }
+        */ 
 
         int n   = int.Parse(args[0]);
 
@@ -20,10 +22,10 @@ public static class NumberOfOperations
         double[]  w = new double[n];
         double[,] V = new double[n, n];
 
-        var watch = Stopwatch.StartNew();
+        // var watch = Stopwatch.StartNew(); // Udkometer da jeg ikke længer brugre Stopwatch men time..
         jacobi.cyclic(A, w, V);
-        watch.Stop();
+        // watch.Stop(); // Udkometer da jeg ikke længer brugre Stopwatch men time..
 
-        Console.WriteLine($"{n} {watch.Elapsed.TotalSeconds:F6}");
+        //Console.WriteLine($"{n} {watch.Elapsed.TotalSeconds:F6}"); // Udkometer da jeg ikke længer brugre Stopwatch men time..
     }
 }

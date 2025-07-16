@@ -59,11 +59,27 @@ $(OUT) $(MAIN_PLOT_DATA) : $(EXE_MAIN)
 	$(RUN_MAIN) > $@ 
 
 # ---------- Lav timing-data til O(n³)-plottet ----------
-$(TIMING_FILE) : $(EXE_TIMING)
-	@echo "# n   seconds" > $@
-	@for n in 100 140 180 220 260 300 ; do \
-		$(RUN_TIMING) $$n >> $@ ; \
+
+#$(TIMING_FILE) : $(EXE_TIMING)
+#	@echo "# n   seconds" > $@
+#	@for n in 100 140 180 220 260 300 ; do \
+#		$(RUN_TIMING) $$n >> $@ ; \
 	done
+#	@echo "Skrev timing-data til $@"
+
+# Lavet om så det køre i parlel (TASK C:)
+Ns := $(shell seq 100 40 300)
+$(TIMING_FILE): $(EXE_TIMING)
+	@echo "# n   seconds" > $@
+	@for N in $(Ns); do \
+		time -o $@.$$N -f "$$N %e" $(RUN_TIMING) $$N  & \
+	done; \
+	wait
+	>$@
+	@for N in $(Ns); do \
+		cat $@.$$N >> $@; \
+		rm -f $@.$$N; \
+	done	
 	@echo "Skrev timing-data til $@"
 
 timing: $(TIMING_FILE)  # praktisk alias
@@ -76,4 +92,6 @@ plots: $(SVG)
 
 clean:
 	-rm -f $(EXE_MAIN) $(EXE_TIMING) $(OUT) $(SVG) $(ALL_PLOT_DATA) fit.log
+
+
 

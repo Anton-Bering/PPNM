@@ -123,13 +123,13 @@ public static class Program
         Console.WriteLine("\nanalytic_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.");
         Console.WriteLine("eigenfunctions.svg also contains the exact results for comparison.");
 
-
+        // HERHER: TASK C: HerFra: flyt muligvis det her i en selstændig fil, når man skal lave parallelisering.
         Console.WriteLine("\n------ Fix r_max and calculate ε₀ for several different values of Δr ------");
         Console.WriteLine("------ and plot the resulting curve                                  ------\n");
         var drs = Enumerable.Range(1, 100).Select(i => i * 0.01);
         using (var drWriter = new StreamWriter("varying_dr.txt"))
         {
-            drWriter.WriteLine("dr, E0");                               // CHANGED: correct writer name
+            drWriter.WriteLine("dr, E0");                               
             foreach (double dr in drs)
             {
                 int npoints = (int)(fixed_rmax / dr) - 1;
@@ -167,6 +167,7 @@ public static class Program
         Console.WriteLine($"\nΔr is fixed to {fixed_dr}.");
         Console.WriteLine("varying_rmax.txt contains the data for the calculated ε₀.");
         Console.WriteLine("varying_rmax.svg is a plot of the resulting curve.");
+        // HERHER: TASK C: HerTIL: flyt muligvis det her i en selstændig fil, når man skal lave parallelisering.
 
         /* ---------- TASK C  (Scaling) ---------- */
         Console.WriteLine("\n------------ TASK C: Scaling and optimization ------------\n");
