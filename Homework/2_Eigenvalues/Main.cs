@@ -187,6 +187,10 @@ public static class Program
                 Console.WriteLine(line);
         }
         */
+
+        /* ------------ Homework points ------------*/
+        int HW_POINTS_A = 1, HW_POINTS_B = 1, HW_POINTS_C = 1;
+        HW_points.HW_POINTS(HW_POINTS_A, HW_POINTS_B, HW_POINTS_C);
     
     }
 
