@@ -2,30 +2,31 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 public static class Utils
 {
     /* -------------------------------------------------------------
-     *  Skriv en matrix i pænt, læsbart format til en StreamWriter
+     *  Write a matrix in a neat, readable format to a StreamWriter
      * ------------------------------------------------------------- */
-    public static void WriteMatrix(StreamWriter sw, string caption, Matrix M)
+
+    /* HERHER: OBS: Taget ud
+    public static void WriteMatrix(StreamWriter sw, string caption,
+                                   double[,] M)
     {
         sw.WriteLine(caption);
-        sw.WriteLine(M.ToPretty());
+        sw.WriteLine(VectorAndMatrix.PrintMatrix(M));
     }
+    */
 
-    public static void WriteTest(StreamWriter sw, string description, bool ok)
+    public static void WriteTest(StreamWriter sw,
+                                 string description, bool ok)
         => sw.WriteLine($"TEST: {description}\nRESULT: {(ok ? "Yes" : "No")}\n");
 
     /* -------------------------------------------------------------
-     *  Læs kolonne 'col' (0‑indekseret) fra en ASCII‑fil.
-     *  Ignorer:
-     *      • tomme linjer
-     *      • linjer der starter med  #  (kommentar)
-     *  Kolonner separeres af et vilkårligt antal blanks eller tabs.
+     *  Read column ‘col’ (0‑based) from a whitespace‑separated text
+     *  file, ignoring blank lines and lines starting with ‘#’.
      * ------------------------------------------------------------- */
-    public static Vector ReadColumn(string path, int col)
+    public static double[] ReadColumn(string path, int col)
     {
         var goodLines = File.ReadLines(path)
                             .Where(l =>
@@ -35,15 +36,15 @@ public static class Utils
                             })
                             .ToList();
 
-        var v = new Vector(goodLines.Count);
+        var v = new double[goodLines.Count];
         int i = 0;
 
         foreach (var line in goodLines)
         {
-            string[] tok = line.Split((char[])null,   // splitter på whitespace
+            string[] tok = line.Split((char[])null,
                                       StringSplitOptions.RemoveEmptyEntries);
             if (col >= tok.Length)
-                throw new FormatException($"Linje har ikke kolonne {col}: {line}");
+                throw new FormatException($"Line lacks column {col}: {line}");
 
             v[i++] = double.Parse(tok[col], CultureInfo.InvariantCulture);
         }

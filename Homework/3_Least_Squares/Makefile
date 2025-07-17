@@ -42,7 +42,8 @@ $(EXE): $(CSFILES)
 
 # Kør programmet for at generere Out.txt og datatabeller
 $(OUT) $(DATA): $(EXE)
-	$(RUN)
+	$(RUN) > $(OUT)
+
 
 # Ét kald til gnuplot producerer begge .svg‑filer
 $(PLOTS): $(DATA) $(GNUPLOT)

@@ -4,19 +4,19 @@ public static class LSFit
 {
     /* ---------------------------------------------------------
      * Ordinary least‑squares with uncertainties:
-     *   y_i = Σ_k c_k f_k(x_i)    ,   σ_i = dy[i]
-     * Returns best‑fit parameter vector c and covariance matrix
+     *   y_i = Σ_k c_k f_k(x_i) ,   σ_i = dy[i]
+     * Returns (best‑fit parameter vector c, covariance matrix Cov)
      * --------------------------------------------------------- */
-    public static (Vector c, Matrix Cov) Fit(
+    public static (double[] c, double[,] Cov) Fit(
         Func<double, double>[] fs,
-        Vector x, Vector y, Vector dy)
+        double[] x, double[] y, double[] dy)
     {
-        int n = x.Size;
+        int n = x.Length;
         int m = fs.Length;
 
-        // Build design matrix A and weighted RHS b
-        var A = new Matrix(n, m);
-        var b = new Vector(n);
+        /* ----------- build design matrix A and weighted RHS b ----------- */
+        var A = new double[n, m];
+        var b = new double[n];
 
         for (int i = 0; i < n; i++)
         {
@@ -25,48 +25,69 @@ public static class LSFit
             for (int k = 0; k < m; k++) A[i, k] = w * fs[k](x[i]);
         }
 
+        /* ----------- QR decomposition and normal‑equation solve ---------- */
         var (Q, R) = QR.Decompose(A);
-        Vector c = QR.Solve(Q, R, b);
+        double[] c = QR.Solve(Q, R, b);
 
-        /* -------- covariance -------- */
-        Vector r = y - Evaluate(fs, c, x);
-        double chi2 = 0;
-        for (int i = 0; i < n; i++) chi2 += Math.Pow(r[i] / dy[i], 2);
-        double sigma2 = chi2 / (n - m);               // reduced χ²
+        /* ----------- covariance matrix ---------------------------------- */
+        double[] yFit  = Evaluate(fs, c, x);
+        double chi2 = 0.0;
+        for (int i = 0; i < n; i++)
+        {
+            double diff = y[i] - yFit[i];
+            chi2 += diff * diff / (dy[i] * dy[i]);
+        }
+        double sigma2 = chi2 / (n - m);          // reduced χ²
 
-        Matrix Rinv = InvertUpper(R);
-        Matrix Cov = sigma2 * (Rinv * Rinv.T);
+        double[,] Rinv = InvertUpper(R);
+        double[,] Cov  = ScaleMatrix(
+                             VectorAndMatrix.Multiply(Rinv,
+                                                       VectorAndMatrix.Transpose(Rinv)),
+                             sigma2);
         return (c, Cov);
     }
 
-    public static Vector Evaluate(Func<double, double>[] fs, Vector c, Vector x)
+    public static double[] Evaluate(Func<double, double>[] fs,
+                                    double[] c, double[] x)
     {
-        var y = new Vector(x.Size);
-        for (int i = 0; i < x.Size; i++)
+        int n = x.Length, m = fs.Length;
+        var y = new double[n];
+        for (int i = 0; i < n; i++)
         {
-            double s = 0;
-            for (int k = 0; k < fs.Length; k++) s += c[k] * fs[k](x[i]);
+            double s = 0.0;
+            for (int k = 0; k < m; k++) s += c[k] * fs[k](x[i]);
             y[i] = s;
         }
         return y;
     }
 
     /* ------------- helper: invert upper‑triangular matrix ------------- */
-    private static Matrix InvertUpper(Matrix U)
+    private static double[,] InvertUpper(double[,] U)
     {
-        int n = U.Rows;
-        var X = new Matrix(n, n);
+        int n = U.GetLength(0);
+        var X = new double[n, n];
 
         for (int i = n - 1; i >= 0; i--)
         {
-            X[i, i] = 1 / U[i, i];
+            X[i, i] = 1.0 / U[i, i];
             for (int j = i - 1; j >= 0; j--)
             {
-                double s = 0;
+                double s = 0.0;
                 for (int k = j + 1; k <= i; k++) s += U[j, k] * X[k, i];
                 X[j, i] = -s / U[j, j];
             }
         }
         return X;
+    }
+
+    /* ------------- helper: scale matrix by scalar --------------------- */
+    private static double[,] ScaleMatrix(double[,] A, double factor)
+    {
+        int n = A.GetLength(0), m = A.GetLength(1);
+        var B = new double[n, m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                B[i, j] = factor * A[i, j];
+        return B;
     }
 }

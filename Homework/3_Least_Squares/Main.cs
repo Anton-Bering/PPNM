@@ -1,9 +1,9 @@
 /* ----------------------------------------------------------------------
- *  Homework ‑ Ordinary Least‑Squares Fit
- *  Main.cs compatible with Mono mcs  (2025‑06‑19)
+ *  Homework – Ordinary Least‑Squares Fit   (updated for VectorAndMatrix)
  * -------------------------------------------------------------------- */
 using System;
 using System.Globalization;
+using System.Diagnostics;   //  HERHER: CG
 using System.IO;
 
 class Program
@@ -14,34 +14,70 @@ class Program
     const string CurvesTxt = "bestfit_curves.txt";
     const string DataPlot  = "Rutherford_and_Soddys_ThX.svg";
     const string CurvesSvg = "best_fit_with_changed_coefficients.svg";
+    const string FitTxt    = "Fit_the_ThX_data_with_exponential_function.txt"; // HERHER: CG
 
-    const double Tmodern = 3.6319;   // modern half‑life (days)
-    const double TOL     = 1e-12;
+    const double Tmodern = 3.6313;   // modern half‑life of 224-Ra [days], Kilde: https://www.sciencedirect.com/science/article/abs/pii/S0969804320307107
+
 
     static void Main()
     {
-        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        if (!File.Exists(RawFile)) BuildOriginalDataFile();
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // HERHER: Er usiker på hvor det her skal plaseres?
+        if (!File.Exists(RawFile)) BuildOriginalDataFile(); // HERHER: Er usiker på hvor det her skal plaseres?
+
+        // ------------ TASK A: del 1 ------------
+        Console.WriteLine("------------ TASK A: Ordinary least-squares fit by QR-decomposition ------------\n");
+
+        Console.WriteLine("------ Make sure that your QR-decomposition routines work for tall matrices ------");
+        Console.WriteLine("------ (A tall matrix of size n×m is one where n>m)                         ------\n");
+
+        Console.WriteLine("Below, I check that my QR decomposition routines work for tall matrices:\n");
+
+        Console.WriteLine("Check part 1) Generate a random tall (6x4) matrix A:\n");
+        double[,] A = VectorAndMatrix.RandomMatrix(6, 4);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(A, "A"));
+
+        Console.WriteLine("Check part 2) Decompose A into Q and R:\n");
+        var (Q, R) = QR.Decompose(A);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(Q, "Q"));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(R, "R"));
+
+        Console.WriteLine("Check part 3) Check that R is upper triangular:\n");
+        VectorAndMatrix.CheckUpperTriangular(R, "R");
+
+        Console.WriteLine("\nCheck part 4) Check that QᵀQ ≈ I:\n");
+        double[,] QTQ = VectorAndMatrix.Multiply(
+                            VectorAndMatrix.Transpose(Q), Q);
+        VectorAndMatrix.CheckIdentityMatrix(QTQ, "QᵀQ");
+
+        Console.WriteLine("\nCheck part 5) Check that QR ≈ A:\n");
+        double[,] QR_check5 = VectorAndMatrix.Multiply(Q,R);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(QR_check5, "QR"));
+        VectorAndMatrix.CheckMatrixEqual(QR_check5, A, "QR", "A");
+        
+        // ---------------- TASK A: del 2 ------------
+        Console.WriteLine("\n------ Implement a routine that makes a least-squares fit (using your QR-decomposition routines) ------");
+        Console.WriteLine("------ The routine must calculate and return the vector of the best fit coefficients, {c_k}      ------\n");
 
         /* ------------- 1.  load and log‑convert data  ------------- */
-        Vector t  = Utils.ReadColumn(RawFile, 0);
-        Vector y  = Utils.ReadColumn(RawFile, 1);
-        Vector dy = Utils.ReadColumn(RawFile, 2);
+        double[] t  = Utils.ReadColumn(RawFile, 0);
+        double[] y  = Utils.ReadColumn(RawFile, 1);
+        double[] dy = Utils.ReadColumn(RawFile, 2);
 
-        Vector lnY  = new Vector(y.Size);
-        Vector dlnY = new Vector(y.Size);
-        for (int i = 0; i < y.Size; i++)
+        var lnY  = new double[y.Length];
+        var dlnY = new double[y.Length];
+        for (int i = 0; i < y.Length; i++)
         {
             lnY[i]  = Math.Log(y[i]);
             dlnY[i] = dy[i] / y[i];
         }
         using (var swLog = new StreamWriter(LogFile, false))
-            for (int i = 0; i < t.Size; i++)
+            for (int i = 0; i < t.Length; i++)
                 swLog.WriteLine($"{t[i]} {lnY[i]} {dlnY[i]}");
 
         /* ------------- 2.  least‑squares fit  lnA − λ t ------------- */
         var fs = new Func<double,double>[] { _ => 1.0, z => -z };
-        var (c , Cov) = LSFit.Fit(fs, t, lnY, dlnY);      // :contentReference[oaicite:0]{index=0}
+        var (c , Cov) = LSFit.Fit(fs, t, lnY, dlnY);
+
         double lnA     = c[0],             lambda   = c[1];
         double dlnA    = Math.Sqrt(Cov[0,0]),
                dlambda = Math.Sqrt(Cov[1,1]);
@@ -59,107 +95,152 @@ class Program
             for (double z = 0; z <= 15; z += 0.1)
                 bf.WriteLine($"{z} {fit(z)} {fitLow(z)} {fitHi(z)}");
 
-        /* ------------- 4.  build Out.txt  ------------- */
-        // ---- FIX for mcs: classic using‑statement ----
-        using (var outw = new StreamWriter(OutPath, false))         // was “using var”
-        {                                                           // ‑‑‑ FIX for mcs
-            /* ========== TASK A summary ========== */
-            outw.WriteLine("------------ TASK A ------------\n");
-            outw.WriteLine("--- Fit the data from Rutherford and Soddy with an exponential function ---\n");
-            outw.WriteLine($"{RawFile} contains the original experimental data.");
-            outw.WriteLine($"{LogFile} contains the logarithmic data used for the fit.");
-            outw.WriteLine($"{CurvesTxt} contains the sampled best‑fit curve and ±1σ variations.\n");
+        /* ------------- 3a.  write data–vs–fit table (Task A) ------------- */
+        //  Create the table // HERHER: CG
+        using (var ft = new StreamWriter(FitTxt, false))
+            for (int i = 0; i < t.Length; i++)
+                ft.WriteLine($"{t[i]} {lnY[i]} {fit(t[i])}");
 
-            outw.WriteLine("--- Plot the experimental data and your best fit ---\n");
-            outw.WriteLine($"{DataPlot} shows the data with error bars and the best‑fit line.\n");
-
-            outw.WriteLine("--- Half‑life of ThX and comparison with modern value ---\n");
-            outw.WriteLine($"Half‑life from the fit: {T12:0.####} ± {dT12:0.####} days");
-            outw.WriteLine($"Modern recommended value: {Tmodern} days\n");
-
-            /* ========== TASK B summary ========== */
-            outw.WriteLine("------------ TASK B ------------\n");
-            outw.WriteLine("------ Estimate the uncertainty of the half‑life value for ThX ------\n");
-            outw.WriteLine($"1σ uncertainty on the half‑life: ±{dT12:0.####} days\n");
-
-            outw.WriteLine("------ Does the fitted value agree with the modern value within that uncertainty? ------\n");
-            outw.WriteLine(within
-                ? "Yes – the modern value lies inside the confidence interval.\n"
-                : "No  – the modern value lies outside the confidence interval.\n");
-
-            /* ========== TASK C summary ========== */
-            outw.WriteLine("------------ TASK C ------------\n");
-            outw.WriteLine("------ Plot your best fit together with the fits where you change the fit coefficients ------");
-            outw.WriteLine("------ by the estimated uncertainties δc in different combinations                     ------\n");
-            outw.WriteLine($"{CurvesTxt} contains the numerical table.");
-            outw.WriteLine($"{CurvesSvg} shows the three curves plotted together.\n");
-
-            /* ---------- detailed diagnostics (unchanged) ---------- */
-            outw.WriteLine("==========================================================================\n");
-            outw.WriteLine("Below follow the detailed numerical checks required by the assignment.\n");
-
-            var rng = new Random(1);
-            Matrix A = Matrix.Random(6,4,rng);                    // :contentReference[oaicite:1]{index=1}
-            var (Q,R) = QR.Decompose(A);                          // :contentReference[oaicite:2]{index=2}
-
-            Utils.WriteMatrix(outw,"Matrix A:",A);
-            Utils.WriteMatrix(outw,"Matrix Q:",Q);
-            Utils.WriteMatrix(outw,"Matrix R:",R);
-
-            Utils.WriteTest(outw,"Is R upper‑triangular?",IsUpperTriangular(R));
-            Utils.WriteTest(outw,"Is QᵀQ ≈ I?",IsIdentity(Q.T * Q,TOL));
-            Utils.WriteTest(outw,"Does Q·R reproduce A (‖QR−A‖<1e‑12)?",
-                            Frobenius(Q*R - A) < TOL);
-
-            outw.WriteLine("\n------------ Detailed decay‑fit output ------------\n");
-            outw.WriteLine($"ln(A)  = {lnA:0.######} ± {dlnA:0.######}");
-            outw.WriteLine($"λ      = {lambda:0.######} ± {dlambda:0.######}");
-            outw.WriteLine($"T½     = {T12:0.####} ± {dT12:0.####} days");
-            outw.WriteLine($"Modern value comparison OK?  {(within ? "Yes" : "No")}\n");
-
-            // --- POINTS from task A, B, and C  ---
-            int HW_POINTS_A = 1;
-            int HW_POINTS_B = 1;
-            int HW_POINTS_C = 1;
-            //
-            var prev = Console.Out;           
-            Console.SetOut(outw);             
-            HW_points.HW_POINTS(HW_POINTS_A, HW_POINTS_B, HW_POINTS_C);
-            Console.SetOut(prev);             
+        /* ------------- 3b.  generate plots via gnuplot scripts ------------- */
+        BuildGnuplotScript(lnA, lambda);
+        TryRunGnuplot("plot.gpi");   // ignores failures quietly
 
 
-        }   // <‑‑ end using(outw)                            // ‑‑‑ FIX for mcs
+
+        
+
+
+
+        Console.WriteLine($"Best‑fit coefficients:");
+        Console.WriteLine($"   ln(a)  = {lnA:g12}");
+        Console.WriteLine($"   λ     = {lambda:g12}");
+
+        Console.WriteLine($"\nFull data‑versus‑fit table written to “{FitTxt}”.\n");
+
+        Console.WriteLine("\n------ Fit the ThX data with exponential function in the usual logarithmic way ------\n");
+
+        Console.WriteLine("Radioactive decay follows: y(t)=a*exp(-λt)");
+        Console.WriteLine("where y is the activity, t is time, a is the activity at t=0, and λ is the decay constant.");
+        Console.WriteLine("The uncertainty of the measurement is denoted as δy.");
+
+        Console.WriteLine("\nThe uncertainty of the logarithm is: δln(y)=δy/y");
+
+        // HERHER til CG: Gør sådan at fitte af ThX data kommer til at fremgå i outputtet ændet i Out.txt eller en særlig fil med nanet Fit_the_ThX_data_with_exponential_function.txt
+
+        Console.WriteLine("\n------ Plot the experimental data (with error-bars) and your best fit ------\n");
+
+        Console.WriteLine($"SVG figure saved as “{DataPlot}”.\n");
+
+        Console.WriteLine("\n------ From your fit find out the half-life time, T_{1/2}=ln(2)/λ, of ThX ------\n");
+        
+        Console.WriteLine($"T_1/2  = {T12:g6} ± {dT12:g6} days");
+
+        Console.WriteLine("\n------ Compare your result for ThX with the modern value ------");
+        Console.WriteLine("------ (ThX is known today as 224Ra)                     ------\n");
+
+        Console.WriteLine($"Modern value : {Tmodern} days");
+        Console.WriteLine(within
+            ? "The modern value lies **within** the 1 σ uncertainty of the fit."
+            : "The modern value lies **outside** the 1 σ uncertainty of the fit.");
+        Console.WriteLine();
+
+        Console.WriteLine("\n------------ TASK B: Uncertainties of the fitting coefficients ------------\n");
+
+        Console.WriteLine("\n------ Modify you least-squares fitting function such that it also calculates  ------");
+        Console.WriteLine("------ the covariance matrix and the uncertainties of the fitting coefficients ------\n");
+
+        Console.WriteLine($"The covariance matrix of (ln a, λ):\n");
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(Cov));
+        Console.WriteLine($"Uncertainty on ln a : {dlnA:g6}");
+        Console.WriteLine($"Uncertainty on λ    : {dlambda:g6}\n");
+
+        Console.WriteLine($"Propagated uncertainty on half‑life: ±{dT12:g6} days\n");
+        Console.WriteLine(within
+            ? "Half‑life agrees with the modern value within its uncertainty.\n"
+            : "Half‑life does **not** agree with the modern value within its uncertainty.\n");
+        
+        // HERHER: til CG: Sikrer at 'the covariance matrix and the uncertainties of the fitting coefficients' bliver udregnet og fremgår i Out.txt
+
+        Console.WriteLine("\n------ Estimate the uncertainty of the half-life value for ThX from the given data ------");
+        Console.WriteLine("------ does it agree with the modern value within the estimated uncertainty?       ------\n");
+        
+        // HERHER: til CG: Sikrer at 'the uncertainty of the half-life value for ThX' bliver udregnet og fremgår i Out.txt
+        // HERHER: til CG: Sikrer at at en udersøge af om verdigen stemmer overens med den moderne værdi inden for den estimerede usikkerhed bliver lavet og fremgår i Out.txt
+
+        Console.WriteLine("\n------------ TASK C: Evaluation of the quality of the uncertainties on the fit coefficients ------------\n");
+
+        Console.WriteLine("\n------ Plot your best fit, together with the fits where you change the fit coefficients ------");
+        Console.WriteLine("------ by the estimated uncertainties δc in different combinations                      ------\n");
+
+        Console.WriteLine($"SVG figure with curves for c ± δc saved as “{CurvesSvg}”.\n");
+            
+        
     }
 
-    /* ------------ helper functions (unchanged) ------------ */
-    static bool IsUpperTriangular(Matrix M)
+    /* ----------------- helpers for diagnostics ----------------- */
+    static double[,] SubtractMatrices(double[,] X, double[,] Y)
     {
-        for (int i=1;i<M.Rows;i++)
-            for (int j=0;j<i;j++)
-                if (Math.Abs(M[i,j])>TOL) return false;
-        return true;
+        int n = X.GetLength(0), m = X.GetLength(1);
+        var Z = new double[n, m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                Z[i, j] = X[i, j] - Y[i, j];
+        return Z;
     }
-    static bool IsIdentity(Matrix M,double tol)
+
+    static double Frobenius(double[,] M)
     {
-        if (M.Rows!=M.Cols) return false;
-        for (int i=0;i<M.Rows;i++)
-            for (int j=0;j<M.Cols;j++)
-            {
-                double e=(i==j)?1:0;
-                if (Math.Abs(M[i,j]-e)>tol) return false;
-            }
-        return true;
-    }
-    static double Frobenius(Matrix M)
-    {
-        double s=0;
-        for (int i=0;i<M.Rows;i++)
-            for (int j=0;j<M.Cols;j++)
-                s+=M[i,j]*M[i,j];
+        double s = 0.0;
+        int n = M.GetLength(0), m = M.GetLength(1);
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                s += M[i, j] * M[i, j];
         return Math.Sqrt(s);
     }
 
-    /* write the original table if it is missing */
+    // HERHER: CG --------- START -------------
+    
+        /* ----------------- gnuplot helpers ----------------- */
+    //  HERHER: CG: helper that writes/updates ‘plot.gpi’
+    static void BuildGnuplotScript(double lnA, double lambda)
+    {
+        using (var gp = new StreamWriter("plot.gpi", false))
+        {
+            gp.WriteLine("set terminal svg size 600,400");
+            gp.WriteLine($"set output '{DataPlot}'");
+            gp.WriteLine("set xlabel 't  (days)'");
+            gp.WriteLine("set ylabel 'ln(activity)'");
+            gp.WriteLine($"f(x) = {lnA.ToString("g17")} - {lambda.ToString("g17")}*x");
+            gp.WriteLine($"plot '{LogFile}' u 1:2:3 w yerrorbars t 'data', \\");
+            gp.WriteLine("     f(x) w l lw 2 t 'best fit'");
+
+            gp.WriteLine($"set output '{CurvesSvg}'");
+            gp.WriteLine("set key bottom left");
+            gp.WriteLine($"plot '{CurvesTxt}' u 1:2 w l lw 2 t 'best', \\");
+            gp.WriteLine($"     '' u 1:3 w l dt 2 t 'low',  '' u 1:4 w l dt 2 t 'high'");
+        }
+    }
+
+    //  HERHER: fra CG: try to call gnuplot; ignore if not available
+    static void TryRunGnuplot(string script)
+    {
+        try
+        {
+            var p = Process.Start(new ProcessStartInfo
+            {
+                FileName  = "gnuplot",
+                Arguments = script,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            });
+            p.WaitForExit();
+        }
+        catch { /* silently ignore missing gnuplot */ }
+    }
+
+    // HERHER: CG ---------- END -------------
+
+    /* write the original table if it is missing (unchanged) */
     static void BuildOriginalDataFile()
     {
         string[] raw = {
