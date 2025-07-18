@@ -22,7 +22,3 @@ dy/dx = f(x, y)
 ### B. (3 points) Relativistic precession of planetary orbit
 
 ### C. (1 points) Test of the order of the method; Alternative interface; Newtonian gravitational three-body problem
-
-1. Implement the cubic spline with derivative and definite integral (anti-derivative).
-
-2. Check that the built-in cubic splines in pyxplot/gnuplot (or the `spline` utility from plotutils) produces a similar cubic spline to your implementation
