@@ -34,7 +34,12 @@ class Program
         Console.WriteLine(VectorAndMatrix.PrintMatrix(A, "A"));
 
         Console.WriteLine("Check part 2) Decompose A into Q and R:\n");
-        var (Q, R) = QR.Decompose(A);
+
+        // var (Q, R) = QR.Decompose(A);
+        var qr = new QR(A);
+        double[,] Q = qr.Q;
+        double[,] R = qr.R;
+        
         Console.WriteLine(VectorAndMatrix.PrintMatrix(Q, "Q"));
         Console.WriteLine(VectorAndMatrix.PrintMatrix(R, "R"));
 

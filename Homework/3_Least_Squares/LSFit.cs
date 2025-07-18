@@ -26,8 +26,13 @@ public static class LSFit
         }
 
         /* ----------- QR decomposition and normal‑equation solve ---------- */
-        var (Q, R) = QR.Decompose(A);
-        double[] c = QR.Solve(Q, R, b);
+        // var (Q, R) = QR.Decompose(A);
+        // double[] c = QR.Solve(Q, R, b);
+        var qr = new QR(A);
+        double[] c = qr.solve(b);
+        double[,] Q = qr.Q;
+        double[,] R = qr.R;
+
 
         /* ----------- covariance matrix ---------------------------------- */
         double[] yFit  = Evaluate(fs, c, x);

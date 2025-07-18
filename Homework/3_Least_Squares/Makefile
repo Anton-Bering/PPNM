@@ -27,9 +27,11 @@ PLOTS   := Rutherford_and_Soddys_ThX.svg \
           best_fit_with_changed_coefficients.svg
 
 # Kildekoden til denne opgave
-SRC     := Main.cs LSFit.cs QRDecomposition.cs Utils.cs
+# (Fjernet QRDecomposition.cs fra SCR)
+SRC     := Main.cs LSFit.cs Utils.cs
 GENERAL := ../../General/general_Vector_and_Matrix.cs \
-		  ../../General/HW_points.cs
+		  ../../General/HW_points.cs \
+		  ../1_Linear_Equations/QR.cs
 
 CSFILES := $(SRC) $(GENERAL)
 
