@@ -10,10 +10,10 @@ You can use either our `vector` class or `double[]` to keep the x and y vectors.
 
 *I have chosen to use `double[]`.*
 
-The exercise (parts B and C) can be solved using different programming styles:
-I. [Procedural programming](https://en.wikipedia.org/wiki/Procedural_programming)
-II. [Object oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming)
-III. [Functional programming](https://en.wikipedia.org/wiki/Functional_programming)
+The exercise (parts B and C) can be solved using different programming styles:  
+I. [Procedural programming](https://en.wikipedia.org/wiki/Procedural_programming)  
+II. [Object oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming)  
+III. [Functional programming](https://en.wikipedia.org/wiki/Functional_programming)  
 
 *I have chosen to use option II: Object oriented programming*
 

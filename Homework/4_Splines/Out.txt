@@ -1,0 +1,57 @@
+------------ TASK A ------------
+
+------ Make some indicative plots to prove the linear spline and the integrator work as intended ------
+
+--- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} and plot its linear interpolant ---
+--- together with interpolant's anti-derivative                                   ---
+
+The data is in cos.txt and the plot is in cos.svg
+--- Take the table: {x_i=0,1,...,9; y_i=x_i^2} and plot its linear interpolant ---
+--- together with interpolant's anti-derivative                                ---
+
+The data is in quad.txt and the plot is in quad.svg
+
+------------ TASK B ------------
+
+------ Make some indicative plots to prove that the quadratic spline ------
+------ and the integrator work as intended                           ------
+
+--- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---
+
+The data is in sin.txt and the plot is in sin.svg.
+
+--- Using {x_i=0,1,...,9; y_i=ln(x_i+1)} ---
+
+The data is in log.txt and the plot is in log.svg.
+
+------ Calculate manually the parameters {b_i, c_i} of the corresponding quadratic-splines ------
+------ And compare the results with the quadratic-spline program ------
+
+
+ For Sin(x):
+The manually calculated values are in Manually_calculate_bi_and_ci_sin.txt.
+The program-computed values are in Computed_bi_and_ci_sin.txt.
+The manual and program-computed values are compared visually in the plot bi_and_ci_comparing.svg.
+
+
+ For ln(x+1):
+The manually calculated values are in Manually_calculate_bi_and_ci_log.txt.
+The program-computed values are in Computed_bi_and_ci_log.txt.
+The manual and program-computed values are compared visually in the plot bi_and_ci_comparing_log.svg.
+
+
+------------ TASK C ------------
+
+------- Check that the built-in cubic splines in Gnuplot produce a similar cubic spline to the implementation ------
+
+The results from my implementation are in sqrt.txt, and the plot is in sqrt.svg.
+In sqrt_comparing.svg, a comparison is shown between my results (from sqrt.txt) and the built-in Gnuplot spline (using the data in sqrt_data_points_to_Gnuplot.txt).
+
+
+------------ POINTS: received from tasks A, B, and C ------------
+
+Task A completed → 6 points😊
+Task B completed → 3 points😄
+Task C completed → 1 point 😎
+
+In total, this exercise results in 10 points 🎉🎉🎉
