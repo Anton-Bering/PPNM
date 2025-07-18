@@ -41,12 +41,12 @@ plot 'Out_Task_B/log.txt' using 1:2 with lines title 'Quadratic Spline', \
 
 
 # --- sqrt(x) plot ---
-set output 'sqrt.svg'
+set output 'Out_Task_C/sqrt.svg'
 set title "Cubic Spline Interpolation of sqrt(x)"
 set xlabel "x"
 set ylabel "y"
 plot sqrt(x) with lines title 'sqrt(x)', \
-     'sqrt.txt' using 1:2 with lines title 'Cubic Spline', \
+     'Out_Task_C/sqrt.txt' using 1:2 with lines title 'Cubic Spline', \
      '' using 1:4 with lines title 'Derivative', \
      '' using 1:3 with lines title 'Integral'
 
@@ -55,7 +55,7 @@ set output 'sqrt_comparing.svg'
 set title "Comparison of Cubic Spline for sqrt(x)"
 set xlabel "x"
 set ylabel "y"
-plot 'sqrt.txt' using 1:2 with lines title 'My Cubic Spline', \
+plot 'Out_Task_C/sqrt.txt' using 1:2 with lines title 'My Cubic Spline', \
      'sqrt_data_points_to_Gnuplot.txt' using 1:2 with linespoints smooth csplines title 'Gnuplot Cubic Spline'
 
 # --- b_i comparison for sin(x) ---

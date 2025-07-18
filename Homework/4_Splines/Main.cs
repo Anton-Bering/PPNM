@@ -113,7 +113,7 @@ public class Program {
         Console.WriteLine("The results from my implementation are in sqrt.txt, and the plot is in sqrt.svg.");
         Console.WriteLine("In sqrt_comparing.svg, a comparison is shown between my results (from sqrt.txt) and the built-in Gnuplot spline (using the data in sqrt_data_points_to_Gnuplot.txt).\n");
 
-        using (StreamWriter sqrtWriter = new StreamWriter("sqrt.txt")) {
+        using (StreamWriter sqrtWriter = new StreamWriter("Out_Task_C/sqrt.txt")) {
             sqrtWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");
             for (double z = 0; z <= 9; z += 0.1) {
                 double val = cs.Evaluate(z);

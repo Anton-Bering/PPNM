@@ -45,4 +45,4 @@ $(PLOTS) &: $(DATA) $(GNUPLOT)
 RM ?= rm
 
 clean:
-	-$(RM) -f $(EXE)  $(OUT) $(DATA) $(PLOTS) fit.log Fit_the_ThX_data_with_exponential_function.txt
+	-$(RM) -f $(EXE)  $(OUT) $(DATA) $(PLOTS)
