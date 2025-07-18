@@ -103,9 +103,6 @@ class Program
             for (int i = 0; i < t.Length; i++)
                 ft.WriteLine($"{t[i]} {lnY[i]} {fit(t[i])}");
 
-        /* ------------- 3b.  generate plots via gnuplot scripts ------------- */
-        TryRunGnuplot("plot.gpi");   // ignores failures quietly
-
         Console.WriteLine($"Best‑fit coefficients:");
         Console.WriteLine($"   ln(a)  = {lnA:g12}");
         Console.WriteLine($"   λ     = {lambda:g12}");
@@ -184,22 +181,5 @@ class Program
             for (int j = 0; j < m; j++)
                 s += M[i, j] * M[i, j];
         return Math.Sqrt(s);
-    }
-
-    // try to call gnuplot; ignore if not available
-    static void TryRunGnuplot(string script)
-    {
-        try
-        {
-            var p = Process.Start(new ProcessStartInfo
-            {
-                FileName  = "gnuplot",
-                Arguments = script,
-                CreateNoWindow = true,
-                UseShellExecute = false
-            });
-            p.WaitForExit();
-        }
-        catch { /* silently ignore missing gnuplot */ }
     }
 }
