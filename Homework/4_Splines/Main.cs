@@ -39,7 +39,7 @@ public class Program {
         Console.WriteLine("--- together with interpolant's anti-derivative                                   ---\n");
 
         Console.WriteLine("The data is in cos.txt and the plot is in cos.svg");
-        using (StreamWriter cosWriter = new StreamWriter("cos.txt")) {
+        using (StreamWriter cosWriter = new StreamWriter("Out_Task_A/cos.txt")) {
             cosWriter.WriteLine("# x\tspline(x)\tsplineInt(x)");
             for (double z = 0; z <= 9; z += 0.1) {
                 double val = LinearSpline.linterp(xs, yCos, z);
@@ -52,7 +52,7 @@ public class Program {
         Console.WriteLine("--- together with interpolant's anti-derivative                                ---\n");
 
         Console.WriteLine("The data is in quad.txt and the plot is in quad.svg");
-        using (StreamWriter quadWriter = new StreamWriter("quad.txt")) {
+        using (StreamWriter quadWriter = new StreamWriter("Out_Task_A/quad.txt")) {
             quadWriter.WriteLine("# x\tspline(x)\tsplineInt(x)");
             for (double z = 0; z <= 9; z += 0.1) {
                 double val = LinearSpline.linterp(xs, yQuad, z);
@@ -69,7 +69,7 @@ public class Program {
 
         Console.WriteLine("--- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---\n");
         Console.WriteLine("The data is in sin.txt and the plot is in sin.svg.");
-        using (StreamWriter sinWriter = new StreamWriter("sin.txt")) {
+        using (StreamWriter sinWriter = new StreamWriter("Out_Task_B/sin.txt")) {
             sinWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");
             for (double z = 0; z <= 9; z += 0.1) {
                 double val = qs.Evaluate(z);
@@ -81,7 +81,7 @@ public class Program {
 
         Console.WriteLine("\n--- Using {x_i=0,1,...,9; y_i=ln(x_i+1)} ---\n");
         Console.WriteLine("The data is in log.txt and the plot is in log.svg.");
-        using (StreamWriter logWriter = new StreamWriter("log.txt")) {
+        using (StreamWriter logWriter = new StreamWriter("Out_Task_B/log.txt")) {
             logWriter.WriteLine("# x\tspline(x)\tsplineInt(x)\tsplineDeriv(x)");
             for (double z = 0; z <= 9; z += 0.1) {
                 double val = qLog.Evaluate(z);
