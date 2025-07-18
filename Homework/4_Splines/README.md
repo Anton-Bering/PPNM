@@ -27,6 +27,11 @@ Implement functions for spline interpolation of tabulated data points {xᵢ, y�
 
 2. Make some indicative plots to prove that your linear spline and your integrator work as intended.
 
+*For this, I use the example from the assignment description, i.e.:*  
+*{xᵢ=0,1,…,9; yᵢ=sin(xᵢ)}.*
+
+*Furthermore, I do the same for: {xᵢ=0,1,...,9; yᵢ=ln(xᵢ+1)}*
+
 ---
 ### C. (1 points) Cubic spline
 
