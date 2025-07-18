@@ -1,77 +1,49 @@
-########################################################################
-#  Makefile – PPNM Homework 4 “Splines”
-#
-#  Kørsel:
-#     make        → kompilerer, kører Main.cs og genererer alle .svg-plots
-#     make run    → kører kun det kompilerede program
-#     make clean  → fjerner main.exe, datafiler og plots
-#
-#  Virker med både dotnet-SDK (csc) og Mono (mcs).
-########################################################################
+## Makefile – PPNM Homework 4 Splines ##
 
-# ----- fælles C#-kilder (ligger to niveauer oppe) -----
-GEN = ../../General/general_Vector_and_Matrix.cs \
-      ../../General/HW_points.cs
+CS      := mcs
+RUN     := mono $(EXE)
+EXE     := main.exe
+OUT     := Out.txt
+GNUPLOT := plot.gnu
+# I de tidliger homework opgaver har jeg bruge plot.gpi
 
-# alle .cs-filer i denne mappe + fælles biblioteker
-CSFILES = $(wildcard *.cs) $(GEN)
+# Filer, som læses af hovedprogrammet
+# INDATA := XXX.txt
+# Bruger ikke for denne homework opgave
 
-# ----- C#-kompilator & kørsel -----
-CS   := $(shell command -v csc 2>/dev/null || command -v mcs 2>/dev/null)
-ifndef CS
-$(error Ingen C#-kompilator fundet – installer dotnet-sdk eller mono-complete.)
-endif
-
-ifeq ($(notdir $(CS)),mcs)        # Mono
-  CSTARGET = -target:exe
-  RUN      = mono $(EXE)
-else                               # dotnet csc
-  CSTARGET = -target:exe -langversion:latest
-  RUN      = ./$(EXE)
-endif
-
-# ----- filnavne -----
-EXE       = main.exe
-GNUSCRIPT = plot.gnu
-
-# txt-data som Main.cs genererer
-DATA = cos.txt quad.txt sin.txt log.txt sqrt.txt \
+# Filer, som hovedprogrammet genererer under kørslen og som læses af gnuplot
+DATA	:= cos.txt quad.txt sin.txt log.txt sqrt.txt \
        Computed_bi_and_ci_sin.txt Computed_bi_and_ci_log.txt
 
-# Out.txt som genereres af Main.cs
-OUT = Out.txt
-
-
-# svg-plots som plot.gnu forventes at producere
-PLOTS = cos.svg quad.svg sin.svg log.svg sqrt.svg sqrt_comparing.svg \
+# Plot‑filer produceret af plot.gpi
+PLOTS   := cos.svg quad.svg sin.svg log.svg sqrt.svg sqrt_comparing.svg \
         bi_comparison_sin.svg ci_comparison_sin.svg \
         bi_comparison_log.svg ci_comparison_log.svg
 
-# ----- targets -----
-.PHONY: all run plots clean
+# Kildekoden til denne opgave
+SRC        := Main.cs CubicSpline.cs QuadraticSpline.cs LinearSpline.cs
+COMMON_DIR := ../../General
+COMMON_SRC := $(COMMON_DIR)/general_Vector_and_Matrix.cs \
+		  $(COMMON_DIR)/HW_points.cs
 
-all: $(PLOTS) $(OUT)
+CSFILES := $(SRC) $(COMMON_SRC)
 
-# 1) Byg binæren
+.PHONY: all clean
+
+all: $(OUT) $(PLOTS)
+
 $(EXE): $(CSFILES)
-	$(CS) $(CSTARGET) -out:$@ $(CSFILES)
+	$(CS) -out:$@ $^
 
-# 2) Kør programmet → lav .txt-data
-$(DATA): $(EXE)
-	$(RUN)
+# Kør programmet for at generere Out.txt og datatabeller
+$(OUT) $(DATA): $(EXE)
+	mono $(EXE) > $(OUT)
 
-$(OUT): $(EXE)
-	$(RUN) > $(OUT)
+# Ét kald til gnuplot producerer begge .svg‑filer
+$(PLOTS) &: $(DATA) $(GNUPLOT)
+	@gnuplot $(GNUPLOT)
 
-# 3) Kør gnuplot én gang – laver alle .svg-plots
-$(PLOTS): $(GNUSCRIPT) $(DATA)
-	@gnuplot $(GNUSCRIPT)
-
-# Hjælpemål
-run: $(EXE)
-	$(RUN)
-
-# 4) Ryd op
 RM ?= rm
+
 clean:
-	-$(RM) -f $(EXE) *.dll $(DATA) $(PLOTS)
+	-$(RM) -f $(EXE)  $(OUT) $(DATA) $(PLOTS)
