@@ -2,20 +2,19 @@
 
 ------ Make some indicative plots to prove the linear spline and the integrator work as intended ------
 
---- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} ---
---- And plot its linear interpolant together with interpolant's anti-derivative ---
+--- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} and plot its linear interpolant ---
+--- together with interpolant's anti-derivative                                   ---
 
 The data is in cos.txt and the plot is in cos.svg
-
---- Take the table: {x_i=0,1,...,9; y_i=x_i^2} ---
---- And plot its linear interpolant together with interpolant's anti-derivative ---
+--- Take the table: {x_i=0,1,...,9; y_i=x_i^2} and plot its linear interpolant ---
+--- together with interpolant's anti-derivative                                ---
 
 The data is in quad.txt and the plot is in quad.svg
 
 ------------ TASK B ------------
 
 ------ Make some indicative plots to prove that the quadratic spline ------
------- And the integrator work as intended ------
+------ and the integrator work as intended                           ------
 
 --- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---
 

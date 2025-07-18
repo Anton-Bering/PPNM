@@ -35,8 +35,8 @@ public class Program {
             writer.WriteLine("------------ TASK A ------------");
             writer.WriteLine("\n------ Make some indicative plots to prove the linear spline and the integrator work as intended ------\n");
                         
-            writer.WriteLine("--- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} ---");
-            writer.WriteLine("--- And plot its linear interpolant together with interpolant's anti-derivative ---\n");
+            writer.WriteLine("--- Take the table: {x_i=0,1,...,9; y_i=cos(x_i)} and plot its linear interpolant ---");
+            writer.WriteLine("--- together with interpolant's anti-derivative                                   ---\n");
 
             writer.WriteLine("The data is in cos.txt and the plot is in cos.svg");
             using (StreamWriter cosWriter = new StreamWriter("cos.txt")) {
@@ -48,8 +48,8 @@ public class Program {
                 }
             }
 
-            writer.WriteLine("\n--- Take the table: {x_i=0,1,...,9; y_i=x_i^2} ---");
-            writer.WriteLine("--- And plot its linear interpolant together with interpolant's anti-derivative ---\n");
+            writer.WriteLine("--- Take the table: {x_i=0,1,...,9; y_i=x_i^2} and plot its linear interpolant ---");
+            writer.WriteLine("--- together with interpolant's anti-derivative                                ---\n");
 
             writer.WriteLine("The data is in quad.txt and the plot is in quad.svg");
             using (StreamWriter quadWriter = new StreamWriter("quad.txt")) {
@@ -65,7 +65,7 @@ public class Program {
             writer.WriteLine("\n------------ TASK B ------------");
             
             writer.WriteLine("\n------ Make some indicative plots to prove that the quadratic spline ------");
-            writer.WriteLine("------ And the integrator work as intended ------\n");
+            writer.WriteLine("------ and the integrator work as intended                           ------\n");
 
             writer.WriteLine("--- Using {x_i=0,1,...,9; y_i=sin(x_i)} ---\n");
             writer.WriteLine("The data is in sin.txt and the plot is in sin.svg.");
