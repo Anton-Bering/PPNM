@@ -14,12 +14,12 @@ Implement functions for spline interpolation of tabulated data points {xᵢ, y�
 
 3. Make some indicative plots to prove that your linear spline and your integrator work as intended.
 
-*For this, I use the example from the assignment description, i.e.:
-take the table
-{xᵢ = 0, 1, ..., 9 ; yᵢ = cos(xᵢ)},
-and plot its linear interpolant together with the interpolant's anti-derivative.
+*For this, I use the example from the assignment description, i.e.:*
+*take the table*
+*{xᵢ = 0, 1, ..., 9 ; yᵢ = cos(xᵢ)},*
+*and plot its linear interpolant together with the interpolant's anti-derivative.*
 
-Furthermore, I do the same for the table {xᵢ = 0, 1, ..., 9 ; yᵢ = xᵢ²}.*
+*Furthermore, I do the same for the table {xᵢ = 0, 1, ..., 9 ; yᵢ = xᵢ²}.*
 
 ### B. (3 points) Quadratic spline
 
