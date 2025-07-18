@@ -1,3 +1,0 @@
-Rosenbrock minimum found at [0.999995, 0.999990]  f=2.66931137695878e-11
-Himmelblau minimum at [3.000000, 2.000000]  f=7.07967816269955e-13
-Sym‑Broyden (Rosenbrock) → [0.999991, 0.999982]  f=8.08597951482419e-11
