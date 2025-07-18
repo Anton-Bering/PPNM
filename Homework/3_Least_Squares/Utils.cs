@@ -9,15 +9,6 @@ public static class Utils
      *  Write a matrix in a neat, readable format to a StreamWriter
      * ------------------------------------------------------------- */
 
-    /* HERHER: OBS: Taget ud
-    public static void WriteMatrix(StreamWriter sw, string caption,
-                                   double[,] M)
-    {
-        sw.WriteLine(caption);
-        sw.WriteLine(VectorAndMatrix.PrintMatrix(M));
-    }
-    */
-
     public static void WriteTest(StreamWriter sw,
                                  string description, bool ok)
         => sw.WriteLine($"TEST: {description}\nRESULT: {(ok ? "Yes" : "No")}\n");

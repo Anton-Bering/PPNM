@@ -1,4 +1,4 @@
-set terminal svg size 600,400
+set terminal svg size 900,600 enhanced font 'Arial,16' background rgb "white"
 set output 'Rutherford_and_Soddys_ThX.svg'
 set xlabel 't  (days)'
 set ylabel 'ln(activity)'

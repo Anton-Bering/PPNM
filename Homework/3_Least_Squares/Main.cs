@@ -21,9 +21,6 @@ class Program
 
     static void Main()
     {
-        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // HERHER: Er usiker på hvor det her skal plaseres?
-        if (!File.Exists(RawFile)) BuildOriginalDataFile(); // HERHER: Er usiker på hvor det her skal plaseres?
-
         // ------------ TASK A: del 1 ------------
         Console.WriteLine("------------ TASK A: Ordinary least-squares fit by QR-decomposition ------------\n");
 
@@ -102,14 +99,7 @@ class Program
                 ft.WriteLine($"{t[i]} {lnY[i]} {fit(t[i])}");
 
         /* ------------- 3b.  generate plots via gnuplot scripts ------------- */
-        BuildGnuplotScript(lnA, lambda);
         TryRunGnuplot("plot.gpi");   // ignores failures quietly
-
-
-
-        
-
-
 
         Console.WriteLine($"Best‑fit coefficients:");
         Console.WriteLine($"   ln(a)  = {lnA:g12}");
@@ -124,8 +114,6 @@ class Program
         Console.WriteLine("The uncertainty of the measurement is denoted as δy.");
 
         Console.WriteLine("\nThe uncertainty of the logarithm is: δln(y)=δy/y");
-
-        // HERHER til CG: Gør sådan at fitte af ThX data kommer til at fremgå i outputtet ændet i Out.txt eller en særlig fil med nanet Fit_the_ThX_data_with_exponential_function.txt
 
         Console.WriteLine("\n------ Plot the experimental data (with error-bars) and your best fit ------\n");
 
@@ -158,14 +146,9 @@ class Program
         Console.WriteLine(within
             ? "Half‑life agrees with the modern value within its uncertainty.\n"
             : "Half‑life does **not** agree with the modern value within its uncertainty.\n");
-        
-        // HERHER: til CG: Sikrer at 'the covariance matrix and the uncertainties of the fitting coefficients' bliver udregnet og fremgår i Out.txt
 
         Console.WriteLine("\n------ Estimate the uncertainty of the half-life value for ThX from the given data ------");
         Console.WriteLine("------ does it agree with the modern value within the estimated uncertainty?       ------\n");
-        
-        // HERHER: til CG: Sikrer at 'the uncertainty of the half-life value for ThX' bliver udregnet og fremgår i Out.txt
-        // HERHER: til CG: Sikrer at at en udersøge af om verdigen stemmer overens med den moderne værdi inden for den estimerede usikkerhed bliver lavet og fremgår i Out.txt
 
         Console.WriteLine("\n------------ TASK C: Evaluation of the quality of the uncertainties on the fit coefficients ------------\n");
 
@@ -198,30 +181,7 @@ class Program
         return Math.Sqrt(s);
     }
 
-    // HERHER: CG --------- START -------------
-    
-        /* ----------------- gnuplot helpers ----------------- */
-    //  HERHER: CG: helper that writes/updates ‘plot.gpi’
-    static void BuildGnuplotScript(double lnA, double lambda)
-    {
-        using (var gp = new StreamWriter("plot.gpi", false))
-        {
-            gp.WriteLine("set terminal svg size 600,400");
-            gp.WriteLine($"set output '{DataPlot}'");
-            gp.WriteLine("set xlabel 't  (days)'");
-            gp.WriteLine("set ylabel 'ln(activity)'");
-            gp.WriteLine($"f(x) = {lnA.ToString("g17")} - {lambda.ToString("g17")}*x");
-            gp.WriteLine($"plot '{LogFile}' u 1:2:3 w yerrorbars t 'data', \\");
-            gp.WriteLine("     f(x) w l lw 2 t 'best fit'");
-
-            gp.WriteLine($"set output '{CurvesSvg}'");
-            gp.WriteLine("set key bottom left");
-            gp.WriteLine($"plot '{CurvesTxt}' u 1:2 w l lw 2 t 'best', \\");
-            gp.WriteLine($"     '' u 1:3 w l dt 2 t 'low',  '' u 1:4 w l dt 2 t 'high'");
-        }
-    }
-
-    //  HERHER: fra CG: try to call gnuplot; ignore if not available
+    // try to call gnuplot; ignore if not available
     static void TryRunGnuplot(string script)
     {
         try
@@ -236,25 +196,5 @@ class Program
             p.WaitForExit();
         }
         catch { /* silently ignore missing gnuplot */ }
-    }
-
-    // HERHER: CG ---------- END -------------
-
-    /* write the original table if it is missing (unchanged) */
-    static void BuildOriginalDataFile()
-    {
-        string[] raw = {
-            "# time  activity  dy",
-            "1  117   6",
-            "2  100   5",
-            "3  88    4",
-            "4  72    4",
-            "6  53    4",
-            "9  29.5  3",
-            "10 25.2  3",
-            "13 15.2  2",
-            "15 11.1  2"
-        };
-        File.WriteAllLines(RawFile, raw);
     }
 }

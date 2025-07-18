@@ -18,8 +18,8 @@ OUT     := Out.txt
 GNUPLOT := plot.gpi
 
 # Filer, som hovedprogrammet genererer under kørslen
-DATA    := Rutherford_and_Soddys_ThX.txt \
-          Rutherford_and_Soddys_ThX_log.txt \
+# (Fjernet: Rutherford_and_Soddys_ThX.txt her fra:)
+DATA    := Rutherford_and_Soddys_ThX_log.txt \
           bestfit_curves.txt
 
 # Plot‑filer produceret af plot.gpi
