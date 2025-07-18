@@ -23,6 +23,8 @@ using System.Text;
     skal brugskoden naturligvis tilrettes. */
 public static class VectorAndMatrix
 {
+    // tol_upper_limmet = 1e-12; // HERHER: tilføj evetuelt det her.
+    // tol_lower_limmet = 1e-5; //HERHER:   tilføj evetuelt det her.
     /* ------------------------------------------------------------------
        1.  Random-generation
        ------------------------------------------------------------------ */
@@ -198,9 +200,10 @@ public static class VectorAndMatrix
             ? $"TEST: is {name} the identity matrix (within a tolerance of {tol})? \nRESULT: Yes."
             : $"TEST: is {name} the identity matrix (within a tolerance of {tol})? \nRESULT: No.");
 
+    /* udgave 1.0
     public static void CheckMatrixEqual(double[,] A, double[,] B,
                                         string aName = "A", string bName = "B",
-                                        double tol = 1e-12)
+                                        double tol = 1e-5) // 1e-12
     {
         int n = A.GetLength(0), m = A.GetLength(1);
         bool ok = true;
@@ -212,6 +215,53 @@ public static class VectorAndMatrix
             ? $"TEST: is {aName}={bName} (within a tolerance of {tol})?\nRESULT: Yes."
             : $"TEST: is {aName}={bName} (within a tolerance of {tol})?\nRESULT: No.");
     }
+    */
+
+    // udgave 2.0:
+    public static bool CheckMatrixEqual(
+        double[,] A,
+        double[,] B,
+        string aName = "A",
+        string bName = "B",
+        double tolUpper = 1e-12,
+        double tolLower = 1e-5,
+        bool verbose = true)
+    {
+        if (A.GetLength(0) != B.GetLength(0) ||
+            A.GetLength(1) != B.GetLength(1))
+            throw new ArgumentException("Matrices do not have the same dimensions.");
+
+        // Find the maximum absolute difference
+        int rows = A.GetLength(0);
+        int cols = A.GetLength(1);
+        double maxDiff = 0.0;
+
+        for (int i = 0; i < rows; ++i)
+            for (int j = 0; j < cols; ++j)
+                maxDiff = Math.Max(maxDiff, Math.Abs(A[i, j] - B[i, j]));
+
+        // Escalate the tolerance (×10) until it is large enough or hits tolLower
+        double tol = tolUpper;
+        while (tol < tolLower && maxDiff > tol)
+            tol *= 10.0;
+
+        // Clamp if you want an upper bound
+        if (tol > tolLower) tol = tolLower;
+
+        bool isEqual = maxDiff <= tol;
+
+        if (verbose)
+        {
+            string resultMsg = isEqual
+                ? $"Yes  (|maximum difference| = {maxDiff:E3})" // ? $"Yes  (|maximum difference| = {maxDiff:E3} ≤ tolerance  = {tol:E3})"
+                : $"No   (|maximum difference| = {maxDiff:E3})"; // : $"No   (|maximum difference| = {maxDiff:E3} > tolerance  = {tol:E3})";
+
+            Console.WriteLine($"TEST: is {aName} = {bName}?\nRESULT: {resultMsg}");
+        }
+
+        return isEqual;
+    }
+
 
     public static void CheckVectorEqual(double[] a, double[] b,
                                         string aName = "a", string bName = "b",
@@ -302,3 +352,4 @@ public static class VectorAndMatrix
             : "CheckDiagonalMatrix vs diag: FAILED");
     }
 }
+
