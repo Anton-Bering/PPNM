@@ -38,6 +38,10 @@ GNUSCRIPT = plot.gnu
 DATA = cos.txt quad.txt sin.txt log.txt sqrt.txt \
        Computed_bi_and_ci_sin.txt Computed_bi_and_ci_log.txt
 
+# Out.txt som genereres af Main.cs
+OUT = Out.txt
+
+
 # svg-plots som plot.gnu forventes at producere
 PLOTS = cos.svg quad.svg sin.svg log.svg sqrt.svg sqrt_comparing.svg \
         bi_comparison_sin.svg ci_comparison_sin.svg \
@@ -46,7 +50,7 @@ PLOTS = cos.svg quad.svg sin.svg log.svg sqrt.svg sqrt_comparing.svg \
 # ----- targets -----
 .PHONY: all run plots clean
 
-all: $(PLOTS)
+all: $(PLOTS) $(OUT)
 
 # 1) Byg binæren
 $(EXE): $(CSFILES)
@@ -55,6 +59,9 @@ $(EXE): $(CSFILES)
 # 2) Kør programmet → lav .txt-data
 $(DATA): $(EXE)
 	$(RUN)
+
+$(OUT): $(EXE)
+	$(RUN) > $(OUT)
 
 # 3) Kør gnuplot én gang – laver alle .svg-plots
 $(PLOTS): $(GNUSCRIPT) $(DATA)

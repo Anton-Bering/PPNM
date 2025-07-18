@@ -1,0 +1,25 @@
+# Kompiler og kør program:
+all: main.exe timing plot
+	@mono main.exe > Out.txt
+
+GEN = ../../General/general_Vector_and_Matrix.cs \
+	../../General/HW_points.cs
+
+# Kompilér kode:
+main.exe: Main.cs QR.cs $(GEN)
+	mcs -out:$@ Main.cs QR.cs $(GEN)
+
+# Tak C; Hvor lang tid det tager at QR-faktorisere en NxN matrix
+timing: main.exe
+	@echo "# N    Time (seconds)" > QR_factorize_time.txt
+	@for N in $(shell seq 100 20 500); do \
+		mono main.exe -size:$$N >> QR_factorize_time.txt; \
+	done
+
+# Lav plot:
+plot: QR_factorize_time.txt plot.gpi
+	@gnuplot plot.gpi
+
+# Ryd op:
+clean:
+	rm -f *.exe *.txt *.svg *.log

@@ -47,3 +47,11 @@ The manual and program-computed values are compared visually in the plot bi_and_
 The results from my implementation are in sqrt.txt, and the plot is in sqrt.svg.
 In sqrt_comparing.svg, a comparison is shown between my results (from sqrt.txt) and the built-in Gnuplot spline (using the data in sqrt_data_points_to_Gnuplot.txt).
 
+
+------------ POINTS: received from tasks A, B, and C ------------
+
+Task A completed → 6 points😊
+Task B completed → 3 points😄
+Task C completed → 1 point 😎
+
+In total, this exercise results in 10 points 🎉🎉🎉
