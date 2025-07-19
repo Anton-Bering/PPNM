@@ -10,7 +10,8 @@
 
    Reuse of points is of utmost importance for the effectiveness of the algorithm.
 
-2. Test your implementation on some interesting integrals.
+2. Test your implementation on some interesting integrals.  
+   Check that your integrator returns results within the given accuracy goals.
 
 *As suggested in the assignment description, I do this for:*
 
@@ -18,8 +19,6 @@
 ∫₀¹ dx 1/√(x) = 2 ,   
 ∫₀¹ dx √(1 - x²) = π/2,   
 ∫₀¹ dx ln(x)/√(x) = -4  
-
-   Check that your integrator returns results within the given accuracy goals.
 
 3. Using your integrator implement the error function via its integral representation,  
    `erf(z) = (see the assignment description for the full explanation)`
