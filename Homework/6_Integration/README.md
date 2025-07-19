@@ -31,5 +31,28 @@
 
 
 ### B. Variable transformation quadratures
-  
+
+1.  Inplement an (open quandrature) adaptive integrator with the Clenshaw–Curtis variable transformation.
+
+2. Calculate some integrals with integrable divergencies at the end-points of the intervals;   
+   record the number of integrand evaluations;  
+   compare with your ordinary integrator without variable transformation.  
+
+*As suggested in the assignment description, I do this for:*  
+
+∫₀¹ dx 1/√(x) = 2  
+∫₀¹ dx ln(x)/√(x) = -4  
+
+3. Compare the number of integrand evaluations with the `python/numpy`'s integration routines.
+
+4. Generalize your integrator to accept infinite limits. 
+
+5. Test your implementation on some (converging) infitine limit integrals and note the number of integrand evaluations.
+
+6. Compare with the `python/numpy` integration routines.
+
 ### C. Error estimate
+
+1. Make your integrator estimate and return the integration error.
+
+2. Investigate the quality of this error estimate by calculating some difficult intergrals and comparing the estimated error with the actual error.
