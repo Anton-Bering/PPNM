@@ -17,6 +17,13 @@ dy/dx = f(x, y)
 
 3. Debug your routines by solving some interesting systems of ordinary differential equations.
 
+*As suggested in the assignment description, I do this for: u'' = -u*  
+*Furthermore, I also do it for: dy/dx = y*  
+*and for: y'' = 6x*  
+
+
+----
+
 *As suggested in the assignment description, I do this for: u''=-u*
 
 4. Reproduce the example from the [scipy.integrate.odeint manual](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html) (oscillator with friction),  

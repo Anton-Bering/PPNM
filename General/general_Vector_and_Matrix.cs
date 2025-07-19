@@ -19,6 +19,64 @@
 using System;
 using System.Text;
 
+/* HERHER ------ Vector-Class tilføget til at bruge i HW5: ------ START */
+public class vector {
+    private double[] data;
+
+    public int size => data.Length;
+
+    public vector(int n) {
+        data = new double[n];
+    }
+
+    public vector(double[] arr) {
+        data = new double[arr.Length];
+        Array.Copy(arr, data, arr.Length);
+    }
+
+    public double this[int i] {
+        get => data[i];
+        set => data[i] = value;
+    }
+
+    public vector copy() {
+        return new vector(data);
+    }
+
+    public double norm() {
+        double sum = 0;
+        foreach (var x in data) sum += x * x;
+        return Math.Sqrt(sum);
+    }
+
+    public static vector operator +(vector a, vector b) {
+        if (a.size != b.size) throw new ArgumentException("vector sizes must match");
+        var result = new vector(a.size);
+        for (int i = 0; i < a.size; i++) result[i] = a[i] + b[i];
+        return result;
+    }
+
+    public static vector operator -(vector a, vector b) {
+        if (a.size != b.size) throw new ArgumentException("vector sizes must match");
+        var result = new vector(a.size);
+        for (int i = 0; i < a.size; i++) result[i] = a[i] - b[i];
+        return result;
+    }
+
+    public static vector operator *(double c, vector v) {
+        var result = new vector(v.size);
+        for (int i = 0; i < v.size; i++) result[i] = c * v[i];
+        return result;
+    }
+
+    public static vector operator *(vector v, double c) => c * v;
+
+    public override string ToString() {
+        return "[" + string.Join(", ", data) + "]";
+    }
+}
+/* HERHER ------ Vector-Class tilføget til at bruge i HW5: ------ END */
+
 /*  Ingen namespace for at matche tidligere brug;  ønskes et namespace,
     skal brugskoden naturligvis tilrettes. */
 public static class VectorAndMatrix

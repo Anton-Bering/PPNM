@@ -39,7 +39,7 @@ $(EXE): $(CSFILES)
 	$(CS) -out:$@ $^
 
 # Kør programmet for at generere Out.txt og datatabeller
-$(OUT) $(DATA)&: $(EXE) $(DIR_A) $(DIR_B) $(DIR_C)
+$(OUT) $(DATA)&: $(EXE) | $(DIR_A) $(DIR_B) $(DIR_C)
 	mono $(EXE) > $(OUT)
 
 # Ét kald til gnuplot producerer begge .svg‑filer
