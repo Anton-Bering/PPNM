@@ -1,30 +1,26 @@
-## ------------ ODE homework (C# + gnuplot) ----------------------------
-
-# 1) Compiler
-CS      := $(shell command -v csc 2>/dev/null || command -v mcs 2>/dev/null)
-CFLAGS  := -target:exe -langversion:latest
+CS      := mcs
+RUN     := mono $(EXE)
 EXE     := main.exe
+OUT     := Out.txt
+GNUPLOT := plot.gpi
+DIR_A 	:= Out_Task_A
+DIR_B 	:= Out_Task_B
+DIR_C 	:= Out_Task_C
 
-# 2) Source files
-SRC     := Main.cs OdeSolver.cs RKStepper.cs ODEModels.cs
-GENERAL := ../../General/general_Vector_and_Matrix.cs \
-           ../../General/HW_points.cs
-CSFILES := $(SRC) $(GENERAL)
-
-# 3) Data- and plot-files (adjust if you change names in Main.cs / plot.gpi)
-DATA_TXT := sho_data.txt exp_data.txt poly_data.txt \
+DATA	:= sho_data.txt exp_data.txt poly_data.txt \
             lotka_volterra.txt oscillator_with_friction.txt \
             Newtonian_circular_motion.txt Newtonian_elliptical_motion.txt \
             Relativistic_motion.txt three_body_problem.txt
-PLOTS    := sho_plot.svg exp_plot.svg poly_plot.svg \
+
+PLOTS   := sho_plot.svg exp_plot.svg poly_plot.svg \
             lotka_volterra_plot.svg oscillator_with_friction_plot.svg \
             Planetary_orbits_plot.svg three_body_problem_plot.svg
-GNUPLOT  := plot.gpi
 
-# 4) Output folders and what to move where
-OUTA := Out_Task_A
-OUTB := Out_Task_B
-OUTC := Out_Task_C
+# Kildekoden til denne opgave
+SRC        := Main.cs OdeSolver.cs RKStepper.cs ODEModels.cs
+COMMON_DIR := ../../General
+COMMON_SRC := $(COMMON_DIR)/general_Vector_and_Matrix.cs \
+		  $(COMMON_DIR)/HW_points.cs
 
 MOVE_A := sho_data.txt sho_plot.svg \
           exp_data.txt exp_plot.svg \
@@ -39,69 +35,34 @@ MOVE_B := Newtonian_circular_motion.txt \
 
 MOVE_C := three_body_problem.txt three_body_problem_plot.svg
 
-.PHONY: all data plots package run clean
+CSFILES := $(SRC) $(COMMON_SRC)
 
-# ---------------------------------------------------------------------
-# Default target: build, generate data, plot, and organise everything
-# ---------------------------------------------------------------------
-all: $(EXE) data plots package
+.PHONY: all clean
 
-# ---------------------------------------------------------------------
-# Build executable
-# ---------------------------------------------------------------------
+all: $(OUT) $(PLOTS)
+
 $(EXE): $(CSFILES)
-	$(CS) $(CFLAGS) -out:$@ $(CSFILES)
+	$(CS) -out:$@ $^
 
-# ---------------------------------------------------------------------
-# Generate data files
-# ---------------------------------------------------------------------
-data: $(DATA_TXT)
+# Kør programmet for at generere Out.txt og datatabeller
+$(OUT) $(DATA)&: $(EXE) | $(DIR_A) $(DIR_B) $(DIR_C)
+	mono $(EXE) > $(OUT)
 
-$(DATA_TXT): $(EXE)
-	./$(EXE)
+# Ét kald til gnuplot producerer begge .svg‑filer
+$(PLOTS): $(DATA) $(GNUPLOT) | $(DIR_A) $(DIR_B) $(DIR_C)
+	@gnuplot $(GNUPLOT)
 
-# ---------------------------------------------------------------------
-# Plot rules
-# ---------------------------------------------------------------------
-define call_gnuplot
-	@gnuplot -e "DATA='$(firstword $^)' ; OUT='$@'" $(GNUPLOT)
-endef
+RM ?= rm
 
-sho_plot.svg: sho_data.txt $(GNUPLOT) ; $(call call_gnuplot)
-exp_plot.svg: exp_data.txt $(GNUPLOT) ; $(call call_gnuplot)
-poly_plot.svg: poly_data.txt $(GNUPLOT) ; $(call call_gnuplot)
+# Opretter mappen, hvis den ikke findes:
+$(DIR_A):
+	@mkdir -p $(DIR_A)
+$(DIR_B):
+	@mkdir -p $(DIR_B)
+$(DIR_C):
+	@mkdir -p $(DIR_C)
 
-lotka_volterra_plot.svg: lotka_volterra.txt $(GNUPLOT) ; $(call call_gnuplot)
-oscillator_with_friction_plot.svg: oscillator_with_friction.txt $(GNUPLOT) ; $(call call_gnuplot)
-
-Planetary_orbits_plot.svg: Newtonian_circular_motion.txt Newtonian_elliptical_motion.txt Relativistic_motion.txt $(GNUPLOT)
-	@gnuplot -e "DATA1='Newtonian_circular_motion.txt'; DATA2='Newtonian_elliptical_motion.txt'; DATA3='Relativistic_motion.txt'; OUT='$@'" $(GNUPLOT)
-
-three_body_problem_plot.svg: three_body_problem.txt $(GNUPLOT) ; $(call call_gnuplot)
-
-plots: $(PLOTS)
-
-# ---------------------------------------------------------------------
-# Packaging: create folders and move outputs
-# ---------------------------------------------------------------------
-$(OUTA) $(OUTB) $(OUTC):
-	@mkdir -p $@
-
-.PHONY: package
-package: $(OUTA) $(OUTB) $(OUTC) $(PLOTS)
-	@echo "Organising output files ..."
-	@mv $(MOVE_A) $(OUTA)/
-	@mv $(MOVE_B) $(OUTB)/
-	@mv $(MOVE_C) $(OUTC)/
-	@echo "  ✔ $(OUTA) contains: $(MOVE_A)"
-	@echo "  ✔ $(OUTB) contains: $(MOVE_B)"
-	@echo "  ✔ $(OUTC) contains: $(MOVE_C)"
-
-# ---------------------------------------------------------------------
-# Convenience targets
-# ---------------------------------------------------------------------
-run: $(EXE)
-	./$(EXE)
 
 clean:
-	rm -rf $(EXE) *.dll *.txt $(PLOTS) $(OUTA) $(OUTB) $(OUTC)
+	-$(RM) -f $(EXE)  $(OUT) $(DATA) $(PLOTS)
+	-$(RM) -r $(DIR_A) $(DIR_B) $(DIR_C)

@@ -1,14 +1,6 @@
------------- TASK A ------------
-
------- Testing the routines by solving systems of ordinary differential equations (ODE) ------
-
---- Solving: u''=-u ---
-
-In sho_data.txt and sho_plot.svg is the data and plot, respectively
-
---- Solving: dy/dx = y ---
-
-In exp_data.txt and exp_plot.svg is the data and plot, respectively
+In lotka_volterra.txt and lotka_volterra_plot.svg is the data and plot, respectively, from solving: Lotka-Volterra system
+In oscillator_with_friction.txt and oscillator_with_friction_plot.svg is the data and plot, respectively, from solving: damped oscillator
+ata.txt and exp_plot.svg is the data and plot, respectively
 
 --- Solving: y'' = 6x ---
 
