@@ -21,7 +21,7 @@
 ∫₀¹ dx ln(x)/√(x) = -4  
 
 3. Using your integrator implement the error function via its integral representation,  
-   `erf(z) = (see the assignment description for the full explanation)`
+   `erf(z) = (see the assignment description for the full explanation)`  
    make a plot and compare with the tabulated values.
 
 4. Now, calculate `erf(1)` with your routine using `eps=0` and decreasing `acc=0.1, 0.01, 0.001, …`  (or something like this).  
