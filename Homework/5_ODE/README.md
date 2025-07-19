@@ -19,7 +19,7 @@ dy/dx = f(x, y)
 
 *As suggested in the assignment description, I do this for: u''=-u*
 
-4. Reproduce (with your routines) the example from the [scipy.integrate.odeint manual](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html) (oscillator with friction)  
+4. Reproduce the example from the [scipy.integrate.odeint manual](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html) (oscillator with friction),  
    and/or the example from the [scipy.integrate.solve_ivp manual](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) (Lotka-Volterra system).
 
 *I do both*
