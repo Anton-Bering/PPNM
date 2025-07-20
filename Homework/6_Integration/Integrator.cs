@@ -1,4 +1,3 @@
-// ---------- Integrator.cs (robust udgave) ----------
 using System;
 using static System.Math;
 
@@ -8,40 +7,39 @@ namespace Integration {
 
     public struct Result { public double val, err; public int calls; }
 
-    /*  depth: intern tæller til at forhindre uendelig rekursion            */
+    /* ------ Til at forhindre uendelig rekursion: ------*/
     public static Result Integrate(Func<double,double> f, double a, double b,
                                    double acc = 1e-6, double eps = 1e-6,
                                    double f2  = double.NaN, double f3 = double.NaN,
                                    int depth  = 0)
     {
-      /* --- bounds‑check: for små intervaller eller for dyb rekursion --- */
+      /* ------ Check: for små intervaler eller for dyb rekursion: ------*/
       if (depth > 1000 || a == b || Abs(b - a) < 1e-15) {
         return new Result { val = 0.0, err = 0.0, calls = 0 };
       }
 
-      /* --- første funktions‑evalueringer (genbrug af punkter) ----------- */
+      /* ------ første funktions‑evalueringer (genbrug af punkter) ------ */
       double h = b - a;
       if (double.IsNaN(f2)) { f2 = f(a + 2 * h / 6); f3 = f(a + 4 * h / 6); }
       double f1 = f(a +     h / 6);
       double f4 = f(a + 5 * h / 6);
 
-      /* --- håndtér eventuelle NaN eller Inf fra integranden ------------- */
+      /* ------ håndter eventuelle NaN eller Inf fra integranden ------ */
       if (IsBad(f1) || IsBad(f2) || IsBad(f3) || IsBad(f4)) {
-        /* vender tilbage med “uendelig” fejl for at stoppe yderligere split */
         return new Result { val = 0.0, err = double.PositiveInfinity, calls = 4 };
       }
 
-      /* --- høj‑ og lav‑ordens kvadraturer ------------------------------- */
-      double Q = (2 * f1 + f2 + f3 + 2 * f4) / 6 * h;   // 5‑punkt (høj)
-      double q = (    f1 + f2 + f3 +     f4) / 4 * h;   // 3‑punkt (lav)
+      /* ------ høj‑ & lav‑ordens kvadraturer ------ */
+      double Q = (2 * f1 + f2 + f3 + 2 * f4) / 6 * h;   // høj
+      double q = (    f1 + f2 + f3 +     f4) / 4 * h;   // lav
       double err = Abs(Q - q);
 
       double tol = acc + eps * Abs(Q);
-      if (err <= tol) {   // ✔️ lokale krav opfyldt
+      if (err <= tol) {
         return new Result { val = Q, err = err, calls = 4 };
       }
 
-      /* --- ellers: del intervallet i to og rekursér --------------------- */
+      /* --- ELSE: del intervallet i to og rekursér --------------------- */
       double acc_half = acc / Sqrt(2.0);
       double mid = (a + b) / 2;
 
@@ -51,11 +49,11 @@ namespace Integration {
       return new Result {
         val   = left.val + right.val,
         err   = Sqrt(left.err * left.err + right.err * right.err),
-        calls = left.calls + right.calls + 2     // f1 og f4 blev regnet her
+        calls = left.calls + right.calls + 2     
       };
     }
 
-    /* lille hjælpe‑funktion */
+    /* hjælpe‑funktion: */
     static bool IsBad(double x) => double.IsNaN(x) || double.IsInfinity(x);
   }
 }

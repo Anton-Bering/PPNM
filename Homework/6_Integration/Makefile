@@ -1,31 +1,50 @@
-# ---------- Makefile ----------
-CSFLAGS = -warn:4 -optimize+ -target:exe
-SRC     = Main.cs Integrator.cs ClenshawCurtis.cs
-EXE     = integrate.exe
+## --------- Homework Integration ---------------------------
 
-.PHONY: all plots clean
+CS      := mcs
+CFLAGS  := -target:exe -langversion:latest
+EXE     := main.exe
+RUN     := mono $(EXE)
+GNUPLOT := plot.gpi
+OUT     := Out.txt
 
-# ---------- standard‑mål ---------------------------------------------------
-all: Out.txt error_function.txt erf1.txt plots
+DIR_A   := Out_Task_A
 
-$(EXE): $(SRC)
-	@echo "Compiling C# ..."
-	mcs $(CSFLAGS) -out:$@ $(SRC)
+DATA_A	:= error_function.txt \
+		   erf1.txt
 
-Out.txt error_function.txt erf1.txt: $(EXE)
-	@echo "Running program ..."
-	mono $(EXE)
+DATA  := $(DATA_A)
 
-plots: error_function.svg erf1.svg
+PLOTS_A := error_function.svg \
+		   erf1.svg
 
-# ---------- plot‑regler ----------------------------------------------------
-error_function.svg: error_function.txt error_function_tabulated_values.txt plot.gpi
-	gnuplot -e "datafile='error_function.txt'; tabfile='error_function_tabulated_values.txt'; outfile='error_function.svg'; loglog=0" plot.gpi
+PLOTS  := $(PLOTS_A)
 
-erf1.svg: erf1.txt plot.gpi
-	gnuplot -e "datafile='erf1.txt'; outfile='erf1.svg'; loglog=1" plot.gpi
+SRC         := ClenshawCurtis.cs  Integrator.cs  Main.cs
+COMMON_DIR  := ../../General
+COMMON_SRC  := $(COMMON_DIR)/HW_points.cs
+CSFILES     := $(SRC) $(COMMON_SRC)
 
-# ---------- oprydning ------------------------------------------------------
-#  Bemærk: 'error_function_tabulated_values.txt' bevares!
+MOVE_A := $(DATA_A) $(PLOTS_A)
+
+.PHONY: all clean package
+all: package
+
+$(EXE): $(CSFILES)
+	$(CS) $(CFLAGS) -out:$@ $^
+
+$(OUT) $(DATA): $(EXE)
+	$(RUN) > $(OUT)
+
+$(PLOTS)&: $(DATA) $(GNUPLOT)
+	@gnuplot $(GNUPLOT)
+
+$(DIR_A):
+	@mkdir -p $@
+
+package: $(PLOTS) | $(DIR_A)
+	mv $(MOVE_A) $(DIR_A)
+
+RM ?= rm
 clean:
-	rm -f $(EXE) Out.txt error_function.txt erf1.txt *.svg
+	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS)
+	-$(RM) -rf $(DIR_A)

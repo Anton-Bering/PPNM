@@ -1,4 +1,3 @@
-// ---------- ClenshawCurtis.cs ----------
 using System;
 using static System.Math;
 using static Integration.Adaptive;

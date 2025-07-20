@@ -4,42 +4,42 @@
 
 --- ∫₀¹ √(x) dx ---
 
-Result from my implementation:
-value = 0.666666679685227
-estimated error = 5.617417E-007
-calls = 412
+Exact value: 0.666666666666667
+Value from my implementation: 0.666666679685227
+Estimated error = 5.617417E-007
+Calls = 412
 
-Test: Is the value within the accuracy goals (=0.666666666666667)?
+Test: Is the value within the accuracy goals?
 Result: Yes
 
 --- ∫₀¹ 1/√(x) dx ---
 
-Result from my implementation:
-value = 1.99999954501371
-estimated error = 6.148834E-007
-calls = 7788
+Exact value: 2
+Value from my implementation: 1.99999954501371
+Estimated error = 6.148834E-007
+Calls = 7788
 
-Test: Is the value within the accuracy goals (=2)?
+Test: Is the value within the accuracy goals?
 Result: Yes
 
 --- ∫₀¹ √(1‑x²) dx ---
 
-Result from my implementation:
-value = 0.785398170578572
-estimated error = 4.223270E-007
-calls = 574
+Exact value: 0.785398163397448
+Value from my implementation: 0.785398170578572
+Estimated error = 4.223270E-007
+Calls = 574
 
-Test: Is the value within the accuracy goals (=1.5707963267949)?
-Result: No
+Test: Is the value within the accuracy goals?
+Result: Yes
 
 --- ∫₀¹ ln(x)/√(x) dx ---
 
-Result from my implementation:
-value = -3.99997808618176
-estimated error = 6.137502E-007
-calls = 16088
+Exact value: -4
+Value from my implementation: -3.99997808618176
+Estimated error = 6.137502E-007
+Calls = 16088
 
-Test: Is the value within the accuracy goals (=-4)?
+Test: Is the value within the accuracy goals?
 Result: No
 
 ------ Make a plot of the error function and compare with the tabulated values ------

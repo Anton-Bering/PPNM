@@ -19,7 +19,7 @@ namespace Integration {
 
         TestIntegral(writer,"∫₀¹ √(x) dx",        x => Sqrt(x),        0,1, 2.0/3.0);
         TestIntegral(writer,"∫₀¹ 1/√(x) dx",      x => 1/Sqrt(x),      0,1, 2.0);
-        TestIntegral(writer,"∫₀¹ √(1‑x²) dx",     x => Sqrt(1-x*x),    0,1, PI/2);
+        TestIntegral(writer,"∫₀¹ √(1‑x²) dx",     x => Sqrt(1-x*x),    0,1, PI/4);
         TestIntegral(writer,"∫₀¹ ln(x)/√(x) dx",  x => Log(x)/Sqrt(x), 0,1,-4.0);
 
         /* ---------- plot af selve fejlfunktionen ------------------------ */
@@ -78,12 +78,12 @@ namespace Integration {
       bool ok = Abs(r.val-exact) <= 1e-6;
 
       w.WriteLine($"--- {label} ---\n");
-      w.WriteLine("Result from my implementation:");
-      w.WriteLine($"value = {r.val}");
-      w.WriteLine($"estimated error = {r.err:E}");
-      w.WriteLine($"calls = {r.calls}\n");
+      w.WriteLine($"Exact value: {exact}");
+      w.WriteLine($"Value from my implementation: {r.val}");
+      w.WriteLine($"Estimated error = {r.err:E}");
+      w.WriteLine($"Calls = {r.calls}\n");
 
-      w.WriteLine($"Test: Is the value within the accuracy goals (={exact})?");
+      w.WriteLine($"Test: Is the value within the accuracy goals?");
       w.WriteLine($"Result: {(ok? "Yes":"No")}\n");
     }
 

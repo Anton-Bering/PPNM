@@ -17,7 +17,7 @@
 
 ∫₀¹ dx √(x) = 2/3 ,  
 ∫₀¹ dx 1/√(x) = 2 ,   
-∫₀¹ dx √(1 - x²) = π/2,   
+∫₀¹ dx √(1 - x²) = π/4, *(note: minor error in the assignment description, which says* =π/2*)*  
 ∫₀¹ dx ln(x)/√(x) = -4  
 
 3. Using your integrator implement the error function via its integral representation, `erf(z)`.  
