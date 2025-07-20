@@ -22,7 +22,7 @@ DATA 	:= sin_data.txt cos_data.txt
 PLOTS   := sin_plot.svg cos_plot.svg
 
 SRC     := Main.cs
-GENERAL := ../../General/general_Vector_and_Matrix.cs \
+GENERAL := ../../General/Vector_and_Matrix.cs \
            ../../General/HW_points.cs
 
 CSFILES := $(SRC) $(GENERAL)

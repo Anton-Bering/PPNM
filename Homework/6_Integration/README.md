@@ -20,15 +20,13 @@
 ∫₀¹ dx √(1 - x²) = π/2,   
 ∫₀¹ dx ln(x)/√(x) = -4  
 
-3. Using your integrator implement the error function via its integral representation,  
-   `erf(z) = (see the assignment description for the full explanation)`  
-   make a plot and compare with the tabulated values.
+3. Using your integrator implement the error function via its integral representation, `erf(z)`.  
+
+   Make a plot and compare with the tabulated values.
 
 4. Now, calculate `erf(1)` with your routine using `eps=0` and decreasing `acc=0.1, 0.01, 0.001, …`  (or something like this).  
-   Plot (in log-log scale) the (absolute value of the) difference between your result and the exact result as function of `acc`.  
-
-   (According to a chatbot: `erf(1) = 0.84270079294971486934`)
-
+   
+   Plot (in log-log scale) the (absolute value of the) difference between your result and the exact result (`erf(1) = 0.84270079294971486934`) as function of `acc`.  
 
 ### B. Variable transformation quadratures
 

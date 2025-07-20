@@ -2,7 +2,7 @@
 
 # Fælles kildefiler (ligger i ../../General/)
 COMMON_DIR := ../../General
-COMMON_SRC := $(COMMON_DIR)/general_Vector_and_Matrix.cs \
+COMMON_SRC := $(COMMON_DIR)/Vector_and_Matrix.cs \
               $(COMMON_DIR)/HW_points.cs
 
 # Lokale kildefiler

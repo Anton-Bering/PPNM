@@ -22,7 +22,7 @@ DATA     := wave_function.dat analytic_wf.dat
 PLOTS    := wave_function.svg
 
 # --- begyndelsen af Makefile ---
-GENERAL := ../../General/general_Vector_and_Matrix.cs \
+GENERAL := ../../General/Vector_and_Matrix.cs \
            ../../General/HW_points.cs
 CSFILES  := $(wildcard *.cs) $(GENERAL)
 

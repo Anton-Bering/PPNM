@@ -6,20 +6,23 @@ public class MainClass
     /*------------------------------------------------------------------*/
     public static void Main(string[] args)
     {
-        /* ---------- Timing mode (Task C) ------------------------------ */
-        if (args.Length > 0 && args[0].StartsWith("-size:"))
-        {
-            int    N    = int.Parse(args[0].Substring(6));
-            var    rng  = new Random(1);
-            double[,] A_perf = VectorAndMatrix.RandomMatrix(N, N, rng); // <- renamed
 
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            _ = new QR(A_perf);                 // QR‑factorise
-            sw.Stop();
+        /* ---------- TIMING MODE (for make out.times.data) ---------- */
+        foreach (string a in args)
+            if (a.StartsWith("-size:", StringComparison.Ordinal))
+            {
+                int N = int.Parse(a.Substring(6));
 
-            Console.WriteLine($"{N} {sw.Elapsed.TotalSeconds:F6}");
-            return;
-        }
+                // Generate a random N×N matrix and QR‑factorise it – nothing else.
+                double[,] Random_N_times_N_Matrix = VectorAndMatrix.RandomMatrix(N, N);
+                var qr      = new QR(Random_N_times_N_Matrix);
+
+                // IMPORTANT: do **not** print anything – I/O would dominate the timing.
+                return;     // leave Main() early, skipping the demo code below
+            }
+        /* ----------------------------------------------------------- */
+
+
 
         Console.WriteLine("------------ TASK A: Solving linear equations using QR-decomposition ------------");
         Console.WriteLine("------------ by modified Gram-Schmidt orthogonalization              ------------\n");
@@ -105,8 +108,8 @@ public class MainClass
         Console.WriteLine("\n------------ TASK C: Operations count for QR-decomposition ------------\n");
         Console.WriteLine("------ Measure the time it takes to QR-factorize a random NxN matrix as function of N ------\n");
         
-        Console.WriteLine("QR_factorize_time.txt contains the data on how long it takes to QR-factorize a random NxN matrix.");
-        Console.WriteLine("QR_factorize_time.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from QR_factorize_time.txt.");
+        Console.WriteLine("out.times.data contains the data on how long it takes to QR-factorize a random NxN matrix.");
+        Console.WriteLine("QR_factorize_time.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from out.times.data.");
         Console.WriteLine("The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time.svg.");
 
 

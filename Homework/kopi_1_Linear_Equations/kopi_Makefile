@@ -2,7 +2,7 @@
 all: main.exe timing plot
 	@mono main.exe > Out.txt
 
-GEN = ../../General/general_Vector_and_Matrix.cs \
+GEN = ../../General/Vector_and_Matrix.cs \
 	../../General/HW_points.cs
 
 # Kompilér kode:

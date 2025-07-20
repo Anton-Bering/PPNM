@@ -28,22 +28,22 @@ GNUPLOT := plot.gpi
 #  – Søg i denne mappe, forældre­mapper *og* evt. underkataloget "General".
 #  – Brug evt. LIBDIR=... for at pege på en bestemt mappe.
 GEN_CS_AUTO := $(firstword \
-    $(wildcard general_Vector_and_Matrix.cs) \
-    $(wildcard ../general_Vector_and_Matrix.cs) \
-    $(wildcard ../../general_Vector_and_Matrix.cs) \
-    $(wildcard ../../../general_Vector_and_Matrix.cs) \
-    $(wildcard ../General/general_Vector_and_Matrix.cs) \
-    $(wildcard ../../General/general_Vector_and_Matrix.cs) \
-    $(wildcard ../../../General/general_Vector_and_Matrix.cs))
+    $(wildcard Vector_and_Matrix.cs) \
+    $(wildcard ../Vector_and_Matrix.cs) \
+    $(wildcard ../../Vector_and_Matrix.cs) \
+    $(wildcard ../../../Vector_and_Matrix.cs) \
+    $(wildcard ../General/Vector_and_Matrix.cs) \
+    $(wildcard ../../General/Vector_and_Matrix.cs) \
+    $(wildcard ../../../General/Vector_and_Matrix.cs))
 
 ifdef LIBDIR
-GEN_CS := $(abspath $(LIBDIR))/general_Vector_and_Matrix.cs
+GEN_CS := $(abspath $(LIBDIR))/Vector_and_Matrix.cs
 else
 GEN_CS := $(GEN_CS_AUTO)
 endif
 
 ifeq ($(strip $(GEN_CS)),)
-$(error "general_Vector_and_Matrix.cs" blev ikke fundet. Kopiér filen hertil eller kør `make LIBDIR=/sti/til/mappe`.)
+$(error "Vector_and_Matrix.cs" blev ikke fundet. Kopiér filen hertil eller kør `make LIBDIR=/sti/til/mappe`.)
 endif
 
 CSFILES := Main.cs ODE.cs QRGS.cs Roots.cs $(GEN_CS)

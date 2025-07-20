@@ -1,6 +1,6 @@
 GEN = ../../General/Mactrics.cs \
 	../../General/HW_points.cs
-     # ../../General/general_Vector_and_Matrix.cs \
+     # ../../General/Vector_and_Matrix.cs \
 	
 all : Out.txt QR_factorize_time.svg
 

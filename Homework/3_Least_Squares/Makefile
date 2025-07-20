@@ -21,7 +21,7 @@ PLOTS   := Rutherford_and_Soddys_ThX.svg \
 # Kildekoden til denne opgave
 SRC        := Main.cs LSFit.cs Utils.cs
 COMMON_DIR := ../../General
-COMMON_SRC := $(COMMON_DIR)/general_Vector_and_Matrix.cs \
+COMMON_SRC := $(COMMON_DIR)/Vector_and_Matrix.cs \
 		  $(COMMON_DIR)/HW_points.cs \
 		  ../1_Linear_Equations/QR.cs
 

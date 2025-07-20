@@ -25,11 +25,11 @@ namespace Integration {
         /* ---------- plot af selve fejlfunktionen ------------------------ */
         writer.WriteLine("------ Make a plot of the error function and compare with the tabulated values ------\n");
         GenErfTable("error_function.txt", -3, 3, 0.05);
-        writer.WriteLine("Data are written to  error_function.txt");
-        writer.WriteLine("Plot (implementation + tabulated points) is  error_function.svg\n");
+        writer.WriteLine("Data is written to error_function.txt");
+        writer.WriteLine("Plot is in error_function.svg\n");
 
         /* ---------- konvergens‑test for erf(1) -------------------------- */
-        writer.WriteLine("------ Calculate erf(1) with the routine (eps = 0, decreasing acc) ------\n");
+        writer.WriteLine("------ Calculate erf(1)  ------\n");
         double exactErf1 = 0.84270079294971486934;
         double[] accList = {1e-1,1e-2,1e-3,1e-4,1e-5,1e-6};
         using(var ef = new StreamWriter("erf1.txt")){
@@ -41,7 +41,10 @@ namespace Integration {
             writer.WriteLine($"acc = {acc:E}   erf(1) = {val:R}   |Δ| = {diff:E}");
           }
         }
-        writer.WriteLine("\nThe log‑log convergence plot is written to  erf1.svg\n");
+        writer.WriteLine("\n------ Plot the difference between your result ------");
+        writer.WriteLine("------ and the exact result as function of acc ------\n");
+        
+        writer.WriteLine("\nThe plot is written to erf1.svg\n");
 
         /* ---------------- TASK B ---------------- */
         writer.WriteLine("------------ TASK B: Variable transformation quadratures ------------\n");
@@ -63,7 +66,7 @@ namespace Integration {
         PrintErr(writer,"∫₀¹ sin(1/x) dx",
                  x=>Sin(1/x),0,1,0.504067061906928);
 
-        writer.WriteLine("\nAll tasks completed – see text files and SVG plots.\n");
+        // HERHER: Tilføj porintes.
       }
     }
 

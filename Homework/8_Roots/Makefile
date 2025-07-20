@@ -26,7 +26,7 @@ SRC := Main.cs \
        RootFind.cs
 
 # Fælles hjælpefiler (tilpas stien om nødvendigt)
-GENERAL := ../../General/general_Vector_and_Matrix.cs \
+GENERAL := ../../General/Vector_and_Matrix.cs \
            ../../General/HW_points.cs
 
 CSFILES := $(SRC) $(GENERAL)

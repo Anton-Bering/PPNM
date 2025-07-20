@@ -26,7 +26,7 @@ PLOTS   := $(DIR_A)/cos.svg $(DIR_A)quad.svg $(DIR_B)sin.svg $(DIR_B)log.svg $(D
 # Kildekoden til denne opgave
 SRC        := Main.cs CubicSpline.cs QuadraticSpline.cs LinearSpline.cs
 COMMON_DIR := ../../General
-COMMON_SRC := $(COMMON_DIR)/general_Vector_and_Matrix.cs \
+COMMON_SRC := $(COMMON_DIR)/Vector_and_Matrix.cs \
 		  $(COMMON_DIR)/HW_points.cs
 
 CSFILES := $(SRC) $(COMMON_SRC)
