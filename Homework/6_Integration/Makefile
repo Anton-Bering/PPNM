@@ -8,7 +8,6 @@ GNUPLOT := plot.gpi
 OUT     := Out.txt
 
 DIR_A   := Out_Task_A
-
 DATA_A	:= error_function.txt \
 		   erf1.txt
 
