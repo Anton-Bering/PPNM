@@ -14,7 +14,8 @@ namespace Integration {
                                    int depth  = 0)
     {
       /* ------ Check: for små intervaler eller for dyb rekursion: ------*/
-      if (depth > 1000 || a == b || Abs(b - a) < 1e-15) {
+      if (depth > 1000000 || a == b ) {
+        Console.WriteLine($"Problem opstår i intergrator.cs. depth={depth}, a={a}, b={b}");
         return new Result { val = 0.0, err = 0.0, calls = 0 };
       }
 

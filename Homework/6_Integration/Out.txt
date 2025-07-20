@@ -15,9 +15,9 @@ Result: Yes
 --- ∫₀¹ 1/√(x) dx ---
 
 Exact value: 2
-Value from my implementation: 1.99999954501371
+Value from my implementation: 1.99999999894916
 Estimated error = 6.148834E-007
-Calls = 7788
+Calls = 185848
 
 Test: Is the value within the accuracy goals?
 Result: Yes
@@ -35,12 +35,12 @@ Result: Yes
 --- ∫₀¹ ln(x)/√(x) dx ---
 
 Exact value: -4
-Value from my implementation: -3.99997808618176
+Value from my implementation: -3.99999999941305
 Estimated error = 6.137502E-007
-Calls = 16088
+Calls = 454492
 
 Test: Is the value within the accuracy goals?
-Result: No
+Result: Yes
 
 ------ Make a plot of the error function and compare with the tabulated values ------
 
@@ -65,12 +65,12 @@ The plot is written to erf1.svg
 ------------ TASK B: Variable transformation quadratures ------------
 
 --- ∫₀¹ 1/√(x) dx ---
-plain  : 1.99999954501371  calls = 7788
+plain  : 1.99999999894916  calls = 185848
 C‑Curt : 1.99999999993764  calls = 526
 exact  : 2
 
 --- ∫₀¹ ln(x)/√(x) dx ---
-plain  : -3.99997808618176  calls = 16088
+plain  : -3.99999999941305  calls = 454492
 C‑Curt : -3.99999826112127  calls = 2950
 exact  : -4
 
