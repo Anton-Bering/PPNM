@@ -2,11 +2,11 @@
 set terminal svg size 900,600 enhanced font 'Arial,16' background rgb "white"
 set output 'Estimate_the_area_of_a_unit_circle_error.svg'
 
-set title 'Monte Carlo Error Scaling (Unit Circle Area)'
-set xlabel 'N (Number of samples)'
+set title 'Error from calculating the area of a unit circle via the MC routine'
+set xlabel 'N [Number of samples]'
 set ylabel 'Error'
-set logscale x
-set logscale y
+# set logscale x
+# set logscale y
 set grid
 set key left top
 
