@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 public static class QuasiRandomMC
 {
-    // Precomputed primes for Halton sequences (at least 30 primes for multi-dimensional use)
+    // Precomputed primes for Halton sequences
     private static readonly int[] primes = new int[] {
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
         31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
         73, 79, 83, 89, 97, 101, 103, 107, 109, 113
     };
 
-    /// <summary>
-    /// Halton sequence generator for a given index (1-based) and base.
-    /// Returns a number in [0,1).
-    /// </summary>
+    // Halton sequence generator for a given index (1-based) and base.
+    // Returns a number in [0,1).
     private static double Halton(int index, int b)
     {
         double f = 1.0;
@@ -28,10 +26,8 @@ public static class QuasiRandomMC
         return r;
     }
 
-    /// <summary>
-    /// Monte Carlo integration using low-discrepancy (quasi-random) sequences.
-    /// Uses two different Halton sequences to estimate error.
-    /// </summary>
+    // MC integration using low-discrepancy (quasi-random) sequences.
+    // Uses two different Halton sequences to estimate error.
     public static (double result, double error) Integrate(Func<double[], double> f, double[] a, double[] b, int N)
     {
         int dim = a.Length;
@@ -39,16 +35,13 @@ public static class QuasiRandomMC
         for (int i = 0; i < dim; i++)
             V *= (b[i] - a[i]);
 
-        // Choose two distinct sets of primes for sequences
-        // Sequence1: first 'dim' primes; Sequence2: next 'dim' primes (offset)
         if (dim > primes.Length / 2)
             throw new ArgumentException("Dimension too high for available prime bases.");
-        int offset = dim;  // start index for second sequence primes
-        // (We ensure we have at least 2*dim primes in the list)
+        int offset = dim;
         
         double sum1 = 0.0, sum2 = 0.0;
         double[] x = new double[dim];
-        // Halton sequence 1 (using primes[0..dim-1]) and sequence 2 (using primes[offset..offset+dim-1])
+  
         for (int i = 1; i <= N; i++)
         {
             // Sequence 1 point

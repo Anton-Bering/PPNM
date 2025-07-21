@@ -15,7 +15,7 @@ public static class SpecialIntegralCalculator
     {
         HashSet<int> existingNs = ReadExistingData();
 
-        // Logaritmisk fordelte N-værdier, fx: 10, 13, 17, ..., 100000
+        // Logaritmisk fordelte N-værdier
         var allNs = Enumerable.Range(1, maxN)
                               .Select(i => (int)Math.Round(Math.Pow(10, i * Math.Log10(maxN) / maxN)))
                               .Distinct()
@@ -64,7 +64,7 @@ public static class SpecialIntegralCalculator
         double cosz = Math.Cos(v[2]);
         double denom = 1.0 - cosx * cosy * cosz;
 
-        // Undgå division med meget små tal (numerisk stabilitet)
+        // Undgå division med meget små tal
         if (denom < 1e-10)
             return 0.0;
 

@@ -2,12 +2,8 @@ using System;
 
 public static class PlainMC
 {
-    private static Random rng = new Random();  // shared random number generator
+    private static Random rng = new Random();
 
-    /// <summary>
-    /// Plain Monte Carlo integration over a hyper-rectangle [a,b] in d dimensions.
-    /// Returns a tuple (integral, error).
-    /// </summary>
     public static (double result, double error) Integrate(Func<double[], double> f, double[] a, double[] b, int N)
     {
         int dim = a.Length;

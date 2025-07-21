@@ -17,7 +17,6 @@ public static class StratifiedSamplingComparison
         var (plainRes, plainErr) = PlainMC.Integrate(PeakedFunction, a, b, N);
         var (stratRes, stratErr) = StratifiedMC.Integrate(PeakedFunction, a, b, N);
 
-        // Skriv til konsol
         Console.WriteLine("Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ {0:F6}) with N={1}", trueValue, N);
         Console.WriteLine("Plain MC:      result = {0:F6},  error estimate = {1:F6},  actual error = {2:F6}",
                           plainRes, plainErr, Math.Abs(plainRes - trueValue));

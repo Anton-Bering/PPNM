@@ -7,30 +7,30 @@
 --- Area of Unit Circle ---
 
 The file 'Estimate_the_area_of_a_unit_circle.txt' contains the Monte Carlo estimates of the unit circle area.
-After 100 samples, the estimated area is 3.360000.
+After 100 samples, the estimated area is 3.240000.
 The plot 'area_of_a_unit_circle_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
 --- Calculating Gaussian Bell Integral ---
 
 The file 'Estimate_GaussianBell2D.txt' contains the Monte Carlo estimates of the area.
-After 100 samples, the estimated area is 3.569698.
+After 100 samples, the estimated area is 3.792361.
 The plot 'Estimate_GaussianBell2D_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
 ------ Calculating The Special 3D Integral ------
 
-The Special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255
+The special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255
 
 The file 'Estimate_SpecialIntegral.txt' contains the results for the value of the Special 3D Integral.
-After 100 samples, the estimated value is 1.128246293.
+After 100 samples, the estimated value is 1.246104141.
 
------- Calculating The less sungular 3D Integral ------
------- The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085 ------
+------ Calculating The Less Sungular 3D Integral ------
 
+The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085
 
 The file 'Estimate_LessSungularIntegral.txt' contains the results for the value of the less sungular 3D Integral.
-After 100 samples, the estimated value is -0.006068802.
+After 100 samples, the estimated value is 0.039423781.
 The plot 'Estimate_LessSungularIntegral_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
@@ -51,9 +51,9 @@ QMC achieves lower error and faster convergence compared to MC, especially for s
 --- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
 Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
        N      MC est.err   MC actual err     QMC est.err  QMC actual err
-    1000   6.933609E-003   7.028127E-004   2.105490E-004   1.783078E-003
-   10000   2.191372E-003   1.945490E-003   2.932159E-005   2.253326E-004
-  100000   6.990873E-004   5.138404E-004   2.449113E-006   2.617998E-005
+    1000   6.927436E-003   8.460108E-004   2.105490E-004   1.783078E-003
+   10000   2.204984E-003   3.058761E-003   2.932159E-005   2.253326E-004
+  100000   6.996039E-004   1.174073E-004   2.449113E-006   2.617998E-005
 
 Results saved to: QuasiVsPseudoResults.txt
 (MC uses internal variance; QMC uses difference of two sequences.)
@@ -69,7 +69,7 @@ StratifiedSamplingError.svg shows the actual error as a function of N in log-log
 
 --- Part C: Recursive Stratified Sampling ---
 Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
-Plain MC:      result = 0.990747,  error estimate = 0.133214,  actual error = 0.009207
-Stratified MC: result = 1.116805,  error estimate = 0.076146,  actual error = 0.116851
+Plain MC:      result = 1.004034,  error estimate = 0.178803,  actual error = 0.004079
+Stratified MC: result = 0.990924,  error estimate = 0.003179,  actual error = 0.009031
 
 Results saved to: StratifiedSamplingResults.txt

@@ -139,7 +139,7 @@ class Program
 
         Console.WriteLine("\n------ Calculating The Less Sungular 3D Integral ------\n");
         
-        Console.WriteLine("The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085\n"); // Integrale
+        Console.WriteLine("The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085"); // Integrale
         LessSungularIntegralCalculator.CalculateAndSaveResults();
         LessSungularIntegralCalculator.PrintLastEstimateSummary();
 
