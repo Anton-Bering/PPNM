@@ -19,7 +19,10 @@
 
    ∫₀ᵖⁱ dx/π ∫₀ᵖⁱ dy/π ∫₀ᵖⁱ dz/π [1 - cos(x) cos(y) cos(z)]⁻¹ = Γ(1/4)⁴ / (4π³) ≈ 1.39320392968567859184246268255  
 
-   (This is a difficult singular integral, do not use it for your tests and error estimates, use something less sungular.)
+   This is a difficult singular integral, do not use it for your tests and error estimates, use something less sungular.
+
+*Here I choose to use the less sungular 3D integral:*  
+∫₀ᵖⁱ dx ∫₀ᵖⁱ dy ∫₀ᵖⁱ dz cos(x) cos(y) cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085
 
 ### B. Quasi-random sequences
 

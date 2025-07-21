@@ -101,7 +101,7 @@ class Program
 
         Console.WriteLine("\n------ Calculating The Special 3D Integral ------\n");
         
-        Console.WriteLine("The Special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255\n"); // Integrale
+        Console.WriteLine("The special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255\n"); // Integrale
         
         SpecialIntegralCalculator.CalculateAndSaveResults();
         string specialPath = "Estimate_SpecialIntegral.txt";
@@ -137,8 +137,9 @@ class Program
             Console.WriteLine($"Error: File '{specialPath}' not found.");
         }
 
-        Console.WriteLine("\n------ Calculating The less sungular 3D Integral ------");
-        Console.WriteLine("------ The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085 ------\n"); // Integrale
+        Console.WriteLine("\n------ Calculating The Less Sungular 3D Integral ------\n");
+        
+        Console.WriteLine("The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085\n"); // Integrale
         LessSungularIntegralCalculator.CalculateAndSaveResults();
         LessSungularIntegralCalculator.PrintLastEstimateSummary();
 
