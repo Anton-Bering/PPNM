@@ -21,7 +21,7 @@
 
    This is a difficult singular integral, do not use it for your tests and error estimates, use something less sungular.
 
-*Here I choose to use the less sungular 3D integral:*  
+*For my tests and error estimates, I choose to use the (less sungular) 3D integral:*  
 ∫₀ᵖⁱ dx ∫₀ᵖⁱ dy ∫₀ᵖⁱ dz cos(x) cos(y) cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085
 
 ### B. Quasi-random sequences
