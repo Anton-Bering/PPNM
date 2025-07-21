@@ -12,8 +12,8 @@
 
    Check whether the actual error scales as: `1/√N`.
 
-*As suggested in the assignment description, I calculate the area of a unit circle*  
-*Furthermore, I also calculate the Gaussian Bell Integral*
+*As suggested in the assignment description, I calculate the area of a unit circle, i.e., the value of π.*  
+*Furthermore, I also calculate the Gaussian Bell Integral.*
 
 3. Try calculate:  
 
