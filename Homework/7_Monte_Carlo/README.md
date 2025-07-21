@@ -15,11 +15,10 @@ Check whether the actual error scales as `1/√N`.
 *As suggested in the assignment description, I calculate the area of a unit circle*
 *Furthermore, I also calculate the Gaussian Bell Integral*
 
-3. Try calculate: ∫₀^π dx / π ∫₀^π dy / π ∫₀^π dz / π [1 - cos(x) cos(y) cos(z)]⁻¹
-= Γ(1/4)⁴ / (4π³) ≈ 1.39320392968567859184246268255
+3. Try calculate:  
 
-`∫₀^π dx / π ∫₀^π dy / π ∫₀^π dz / π [1 - cos(x) cos(y) cos(z)]⁻¹
-= Γ(1/4)⁴ / (4π³) ≈ 1.39320392968567859184246268255`
+   ∫₀ᵖⁱ dx/π ∫₀ᵖⁱ dy/π ∫₀ᵖⁱ dz/π [1 - cos(x) cos(y) cos(z)]⁻¹ = Γ(1/4)⁴ / (4π³)  
+                                                              ≈ 1.39320392968567859184246268255
 
 (This is a difficult singular integral, do not use it for your tests and error estimates, use something less sungular.)
 
