@@ -17,7 +17,7 @@ Processed N=9000
 Processed N=10000
 
 The file 'Estimate_the_area_of_a_unit_circle.txt' contains the Monte Carlo estimates of the unit circle area.
-After 10000 samples, the estimated area is 3.114000.
+After 10000 samples, the estimated area is 3.145600.
 The plot 'area_of_a_unit_circle_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
@@ -26,7 +26,7 @@ Processed N=1000 for Gaussian Bell
 Processed N=10000 for Gaussian Bell
 
 The file 'Estimate_GaussianBell2D.txt' contains the Monte Carlo estimates of the area.
-After 10000 samples, the estimated area is 3.117362.
+After 10000 samples, the estimated area is 3.155899.
 The plot 'Estimate_GaussianBell2D_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
@@ -37,7 +37,7 @@ The special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - co
 Processed N=1000 for Special Integral
 Processed N=10000 for Special Integral
 The file 'Estimate_SpecialIntegral.txt' contains the results for the value of the Special 3D Integral.
-After 10000 samples, the estimated value is 1.358225944.
+After 10000 samples, the estimated value is 1.362955560.
 
 ------ Calculating The Less Sungular 3D Integral ------
 
@@ -46,7 +46,7 @@ Processed N=1000 for Less Singular Integral
 Processed N=10000 for Less Singular Integral
 
 The file 'Estimate_LessSungularIntegral.txt' contains the results for the value of the less sungular 3D Integral.
-After 10000 samples, the estimated value is -0.003206933.
+After 10000 samples, the estimated value is -0.003108453.
 The plot 'Estimate_LessSungularIntegral_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
@@ -67,9 +67,9 @@ QMC achieves lower error and faster convergence compared to MC, especially for s
 --- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
 Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
        N      MC est.err   MC actual err     QMC est.err  QMC actual err
-    1000   7.013964E-003   4.324544E-004   2.105490E-004   1.783078E-003
-   10000   2.190429E-003   1.622514E-003   2.932159E-005   2.253326E-004
-  100000   6.987624E-004   1.472759E-004   2.449113E-006   2.617998E-005
+    1000   6.860991E-003   1.699933E-003   2.105490E-004   1.783078E-003
+   10000   2.211263E-003   1.862839E-003   2.932159E-005   2.253326E-004
+  100000   6.965025E-004   5.397637E-004   2.449113E-006   2.617998E-005
 
 Results saved to: QuasiVsPseudoResults.txt
 (MC uses internal variance; QMC uses difference of two sequences.)
@@ -85,7 +85,7 @@ StratifiedSamplingError.svg shows the actual error as a function of N in log-log
 
 --- Part C: Recursive Stratified Sampling ---
 Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
-Plain MC:      result = 1.047661,  error estimate = 0.142526,  actual error = 0.047707
-Stratified MC: result = 1.003722,  error estimate = 0.008375,  actual error = 0.003767
+Plain MC:      result = 0.786911,  error estimate = 0.142795,  actual error = 0.213044
+Stratified MC: result = 0.783518,  error estimate = 0.633295,  actual error = 0.216437
 
 Results saved to: StratifiedSamplingResults.txt

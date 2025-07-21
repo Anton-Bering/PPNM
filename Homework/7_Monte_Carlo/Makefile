@@ -3,7 +3,6 @@
 CS      := mcs
 CFLAGS  := -target:exe -langversion:latest
 EXE     := main.exe
-# HERHER: Eller skal det være: := MonteCarloIntegration.exe
 
 RUN     := mono $(EXE)
 
@@ -79,5 +78,5 @@ package: $(PLOTS) | $(DIR_A) $(DIR_B) $(DIR_C)
 
 RM ?= rm
 clean:
-	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS) *exe
+	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS)
 	-$(RM) -rf $(DIR_A) $(DIR_B) $(DIR_C)
