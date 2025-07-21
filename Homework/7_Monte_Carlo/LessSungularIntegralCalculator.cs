@@ -11,7 +11,7 @@ public static class LessSungularIntegralCalculator
     private static readonly double exactValue = 8.0 / (Math.PI * Math.PI * Math.PI);
     private const string DataFile = "Estimate_LessSungularIntegral.txt";
 
-    public static void CalculateAndSaveResults(int maxN = 100)
+    public static void CalculateAndSaveResults(int maxN = 10000)
     {
         HashSet<int> existingNs = ReadExistingData();
 

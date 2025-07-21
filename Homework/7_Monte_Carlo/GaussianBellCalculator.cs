@@ -11,7 +11,7 @@ public static class GaussianBellCalculator
     private static readonly double trueValue = Math.PI; // Integralet over ℝ² er π, men over [-2,2]^2 er det ca. 0.98π
     private const string DataFile = "Estimate_GaussianBell2D.txt";
 
-    public static void CalculateAndSaveResults(int maxN = 100)
+    public static void CalculateAndSaveResults(int maxN = 10000)
     {
         HashSet<int> existingNs = ReadExistingData();
 

@@ -11,7 +11,7 @@ public static class SpecialIntegralCalculator
     private static readonly double analyticalValue = 1.393203929685676859;
     private const string DataFile = "Estimate_SpecialIntegral.txt";
 
-    public static void CalculateAndSaveResults(int maxN = 100)
+    public static void CalculateAndSaveResults(int maxN = 10000)
     {
         HashSet<int> existingNs = ReadExistingData();
 
