@@ -99,8 +99,10 @@ class Program
             Console.WriteLine("Error: File 'Estimate_GaussianBell2D.txt' not found.");
         }
 
-        Console.WriteLine("\n------ Calculating The Special 3D Integral ------");
-        Console.WriteLine("------ The Special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255 ------"); // Integrale
+        Console.WriteLine("\n------ Calculating The Special 3D Integral ------\n");
+        
+        Console.WriteLine("The Special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255\n"); // Integrale
+        
         SpecialIntegralCalculator.CalculateAndSaveResults();
         string specialPath = "Estimate_SpecialIntegral.txt";
         if (File.Exists(specialPath))

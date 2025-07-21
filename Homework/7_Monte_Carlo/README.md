@@ -10,7 +10,7 @@
 
    Plot the estimated error and the actual error as functions of the number of sampling points. 
 
-   Check whether the actual error scales as `1/√N`.
+   Check whether the actual error scales as: `1/√N`.
 
 *As suggested in the assignment description, I calculate the area of a unit circle*  
 *Furthermore, I also calculate the Gaussian Bell Integral*

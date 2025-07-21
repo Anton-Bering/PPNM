@@ -216,8 +216,8 @@
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<path stroke='rgb(148,   0, 211)'  d='M221.50,60.01 L257.00,60.01 M323.33,163.38 L551.16,212.86 L778.99,263.63  '/>	<use xlink:href='#gpPt0' transform='translate(323.33,163.38) scale(3.75)' color='rgb(148,   0, 211)'/>
-	<use xlink:href='#gpPt0' transform='translate(551.16,212.86) scale(3.75)' color='rgb(148,   0, 211)'/>
+	<path stroke='rgb(148,   0, 211)'  d='M221.50,60.01 L257.00,60.01 M323.33,161.70 L551.16,213.17 L778.99,263.63  '/>	<use xlink:href='#gpPt0' transform='translate(323.33,161.70) scale(3.75)' color='rgb(148,   0, 211)'/>
+	<use xlink:href='#gpPt0' transform='translate(551.16,213.17) scale(3.75)' color='rgb(148,   0, 211)'/>
 	<use xlink:href='#gpPt0' transform='translate(778.99,263.63) scale(3.75)' color='rgb(148,   0, 211)'/>
 	<use xlink:href='#gpPt0' transform='translate(239.25,60.01) scale(3.75)' color='rgb(148,   0, 211)'/>
 </g>
@@ -229,9 +229,9 @@
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
-	<path stroke='rgb(  0, 158, 115)'  d='M221.50,75.01 L257.00,75.01 M323.33,185.70 L551.16,241.16 L778.99,243.16  '/>	<use xlink:href='#gpPt1' transform='translate(323.33,185.70) scale(3.75)' color='rgb(  0, 158, 115)'/>
-	<use xlink:href='#gpPt1' transform='translate(551.16,241.16) scale(3.75)' color='rgb(  0, 158, 115)'/>
-	<use xlink:href='#gpPt1' transform='translate(778.99,243.16) scale(3.75)' color='rgb(  0, 158, 115)'/>
+	<path stroke='rgb(  0, 158, 115)'  d='M221.50,75.01 L257.00,75.01 M323.33,191.22 L551.16,271.48 L778.99,251.12  '/>	<use xlink:href='#gpPt1' transform='translate(323.33,191.22) scale(3.75)' color='rgb(  0, 158, 115)'/>
+	<use xlink:href='#gpPt1' transform='translate(551.16,271.48) scale(3.75)' color='rgb(  0, 158, 115)'/>
+	<use xlink:href='#gpPt1' transform='translate(778.99,251.12) scale(3.75)' color='rgb(  0, 158, 115)'/>
 	<use xlink:href='#gpPt1' transform='translate(239.25,75.01) scale(3.75)' color='rgb(  0, 158, 115)'/>
 </g>
 	</g>
