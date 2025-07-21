@@ -20,7 +20,7 @@ class Program
     {
         Console.WriteLine("------------ TASK A ------------");
         Console.WriteLine("\n------ Calculate two-dimensional integrals with my Monte Carlo routine ------");
-        Console.WriteLine("------ Plot the estimated error and the actual error as functions of the number of sampling points------");
+        Console.WriteLine("------ Plot the estimated error and the actual error as functions of the number of sampling points ------");
         Console.WriteLine("------ And check whether the actual error scales as N^(-1/2) ------");
 
         // --- Area of Unit Circle ---
