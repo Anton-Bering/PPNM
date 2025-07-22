@@ -23,9 +23,9 @@ return x;
 
    The vector δx to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand  
    and should be supplied by the user. If the user does not supply it, the routine can choose it as  
-   `δxᵢ = |xᵢ|*2^{-26}`
-   or as (might work better sometimes),
-   `δxᵢ = Max(|xᵢ|,1)*2^{-26}`,
+   `δxᵢ = |xᵢ|*2^{-26}`  
+   or as (might work better sometimes)  
+   `δxᵢ = Max(|xᵢ|,1)*2^{-26}`.
 
    The Jacobian can be estimated numerically like this:
 
