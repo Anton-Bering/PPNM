@@ -16,8 +16,34 @@ static vector newton(
   , vector δx = null         /* optional δx-vector for calculation of Jacobian */
 ){
 ...
+return x;
 }
 ```
+   The routine returns a vector x that approximates the root of the equation f(x)=0 such that ‖f(x)‖<acc.  
+
+   The vector δx to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand and should be supplied by the user.  
+   If the user does not supply it, the routine can choose it as  
+
+   δxi = |xi|*2^{-26}
+
+   or as (might work better sometimes),
+
+   δxi = Max(|xi|,1)*2^{-26},
+
+   The Jacobian can be estimated numerically like this:
+
+```csharp
+public static matrix jacobian(
+    Func<vector, vector> f
+, vector x
+, vector fx = null,
+ vector dx = null
+){
+    ...
+
+    return J;
+}
+
 
 2. You should use your own routines for solving linear systems.
 
