@@ -21,13 +21,10 @@ return x;
 ```
    The routine returns a vector x that approximates the root of the equation f(x)=0 such that ‖f(x)‖<acc.  
 
-   The vector δx to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand and should be supplied by the user.  
-   If the user does not supply it, the routine can choose it as  
-
+   The vector δx to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand  
+   and should be supplied by the user. If the user does not supply it, the routine can choose it as  
    `δxᵢ = |xᵢ|*2^{-26}`
-
    or as (might work better sometimes),
-
    `δxᵢ = Max(|xᵢ|,1)*2^{-26}`,
 
    The Jacobian can be estimated numerically like this:
