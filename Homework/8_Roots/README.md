@@ -15,6 +15,8 @@ static vector newton(
   , double acc = 1e-2        /* accuracy goal: on exit ‖f(x)‖ should be < acc */
   , vector δx = null         /* optional δx-vector for calculation of Jacobian */
 ){
+...
+}
 ```
 
 2. You should use your own routines for solving linear systems.
