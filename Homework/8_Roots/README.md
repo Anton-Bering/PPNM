@@ -11,9 +11,9 @@
 ```csharp
 static vector newton(
     Func<vector, vector> f   /* the function to find the root of */
-  , vector start             /* the start point */
-  , double acc = 1e-2        /* accuracy goal: on exit ‖f(x)‖ should be < acc */
-  , vector δx = null         /* optional δx-vector for calculation of Jacobian */
+    ,vector start             /* the start point */
+    ,double acc = 1e-2        /* accuracy goal: on exit ‖f(x)‖ should be < acc */
+    ,vector δx = null         /* optional δx-vector for calculation of Jacobian */
 ){
 ...
 return x;
@@ -24,26 +24,28 @@ return x;
    The vector δx to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand and should be supplied by the user.  
    If the user does not supply it, the routine can choose it as  
 
-   δxi = |xi|*2^{-26}
+   `δxᵢ = |xᵢ|*2^{-26}`
 
    or as (might work better sometimes),
 
-   δxi = Max(|xi|,1)*2^{-26},
+   `δxᵢ = Max(|xᵢ|,1)*2^{-26}`,
 
    The Jacobian can be estimated numerically like this:
 
 ```csharp
 public static matrix jacobian(
     Func<vector, vector> f
-, vector x
-, vector fx = null,
- vector dx = null
+    ,vector x
+    ,vector fx = null
+    ,vector dx = null
 ){
     ...
-
     return J;
 }
+```
 
+   One should stop one's iterations if either the condition ‖f(x)‖<acc is satisfied  
+   or if the step-size becomes smaller than the size of the δx parameter in your numerical gradient calculation.
 
 2. You should use your own routines for solving linear systems.
 
@@ -66,3 +68,4 @@ xᵢ
 *and for: ...*  
 
 *I do both*
+ᵢ
