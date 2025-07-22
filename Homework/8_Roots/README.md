@@ -48,9 +48,13 @@ public static matrix jacobian(
 
 3. Debug your root-finding routine using some simple one- and two-dimensional equations.
 
-4. Find the extremum(s) of the [Rosenbrock's valley function](https://en.wikipedia.org/wiki/Rosenbrock_function): `f(x,y) = (1-x)^2 + 100(y-x^2)^2` by searching for the roots of its gradient (you should calculate the latter analytically).
+4. Find the extremum(s) of the [Rosenbrock's valley function](https://en.wikipedia.org/wiki/Rosenbrock_function),  
+   `f(x,y) = (1-x)^2 + 100(y-x^2)^2`,  
+    by searching for the roots of its gradient (you should calculate the latter analytically).
 
-5. Find the minimum(s) of the [Himmelblau's function](https://en.wikipedia.org/wiki/Himmelblau%27s_function): `f(x,y) = (x^2 + y-11)^2 + (x + y^2 - 7)^2` by searching for the roots of its (analytic) gradient.
+5. Find the minimum(s) of the [Himmelblau's function](https://en.wikipedia.org/wiki/Himmelblau%27s_function),  
+   `f(x,y) = (x^2 + y-11)^2 + (x + y^2 - 7)^2`,  
+    by searching for the roots of its (analytic) gradient.
 
 ### B. Bound states of hydrogen atom with [shooting method for boundary value problems](https://en.wikipedia.org/wiki/Shooting_method)
   
