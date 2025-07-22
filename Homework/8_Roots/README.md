@@ -4,15 +4,26 @@
 
 ### A. Newton's method with numerical Jacobian and back-tracking line-search
 
-1. Implement the Newton's method with simple backtracking line-search algorithm where the derivatives in the Jacobian matrix are calculated numerically using finite differences (as described in the Book).
+1. Implement the Newton's method with simple backtracking line-search algorithm where the derivatives in the Jacobian matrix are calculated numerically using finite differences (as described in the Book).  
 
-You should use your own routines for solving linear systems.
+   Something like this:
 
-Debug your root-finding routine using some simple one- and two-dimensional equations.
+```csharp
+static vector newton(
+    Func<vector, vector> f   /* the function to find the root of */
+  , vector start             /* the start point */
+  , double acc = 1e-2        /* accuracy goal: on exit ‖f(x)‖ should be < acc */
+  , vector δx = null         /* optional δx-vector for calculation of Jacobian */
+){
+```
 
-Find the extremum(s) of the [Rosenbrock's valley function](https://en.wikipedia.org/wiki/Rosenbrock_function): `f(x,y) = (1-x)^2 + 100(y-x^2)^2` by searching for the roots of its gradient (you should calculate the latter analytically).
+2. You should use your own routines for solving linear systems.
 
-Find the minimum(s) of the [Himmelblau's function](https://en.wikipedia.org/wiki/Himmelblau%27s_function): `f(x,y) = (x^2 + y-11)^2 + (x + y^2 - 7)^2` by searching for the roots of its (analytic) gradient.
+3. Debug your root-finding routine using some simple one- and two-dimensional equations.
+
+4. Find the extremum(s) of the [Rosenbrock's valley function](https://en.wikipedia.org/wiki/Rosenbrock_function): `f(x,y) = (1-x)^2 + 100(y-x^2)^2` by searching for the roots of its gradient (you should calculate the latter analytically).
+
+5. Find the minimum(s) of the [Himmelblau's function](https://en.wikipedia.org/wiki/Himmelblau%27s_function): `f(x,y) = (x^2 + y-11)^2 + (x + y^2 - 7)^2` by searching for the roots of its (analytic) gradient.
 
 ### B. Bound states of hydrogen atom with [shooting method for boundary value problems](https://en.wikipedia.org/wiki/Shooting_method)
   
