@@ -58,27 +58,18 @@ public static matrix jacobian(
 
 ### B. Bound states of hydrogen atom with [shooting method for boundary value problems](https://en.wikipedia.org/wiki/Shooting_method)
 
-1. Find the lowest root, *E₀*, of the equation *M(E) = 0* for, say, *rₘₐₓ = 8*.  
-Plot the resulting wave function and compare with the exact result  
-(which is *E₀ = −½*, *f₀(r) = r·e⁻ʳ* — check this by inserting *E₀* and *f₀(r)* into the Schrödinger equation above).
+1. Find the lowest root, E₀, of the equation M(E)=0 for rₘₐₓ=8.  
+
+   Plot the resulting wave function and compare with the exact result  
+   (which is E₀=-1/2, f₀(r)=r·e⁻ʳ — check this by inserting E₀ and f₀(r) into the Schrödinger equation).
 
 
-2. Investigate the convergence of your solution towards the exact result with respect to the *rₘₐₓ* and *rₘᵢₙ* parameters (separately)  
-as well as with respect to the parameters *acc* and *eps* of your ODE integrator.
+2. Investigate the convergence of your solution towards the exact result with respect to the rₘₐₓ and rₘᵢₙ parameters (separately)  
+   as well as with respect to the parameters `acc` and `eps` of your ODE integrator.
 
 ### C. Quadratic interpolation line-search
 
-1. In the naïve implementation in part A we allocate — at each step — a new matrix to keep the Jacobian. Optimize the implementation by only allocating one matrix in the beginning and then updating it at each step.
+1. (In the naïve implementation in part A we allocate — at each step — a new matrix to keep the Jacobian.)  
+   Optimize the implementation by only allocating one matrix in the beginning and then updating it at each step.
 
-2. Implement the quadratic interpolation line-search as described in the book.
-
-`...kode..ish...`
-[TEXT](LINK)
-xᵢ
-*As suggested in the assignment description, I do this for: ...*  
-
-*Furthermore, I also do it for: ...*  
-*and for: ...*  
-
-*I do both*
-ᵢ
+2. Implement the quadratic interpolation line-search (as described in the book).
