@@ -1,0 +1,117 @@
+------------ TASK A: Newton's method with numerical Jacobian and back-tracking line-search ------------
+
+------ Use your own routines for solving linear systems ------
+
+--- Solving a linear system Ax=b ---
+
+The system is defined by matrix A and vector b:
+A =
+      4.0000       1.0000       2.0000 
+      1.0000       5.0000       3.0000 
+      2.0000       3.0000       6.0000 
+
+b = 12.00000000 20.00000000 26.00000000 
+
+The expected solution is (1, 2, 3).
+
+The solver finds the solution:
+x = 1.00000000 2.00000000 3.00000000 
+
+------ Test your root-finding routine using one- and two-dimensional equations ------
+
+--- Finding root for f(x) = (x-5)^2 - 4 ---
+
+The expected solutions are x=3 and x=7.
+
+Searching from starting point x=1.0:
+  Root found at x = 2.99999991 
+  f(3.0000) = 0.00000037
+
+Searching from starting point x=8.0:
+  Root found at x = 7.00001024 
+  f(7.0000) = 0.00004096
+
+
+--- Finding root for f(x,y)=(x+y-5, x^2-y-1) ---
+
+The expected solutions are (x,y)=(2,3) and (x,y)=(-3,8).
+
+Searching from starting point (1,1):
+  Root found at (x,y) = 2.00013016 2.99986984 
+  f(2.0001, 2.9999) = (0.00000000, 0.00065081)
+
+Searching from starting point (-2,7):
+  Root found at (x,y) = -3.00007629 8.00007629 
+  f(-3.0001, 8.0001) = (0.00000000, 0.00038148)
+
+------------ (Here is a small comment related to Task C:                ------------
+------------  In the analysis below, I use the 'naïve implementation'.) ------------
+
+------ Find the extremum(s) of the Rosenbrock's valley function ------
+
+Expected minimum is (x,y)=(1, 1).
+
+Rosenbrock minimum found at:
+  x = 1.00000255 1.00000505 
+
+------ Find the minimum(s) of the Himmelblau's function ------
+
+Expected minima are (3, 2), (-2.805, 3.131), (-3.779, -3.283), and (3.584, -1.848).
+
+Minimum found from start point (4,4): 2.99999912 2.00000396 
+Minimum found from start point (-2,2): -2.80511924 3.13131265 
+Minimum found from start point (-3,-4): -3.77931155 -3.28319145 
+Minimum found from start point (3,-3): 3.58442834 -1.84812653 
+
+------------ TASK B: Bound states of hydrogen atom with shooting method for boundary value problems ------------
+
+------ Find the lowest root, E_0, of the equation M(E)=0 ------
+
+Calculated ground state energy: E0 = -0.49997520 Hartree
+
+------ Plot the resulting wave-function and compare with the exact result ------
+------ (which is: E_0 = -1/2, f_0(r) = r e^(-r)                           ------
+
+Wavefunction data saved to Hydrogen_wavefunction.txt.
+Wavefunction plot saved as Hydrogen_wavefunction.svg.
+
+------ Investigate the convergence of the solution  ------
+------ (with respect to r_max, r_min, acc, and eps) ------
+
+Convergence data for r_max saved to Hydrogen_convergence_rmax.txt
+Convergence data for r_min saved to Hydrogen_convergence_rmin.txt
+Convergence data for ODE accuracy (acc) saved to Hydrogen_convergence_acc.txt
+Convergence data for ODE accuracy (eps) saved to Hydrogen_convergence_eps.txt
+
+------------ TASK C: Quadratic interpolation line-search ------------
+
+------ Optimize the implementation by only allocating one matrix ------
+------ in the beginning and then updating it at each step.       ------
+------ And implement the quadratic interpolation line-search ------
+
+For this purpose, I have implemented the function NewtonOptimized (in RootFinder.cs),
+which is an optimized version of the Newton function.
+
+To check that the optimizations work, the analyses from Task A and B are run once again,
+but using the function 'NewtonOptimized' instead of 'Newton'.
+The results for this are shown below:
+
+------ Find the extremum(s) of the Rosenbrock's valley function ------
+
+Expected minimum is (x,y)=(1, 1).
+
+Rosenbrock minimum found at:
+  x = 1.00000003 1.00000007 
+
+------ Find the minimum(s) of the Himmelblau's function ------
+
+Expected minima are (3, 2), (-2.805, 3.131), (-3.779, -3.283), and (3.584, -1.848).
+
+Minimum found from start point (4,4): 2.99999912 2.00000396 
+Minimum found from start point (-2,2): -2.80511809 3.13131252 
+Minimum found from start point (-3,-4): -3.77931155 -3.28319145 
+Minimum found from start point (3,-3): 3.58442834 -1.84812653 
+
+------ Find the lowest root, E_0, of the equation M(E)=0 ------
+
+Calculated ground state energy: E0 = -0.49997520 Hartree

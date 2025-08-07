@@ -71,11 +71,10 @@ namespace Integration {
     }
 
     /* ---------- helper sub‑routines ---------- */
-
     static void TestIntegral(StreamWriter w,string label,Func<double,double> f,
-                             double a,double b,double exact){
+                             double a,double b,double exact){// HERHER: tilfej måske acc som parmeter.
       var r  = Integrate(f,a,b);
-      bool ok = Abs(r.val-exact) <= 1e-6;
+      bool ok = Abs(r.val-exact) <= 1e-6; // HERHER: Dumt at have 1e-6 here
 
       w.WriteLine($"--- {label} ---\n");
       w.WriteLine($"Exact value: {exact}");

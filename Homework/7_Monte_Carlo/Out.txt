@@ -17,7 +17,7 @@ Processed N=9000
 Processed N=10000
 
 The file 'Estimate_the_area_of_a_unit_circle.txt' contains the Monte Carlo estimates of the unit circle area.
-After 10000 samples, the estimated area is 3.145600.
+After 10000 samples, the estimated area is 3.140000.
 The plot 'area_of_a_unit_circle_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
 
@@ -26,66 +26,6 @@ Processed N=1000 for Gaussian Bell
 Processed N=10000 for Gaussian Bell
 
 The file 'Estimate_GaussianBell2D.txt' contains the Monte Carlo estimates of the area.
-After 10000 samples, the estimated area is 3.155899.
+After 10000 samples, the estimated area is 3.065652.
 The plot 'Estimate_GaussianBell2D_error.plot' shows the estimated and actual error as a function of N.
 As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
-
------- Calculating The Special 3D Integral ------
-
-The special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255
-
-Processed N=1000 for Special Integral
-Processed N=10000 for Special Integral
-The file 'Estimate_SpecialIntegral.txt' contains the results for the value of the Special 3D Integral.
-After 10000 samples, the estimated value is 1.362955560.
-
------- Calculating The Less Sungular 3D Integral ------
-
-The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085
-Processed N=1000 for Less Singular Integral
-Processed N=10000 for Less Singular Integral
-
-The file 'Estimate_LessSungularIntegral.txt' contains the results for the value of the less sungular 3D Integral.
-After 10000 samples, the estimated value is -0.003108453.
-The plot 'Estimate_LessSungularIntegral_error.plot' shows the estimated and actual error as a function of N.
-As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
-
- ------------ TASK B ------------
-
------- Estimated the error by using two different sequences ------
-
-Estimate_QMC_vs_MC.txt contains the data for the estimated errors.
-Estimate_QMC_vs_MC_error.svg is a plot showing the estimated and actual error for MC and QMC as a function of N.
-The QMC error is estimated as the absolute difference between two independent Halton sequence evaluations.
-
------- Compare the scaling of the error with my pseudo-random Monte-Carlo integrator ------
-
-QuasiVsPseudoResults.txt contains the estimated and actual errors for both MC and QMC.
-Estimate_QMC_vs_MC_error.svg is a log-log plot visualizing the error scaling as a function of N.
-QMC achieves lower error and faster convergence compared to MC, especially for smaller sample sizes.
-
---- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
-Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
-       N      MC est.err   MC actual err     QMC est.err  QMC actual err
-    1000   6.860991E-003   1.699933E-003   2.105490E-004   1.783078E-003
-   10000   2.211263E-003   1.862839E-003   2.932159E-005   2.253326E-004
-  100000   6.965025E-004   5.397637E-004   2.449113E-006   2.617998E-005
-
-Results saved to: QuasiVsPseudoResults.txt
-(MC uses internal variance; QMC uses difference of two sequences.)
-
- ------------ TASK C ------------
-This task implements recursive stratified sampling, where the domain is adaptively subdivided based on estimated sub-variances.
-The integrator distributes more points where the function varies most, improving accuracy in difficult regions.
-The method is recursive and stops subdividing when the number of points is below a fixed threshold (nmin).
-
-StratifiedSamplingErrors.txt contains error data for plain vs stratified MC.
-StratifiedSamplingError.svg shows the actual error as a function of N in log-log scale.
-
-
---- Part C: Recursive Stratified Sampling ---
-Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
-Plain MC:      result = 0.786911,  error estimate = 0.142795,  actual error = 0.213044
-Stratified MC: result = 0.783518,  error estimate = 0.633295,  actual error = 0.216437
-
-Results saved to: StratifiedSamplingResults.txt

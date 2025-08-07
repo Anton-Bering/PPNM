@@ -1,0 +1,84 @@
+### Makefile for the homework assignment [indsæt navnet på den mappe jeg befinder mig i] ###
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+CS      := mcs
+CFLAGS  := -target:exe -langversion:latest
+EXE     := main.exe
+RUN     := mono $(EXE)
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+GNUPLOT := plot.gpi
+OUT     := Out.txt
+
+# Output folders, tilhøre task A, B, og C: # Til Chat GBT: oversæt denne kommentar til engelsk.
+DIR_A   := Out_Task_A
+DIR_B   := Out_Task_B
+DIR_C   := Out_Task_C
+
+# Data filer tilhøre task A: # Til Chat GBT: oversæt denne kommentar til engelsk.
+DATA_A	:= aaa.txt
+
+# Data filer tilhøre task B: # Til Chat GBT: oversæt denne kommentar til engelsk.
+DATA_B	:= bbb.txt
+
+# Data filer tilhøre task C: # Til Chat GBT: oversæt denne kommentar til engelsk.
+DATA_C := ccc.txt
+
+# Samlet data filer tilhøre task A, B, og C: # Til Chat GBT: oversæt denne kommentar til engelsk.
+DATA  := $(DATA_A) $(DATA_B) $(DATA_C)
+
+# Plot filer tilhøre task A: # Til Chat GBT: oversæt denne kommentar til engelsk.
+PLOT_A := aaa.svg
+
+# Plot filer tilhøre task B: # Til Chat GBT: oversæt denne kommentar til engelsk. 
+PLOTS_B := bbb.svg
+
+# Plot filer tilhøre task C: # Til Chat GBT: oversæt denne kommentar til engelsk.
+PLOTS_C := ccc.svg
+
+# Samlet plot filer tilhøre task A, B, og C: # Til Chat GBT: oversæt denne kommentar til engelsk.
+PLOTS  := $(PLOTS_A) $(PLOTS_B) $(PLOTS_C)
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+SRC         := [indsær alle de .cs filer der er i den mappe jeg befinder mig i]
+COMMON_DIR  := ../../General
+COMMON_SRC  := $(COMMON_DIR)/Vector_and_Matrix.cs \
+               $(COMMON_DIR)/HW_points.cs
+CSFILES     := $(SRC) $(COMMON_SRC)
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+MOVE_A := $(DATA_A) $(PLOTS_A)
+MOVE_B := $(DATA_B) $(PLOTS_B)
+MOVE_C := $(DATA_C) $(PLOTS_C)
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+.PHONY: all clean package
+all: package
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+$(EXE): $(CSFILES)
+	$(CS) $(CFLAGS) -out:$@ $^
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+$(OUT) $(DATA): $(EXE)
+	$(RUN) > $(OUT)
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+$(PLOTS)&: $(DATA) $(GNUPLOT)
+	@gnuplot $(GNUPLOT)
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+$(DIR_A) $(DIR_B) $(DIR_C):
+	@mkdir -p $@
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+package: $(PLOTS) | $(DIR_A) $(DIR_B) $(DIR_C)
+	mv $(MOVE_A) $(DIR_A)/
+	mv $(MOVE_B) $(DIR_B)/
+	mv $(MOVE_C) $(DIR_C)/
+
+# Til Chat GBT: tilføje korte relevant kommetart her.
+RM ?= rm
+clean:
+	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS)
+	-$(RM) -rf $(DIR_A) $(DIR_B) $(DIR_C)

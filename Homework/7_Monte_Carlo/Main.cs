@@ -99,6 +99,44 @@ class Program
             Console.WriteLine("Error: File 'Estimate_GaussianBell2D.txt' not found.");
         }
 
+        // HERHER TILFØJET ------- START --------
+
+                // 1) Unit-circle
+        GenericMCCalculator.Run(
+            v => (v[0]*v[0]+v[1]*v[1] <= 1) ? 1 : 0,
+            new[]{-1.0,-1.0}, new[]{1.0,1.0},
+            Math.PI,
+            "Estimate_the_area_of_a_unit_circle.txt",
+            maxN: 10_000, logScaleN: false);
+
+        // 2) Gaussian bell
+        GenericMCCalculator.Run(
+            v => Math.Exp(-(v[0]*v[0]+v[1]*v[1])),
+            new[]{-2.0,-2.0}, new[]{2.0,2.0},
+            Math.PI,
+            "Estimate_GaussianBell2D.txt");
+
+        // 3) Less-singular 3D integral
+        GenericMCCalculator.Run(
+            v => Math.Cos(v[0])*Math.Cos(v[1])*Math.Cos(v[2]) /
+                (Math.PI*Math.PI*Math.PI),
+            new[]{0.0,0.0,0.0}, new[]{Math.PI,Math.PI,Math.PI},
+            8.0/(Math.PI*Math.PI*Math.PI),
+            "Estimate_LessSingularIntegral.txt");
+
+        // 4) Special integral
+        GenericMCCalculator.Run(
+            v => {
+                double d = 1 - Math.Cos(v[0])*Math.Cos(v[1])*Math.Cos(v[2]);
+                return (d < 1e-10) ? 0 : 1.0/(Math.PI*Math.PI*Math.PI*d);
+            },
+            new[]{0.0,0.0,0.0}, new[]{Math.PI,Math.PI,Math.PI},
+            1.393203929685676859,
+            "Estimate_SpecialIntegral.txt");
+
+
+        // HERHER TILFØJET ------- END --------
+
         Console.WriteLine("\n------ Calculating The Special 3D Integral ------\n");
         
         Console.WriteLine("The special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255\n"); // Integrale

@@ -1,62 +1,95 @@
-## Makefile – Roots ##
+## --------- Makefile: Homework Root_Finding ---------------------------
 
-# ────────────── Vælg C#-kompiler (dotnet sdk eller mono/mcs) ──────────────
-CS := $(shell command -v csc 2>/dev/null || command -v mcs 2>/dev/null)
-ifndef CS
-$(error Ingen C#-kompiler fundet. Installer dotnet-sdk eller mono-complete.)
-endif
+CS      := mcs
+CFLAGS  := -target:exe -langversion:latest
+EXE     := main.exe
 
-ifeq ($(notdir $(CS)),mcs)
-    RUN      = mono $(EXE)
-    CSTARGET = -target:exe
-else
-    RUN      = ./$(EXE)
-    CSTARGET = -target:exe -langversion:latest
-endif
+RUN     := mono $(EXE)
 
-# ────────────── Filer og afhængigheder ──────────────
-EXE      := roots.exe            # navn på den resulterende binær
-OUT      := Out.txt              # evt. tekstoutput (fra Main.cs)
-GNUPLOT  := plot.gpi             # hvis du laver plots til opgaven
+GNUPLOT := plot.gnu
+OUT     := Out.txt
 
-# Lokale kildefiler til “Roots”
-SRC := Main.cs \
-       ODESolver.cs \
-       QRDecomposition.cs \
-       RootFind.cs
+# Output mapper
+DIR_A   := Out_Task_A
+DIR_B   := Out_Task_B
+DIR_C   := Out_Task_C
 
-# Fælles hjælpefiler (tilpas stien om nødvendigt)
-GENERAL := ../../General/Vector_and_Matrix.cs \
-           ../../General/HW_points.cs
+# Datafiler for Opgave A
+DATA_A	:= Rosenbrock_minimum.txt \
+		   Himmelblau_minimum.txt
 
-CSFILES := $(SRC) $(GENERAL)
+# Datafiler for Opgave B
+DATA_B	:= Hydrogen_energy.txt \
+		   Hydrogen_wavefunction.txt \
+		   Hydrogen_convergence_rmax.txt \
+		   Hydrogen_convergence_rmin.txt \
+		   Hydrogen_convergence_acc.txt \
+		   Hydrogen_convergence_eps.txt
 
-.PHONY: all run clean plots
+# Datafiler for Opgave C
+DATA_C  := Himmelblau_minimum_optimized.txt
 
-# ────────────── Standardmål ──────────────
-all: $(EXE)
+# Samlet liste over datafiler
+DATA  := $(DATA_A) $(DATA_B) $(DATA_C)
 
-# Kompilér
+# Plots for Opgave B
+PLOTS_B := Hydrogen_wavefunction.svg \
+		   Hydrogen_convergence.svg
+
+# Samlet liste over plots
+PLOTS  := $(PLOTS_B)
+
+# Kildekofefiler
+SRC     := Main.cs \
+		   Vector.cs \
+		   Matrix.cs \
+		   QrDecomposition.cs \
+		   RootFinder.cs \
+		   OdeSolver.cs \
+		   Functions.cs
+
+CSFILES := $(SRC)
+
+# Filer der skal flyttes til mapper
+MOVE_A := $(DATA_A)
+MOVE_B := $(DATA_B) $(PLOTS_B)
+MOVE_C := $(DATA_C)
+
+.PHONY: all clean package
+
+all: package
+
+# Kompilering
 $(EXE): $(CSFILES)
-	$(CS) $(CSTARGET) -out:$@ $(CSFILES)
+	@echo ">> Compiling C# source files..."
+	$(CS) $(CFLAGS) -out:$@ $^
 
-# Kør programmet og producer Out.txt (hvis Main.cs skriver til fil)
-$(OUT): $(EXE)
-	$(RUN)
+# Kørsel og datagenerering
+$(OUT) $(DATA): $(EXE)
+	@echo ">> Running executable to generate data..."
+	$(RUN) > $(OUT)
 
-run: $(EXE)
-	$(RUN)
+# Plotting
+$(PLOTS): $(DATA) $(GNUPLOT)
+	@echo ">> Generating plots with gnuplot..."
+	@gnuplot $(GNUPLOT)
 
-# ────────────── Plot (valgfrit – fjern hvis ikke relevant) ──────────────
-# Eksempel: roots_plot.svg: roots_data.txt $(GNUPLOT)
-# 	@gnuplot -e "set terminal svg background 'white'; \
-# 	            set output '$@';                       \
-# 	            load '$(GNUPLOT)'"
+# Oprettelse af mapper
+$(DIR_A) $(DIR_B) $(DIR_C):
+	@mkdir -p $@
 
-plots:    # samlet mål hvis du senere tilføjer flere plots
-	@echo "Ingen plots defineret endnu."
+# Paketering: Flyt filer til deres respektive mapper
+package: $(PLOTS) | $(DIR_A) $(DIR_B) $(DIR_C)
+	@echo ">> Packaging output files..."
+	@mv $(MOVE_A) $(DIR_A)/ 2>/dev/null || true
+	@mv $(MOVE_B) $(DIR_B)/ 2>/dev/null || true
+	@mv $(MOVE_C) $(DIR_C)/ 2>/dev/null || true
+	@echo ">> Done. Output is in directories $(DIR_A), $(DIR_B), $(DIR_C)."
 
-# ────────────── Ryd op ──────────────
+# Oprydning
 RM ?= rm
 clean:
-	-$(RM) -f $(EXE) *.dll $(OUT) *.svg *.txt
+	@echo ">> Cleaning up generated files..."
+	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS)
+	-$(RM) -rf $(DIR_A) $(DIR_B) $(DIR_C)
+	@echo ">> Cleanup complete."

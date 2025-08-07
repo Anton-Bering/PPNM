@@ -74,8 +74,21 @@ public class vector {
     public override string ToString() {
         return "[" + string.Join(", ", data) + "]";
     }
+
+    /* HERHER ------ Vector-Class tilføget til at bruge i HW5: ------ END */
+
+    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ START */
+
+    public double[] ToArray() {
+        var arr = new double[size];
+        Array.Copy(data, arr, size);
+        return arr;
+    }
+
+    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ END */
+
 }
-/* HERHER ------ Vector-Class tilføget til at bruge i HW5: ------ END */
+
 
 /*  Ingen namespace for at matche tidligere brug;  ønskes et namespace,
     skal brugskoden naturligvis tilrettes. */
@@ -244,6 +257,50 @@ public static class VectorAndMatrix
         }
         return x;
     }
+
+    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ START */
+
+    public static double[,] Outer(vector a, vector b) {
+        var A = new double[a.size, b.size];
+        for (int i = 0; i < a.size; i++)
+            for (int j = 0; j < b.size; j++)
+                A[i, j] = a[i] * b[j];
+        return A;
+    }
+
+    public static vector Multiply(double[,] A, vector v) {
+        int n = A.GetLength(0), m = A.GetLength(1);
+        if (v.size != m) throw new ArgumentException("Dimensions mismatch.");
+        var result = new vector(n);
+        for (int i = 0; i < n; i++) {
+            double sum = 0;
+            for (int j = 0; j < m; j++) sum += A[i, j] * v[j];
+            result[i] = sum;
+        }
+        return result;
+    }
+
+    public static double[,] Scale(double[,] A, double s) {
+        int n = A.GetLength(0), m = A.GetLength(1);
+        var B = new double[n, m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                B[i, j] = s * A[i, j];
+        return B;
+    }
+
+    public static double[,] Subtract(double[,] A, double[,] B) {
+        int n = A.GetLength(0), m = A.GetLength(1);
+        if (B.GetLength(0) != n || B.GetLength(1) != m)
+            throw new ArgumentException("Dimension mismatch.");
+        var C = new double[n, m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                C[i, j] = A[i, j] - B[i, j];
+        return C;
+    }
+
+    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ END */
 
     /* ------------------------------------------------------------------
        5.  Convenience  “Check*”  – skriver resultat til Console

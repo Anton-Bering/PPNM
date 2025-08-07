@@ -1,3 +1,0 @@
-Method	Result	ErrorEstimate	ActualError
-PlainMC	0.786911	0.142795	0.213044
-StratifiedMC	0.783518	0.633295	0.216437

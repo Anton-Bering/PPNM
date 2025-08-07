@@ -19,13 +19,13 @@ static vector newton(
 return x;
 }
 ```
-   The routine returns a vector x that approximates the root of the equation f(x)=0 such that ‖f(x)‖<acc.  
+   The routine returns a vector `x` that approximates the root of the equation `f(x)=0` such that `‖f(x)‖ < acc`.  
 
-   The vector δx to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand  
+   The vector `δx` to be used in the finite-difference numerical evaluation of the Jacobian depends on the problem at hand  
    and should be supplied by the user. If the user does not supply it, the routine can choose it as  
-   `δxᵢ = |xᵢ|*2^{-26}`  
-   or as (might work better sometimes)  
-   `δxᵢ = Max(|xᵢ|,1)*2^{-26}`.
+   `δxᵢ = |xᵢ| 2^{-26}`  
+   or as  
+   `δxᵢ = Max(|xᵢ|,1) 2^{-26}`.
 
    The Jacobian can be estimated numerically like this:
 
@@ -41,7 +41,7 @@ public static matrix jacobian(
 }
 ```
 
-   One should stop one's iterations if either the condition ‖f(x)‖<acc is satisfied  
+   One should stop one's iterations if either the condition `‖f(x)‖ < acc` is satisfied  
    or if the step-size becomes smaller than the size of the δx parameter in your numerical gradient calculation.
 
 2. You should use your own routines for solving linear systems.
@@ -58,13 +58,13 @@ public static matrix jacobian(
 
 ### B. Bound states of hydrogen atom with [shooting method for boundary value problems](https://en.wikipedia.org/wiki/Shooting_method)
 
-1. Find the lowest root, E₀, of the equation M(E)=0 for rₘₐₓ=8.  
+1. Find the lowest root, `E₀`, of the equation `M(E)=0` for `rₘₐₓ=8`.  
 
    Plot the resulting wave function and compare with the exact result  
-   (which is E₀=-1/2, f₀(r)=r·e⁻ʳ — check this by inserting E₀ and f₀(r) into the Schrödinger equation).
+   (which is `E₀=-1/2`, `f₀(r)=r exp(-r)` — check this by inserting `E₀` and `f₀(r)` into the Schrödinger equation).
 
 
-2. Investigate the convergence of your solution towards the exact result with respect to the rₘₐₓ and rₘᵢₙ parameters (separately)  
+2. Investigate the convergence of your solution towards the exact result with respect to the `rₘₐₓ` and `rₘᵢₙ` parameters (separately)  
    as well as with respect to the parameters `acc` and `eps` of your ODE integrator.
 
 ### C. Quadratic interpolation line-search

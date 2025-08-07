@@ -45,7 +45,8 @@ SRC         := Main.cs \
 				PlainMC.cs \
 				QuasiVsPseudoComparison.cs \
 				StratifiedMC.cs \
-				UnitCircleCalculator.cs
+				UnitCircleCalculator.cs \
+				GenericMCCalculator.cs
 
 COMMON_DIR  := ../../General
 COMMON_SRC  := $(COMMON_DIR)/HW_points.cs
