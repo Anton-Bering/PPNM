@@ -59,9 +59,8 @@ class Program
 
 		// SKrive Out.txt:
 		using(var OUT = new StreamWriter("Out.txt")){
-			OUT.WriteLine("------------ TASK A: Newton's method with numerical gradient ------------");
-			OUT.WriteLine("------------ And numerical Hessian matrix ------------");
-			OUT.WriteLine("------------ And back-tracking linesearch ------------\n");
+			OUT.WriteLine("------------ TASK A: Newton's method with numerical gradient,      ------------");
+			OUT.WriteLine("------------ numerical Hessian matrix and back-tracking linesearch ------------\n");
 
 			OUT.WriteLine("------ Find a minimum of the Rosenbrock's valley function ------\n");
 			OUT.WriteLine("The Rosenbrock's valley function: f(x,y) = (1-x)^2 + 100(y-x^2)^2\n");
