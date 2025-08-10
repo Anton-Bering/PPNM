@@ -14,7 +14,9 @@
 
 ### B. Higgs boson discovery
 
-1. Fit the Breit-Wigner function (where A is the scale-factor, m is the mass and Γ is the widths of the resonance), `F(E|m,Γ,A) = A /[(E-m)² + Γ² /4]` to the data (2012 CERN) and determine the mass and the experimetnal width of the Higgs boson.
+1. Fit the Breit-Wigner function: `F(E|m,Γ,A) = A /[(E-m)² + Γ² /4]`  
+   (where A is the scale-factor, m is the mass and Γ is the widths of the resonance)  
+   to the data (2012 CERN) and determine the mass and the experimetnal width of the Higgs boson.
 
 2. Plot your fit together with the experimental data.
 

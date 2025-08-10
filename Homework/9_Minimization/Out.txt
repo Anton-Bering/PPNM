@@ -1,6 +1,5 @@
------------- TASK A: Newton's method with numerical gradient ------------
------------- And numerical Hessian matrix ------------
------------- And back-tracking linesearch ------------
+------------ TASK A: Newton's method with numerical gradient,      ------------
+------------ numerical Hessian matrix and back-tracking linesearch ------------
 
 ------ Find a minimum of the Rosenbrock's valley function ------
 
