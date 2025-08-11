@@ -3,9 +3,9 @@
 ## Objective
 
 Implement functions to:  
-    1. solve linear equations
-    2. calculate matrix inverse 
-    3. calculate matrix determinant. 
+    1. solve linear equations  
+    2. calculate matrix inverse   
+    3. calculate matrix determinant.   
    
 The method to use is the modified Gram-Schmidt orthogonalization.
 
