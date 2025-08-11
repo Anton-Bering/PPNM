@@ -1,4 +1,4 @@
-# Homework "Linear Equations"
+# Homework "[Linear Equations](https://fedorov.sdfeu.org/prog/homeworks/lineq.htm)"
 
 ## Objective
 
