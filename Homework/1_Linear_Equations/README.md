@@ -9,13 +9,19 @@ Implement functions to:
    
 The method to use is the modified Gram-Schmidt orthogonalization.
 
+## Hints
+
+To work with matrices and vectors you may use the matrix and vector classes from ../csharp/matlib/matrix. Alternatively, you can implement your own matrix/vector classes the way you like it.
+
+*I implement my own matrix/vector classes.*
+
 ## Tasks
 
 ### A. Solving linear equations using QR-decomposition by modified Gram-Schmidt orthogonalization
 
 1. Implement a static (or, at your choice, non-static) class "QR" with functions "decomp", "solve", and "det" (as indicated above). In the non-static class "decomp" becomes a constructor and must be called "QR").  
 
-*I implement a non-static class*
+*I implement a non-static class.*
 
 2. The function "decomp" (or the constructor QR) should perform stabilized Gram-Schmidt orthogonalization of an n×m (where n≥m) matrix A and calculate R.
 

@@ -8,7 +8,16 @@
 
 2. Find a minimum of the Rosenbrock's valley function, `f(x,y) = (1 - x)^2 + 100 (y - x^2)^2`.
 
+*The minimum is: f(x,y)=(1,1)*   
+
 3. Find a minimum of the Himmelblau's function, `f(x,y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2`.
+
+*The minimum is:*  
+
+*f(x,y)=(3, 2)*  
+*f(x,y)=(−2.805118, 3.131313)*  
+*f(x,y)=(−3.779310, −3.283186)*  
+*f(x,y)=(3.584428, −1.848127)*  
 
 4. Record the number of steps it takes for the algorithm to reach the minimum.
 

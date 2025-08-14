@@ -1,97 +1,79 @@
 using System;
 
-/// <summary>
-/// QR‑decomposition by modified Gram–Schmidt, rewritten to use the
-/// static utility library <c>VectorAndMatrix</c> (double[,] / double[]).
-/// </summary>
 public sealed class QR
 {
-    public double[,] Q { get; }   // n×m (orthonormal columns)
-    public double[,] R { get; }   // m×m (upper‑triangular)
+    public matrix Q { get; }      // n×m (orthonormal columns)
+    public matrix R { get; }      // m×m (upper‑triangular)
 
     /*------------------------------------------------------------*/
-    public QR(double[,] A)
+    public QR(matrix A)
     {
-        int n = A.GetLength(0);
-        int m = A.GetLength(1);
+        int n = A.Rows;
+        int m = A.Cols;
+
         if (n < m) throw new ArgumentException("QR decomposition requires n ≥ m");
 
-        Q = (double[,])A.Clone();         // work‑copy of A
-        R = new double[m, m];
+        Q = A.Copy();                      // work‑copy of A
+        R = new matrix(m, m);
 
         /* modified Gram–Schmidt ---------------------------------*/
-        for (int j = 0; j < m; j++)
-        {
-            /* subtract projections on earlier orthonormal columns */
-            for (int i = 0; i < j; i++)
-            {
-                double dot = 0.0;
-                for (int k = 0; k < n; k++) dot += Q[k, i] * Q[k, j];
-                R[i, j] = dot;
-                for (int k = 0; k < n; k++) Q[k, j] -= dot * Q[k, i];
+        for (int j = 0; j < m; j++) {
+            vector v = Q.GetCol(j);
+
+            for (int i = 0; i < j; i++) {
+                vector qi = Q.GetCol(i);
+                double rij = vector.Dot(qi, v);
+                R[i, j] = rij;
+                v = v - rij * qi;
             }
 
-            /* normalise current column -------------------------*/
-            double norm = 0.0;
-            for (int k = 0; k < n; k++) norm += Q[k, j] * Q[k, j];
-            norm = Math.Sqrt(norm);
+            double norm = v.Norm();
             if (norm == 0.0)
                 throw new InvalidOperationException("Matrix has linearly dependent (or zero) columns.");
 
             R[j, j] = norm;
-            for (int k = 0; k < n; k++) Q[k, j] /= norm;
+            Q.SetCol(j, v / norm);
         }
+
+
     }
 
-    /*------------------------------------------------------------*/
-    /// <summary>Solve <c>A x = b</c> where A == Q R.</summary>
-    public double[] solve(double[] b)
+    // A x = b
+    public vector solve(vector b)
     {
-        int n = Q.GetLength(0);
-        int m = R.GetLength(0);
-        if (b.Length != n) throw new ArgumentException("Vector length must equal matrix row count.");
+        int n = Q.Rows;
+        int m = R.Cols;
+        if (b.Size != n) throw new ArgumentException("b.Length must equal A.Rows");
 
-        /* y = Qᴴ b (Q is real orthogonal ⇒ Qᴴ == Qᵀ) */
-        var y = new double[m];
+        // y = Q^T b
+        var y = new vector(m);
         for (int i = 0; i < m; i++)
-        {
-            double sum = 0.0;
-            for (int k = 0; k < n; k++) sum += Q[k, i] * b[k];
-            y[i] = sum;
-        }
+            y[i] = vector.Dot(Q.GetCol(i), b);
 
-        /* back‑substitution: R x = y ---------------------------*/
-        return VectorAndMatrix.SolveUpperTriangular(R, y);
+        // R x = y
+        return matrix.BackSubstitute(R, y);
     }
 
-    /*------------------------------------------------------------*/
     public double det()
     {
-        /* For square A, det(A) = Π diag(R)  (because det(Q)=±1) */
-        int m = R.GetLength(0);
+        if (Q.Rows != Q.Cols) throw new InvalidOperationException("Determinant requires a square matrix.");
+        int n = R.Cols;
         double p = 1.0;
-        for (int i = 0; i < m; i++) p *= R[i, i];
+        for (int i = 0; i < n; i++) p *= R[i, i];
         return p;
     }
 
-    /*------------------------------------------------------------*/
-    public double[,] inverse()
+    public matrix inverse()
     {
-        int n = Q.GetLength(0);
-        int m = R.GetLength(0);
-        if (n != m) throw new InvalidOperationException("Inverse requires a square matrix.");
+        if (Q.Rows != Q.Cols) throw new InvalidOperationException("Inverse requires a square matrix.");
+        int n = Q.Rows;
+        var inv = new matrix(n, n);
 
-        var inv = new double[n, n];
-        var e   = new double[n];
-
-        /* Solve A x_j = e_j  — one RHS per unit vector ----------*/
-        for (int j = 0; j < n; j++)
-        {
-            Array.Clear(e, 0, n);
+        for (int j = 0; j < n; j++) {
+            var e = new vector(n);
             e[j] = 1.0;
-
-            var x = solve(e);
-            for (int i = 0; i < n; i++) inv[i, j] = x[i];
+            vector x = solve(e);
+            inv.SetCol(j, x);
         }
         return inv;
     }

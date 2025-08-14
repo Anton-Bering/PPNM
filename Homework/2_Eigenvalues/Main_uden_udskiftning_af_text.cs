@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using static MatrixHelpers;
-using static VectorHelpers;
 
 public static class Program
 {
@@ -14,56 +12,58 @@ public static class Program
 
         const int sizeA = 5;
         Console.WriteLine($"--- Generate a random symmetric matrix A ({sizeA}x{sizeA}) ---\n");
-        matrix A = RandomMatrix(sizeA, sizeA);
-        Symmetrize(A); // Gør A symmetrisk
-        Console.WriteLine(PrintMatrix(A, "A"));
+        double[,] A = VectorAndMatrix.RandomMatrix(sizeA, sizeA);
+        VectorAndMatrix.Symmetrize(A); // Gør A symmetrisk
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(A, "A"));
 
         Console.WriteLine("\n--- Apply your routine to perform the eigenvalue-decomposition, A=VDVᵀ ---");
         Console.WriteLine("--- (where V is the orthogonal matrix of eigenvectors                  ---");
         Console.WriteLine("--- and D is the diagonal matrix with the corresponding eigenvalues)   ---\n"); 
 
         /* ---------- Diagonalise ---------- */
-        matrix A_orig = A.Copy();                 // keep original for tests
-        vector w      = new vector(sizeA);        
-        matrix V      = new matrix(sizeA, sizeA); 
+        double[,] A_orig = (double[,])A.Clone();   // keep original for tests
+        double[] w       = new double[sizeA];
+        double[,] V      = new double[sizeA, sizeA];
 
         jacobi.cyclic(A, w, V);
 
         Console.WriteLine("The orthogonal matrix V of eigenvectors:\n");
-        Console.WriteLine(PrintMatrix(V, "V"));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(V, "V"));
 
-        matrix D = DiagonalMatrix(w);
+        double[,] D = VectorAndMatrix.DiagonalMatrix(w);
         Console.WriteLine("\nThe diagonal matrix D with the corresponding eigenvalues:\n");
-        Console.WriteLine(PrintMatrix(D, "D"));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(D, "D"));
 
         Console.WriteLine("\nThe vector w of the eigenvalues:\n");
-        Console.WriteLine(PrintVector(w, "w"));
+        Console.WriteLine(VectorAndMatrix.PrintVector(w, "w"));
 
-        matrix V_T = V.Transpose();
+        double[,] V_T = VectorAndMatrix.Transpose(V);
         Console.WriteLine("\nThe matrix Vᵀ (which is the transpose of V)\n");
-        Console.WriteLine(PrintMatrix(V_T, "Vᵀ"));            
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(V_T, "Vᵀ"));            
 
         /* ---------- Checks ---------- */
 
         Console.WriteLine("\n--- Check that VᵀAV≈D ---\n");
-        matrix VtAV = V_T * (A_orig * V);
-        Console.WriteLine(PrintMatrix(VtAV, "VᵀAV"));
-        CheckMatrixEqual(VtAV, D, "VᵀAV", "D");
+        double[,] VtAV = VectorAndMatrix.Multiply(V_T, VectorAndMatrix.Multiply(A_orig, V));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(VtAV, "VᵀAV"));
+        VectorAndMatrix.CheckMatrixEqual(VtAV, D, "VᵀAV", "D");
 
         Console.WriteLine("\n--- Check that VDVᵀ≈A ---\n");
-        matrix VDVt = (V * D) * V_T;
-        Console.WriteLine(PrintMatrix(VDVt, "VDVᵀ"));
-        CheckMatrixEqual(VDVt, A_orig, "VDVᵀ", "A");
+        double[,] VDVt = VectorAndMatrix.Multiply(
+                                VectorAndMatrix.Multiply(V, D),
+                                V_T);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(VDVt, "VDVᵀ"));
+        VectorAndMatrix.CheckMatrixEqual(VDVt, A_orig, "VDVᵀ", "A");
 
         Console.WriteLine("\n--- Check that VᵀV≈I ---\n");
-        matrix VtV = V_T * V;
-        Console.WriteLine(PrintMatrix(VtV, "VᵀV"));
-        CheckIdentityMatrix(VtV, "VᵀV");
+        double[,] VtV = VectorAndMatrix.Multiply(V_T, V);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(VtV, "VᵀV"));
+        VectorAndMatrix.CheckIdentityMatrix(VtV, "VᵀV");
 
         Console.WriteLine("\n--- Check that VVᵀ≈I ---\n");
-        matrix VVt = V * V_T;
-        Console.WriteLine(PrintMatrix(VVt, "VVᵀ"));
-        CheckIdentityMatrix(VVt, "VVᵀ");
+        double[,] VVt = VectorAndMatrix.Multiply(V, V_T);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(VVt, "VVᵀ"));
+        VectorAndMatrix.CheckIdentityMatrix(VVt, "VVᵀ");
 
         /* ---------- TASK B  (Hydrogen atom) ---------- */
         Console.WriteLine("\n------------ TASK B: Hydrogen atom, s-wave radial Schrödinger equation on a grid -----------\n");
@@ -76,13 +76,13 @@ public static class Program
         double fixed_dr   = 0.3;
         int npoints_main  = (int)(fixed_rmax / fixed_dr) - 1;
 
-        matrix H_main  = BuildHamiltonian(npoints_main, fixed_dr);
-        vector  w_main  = new vector(npoints_main);
-        matrix V_main  = new matrix(npoints_main, npoints_main);
+        double[,] H_main  = BuildHamiltonian(npoints_main, fixed_dr);
+        double[]  w_main  = new double[npoints_main];
+        double[,] V_main  = new double[npoints_main, npoints_main];
         jacobi.cyclic(H_main, w_main, V_main);
 
         Console.WriteLine("Numerically calculated lowest eigenvalues:");
-        for (int i = 0; i < 5 && i < w_main.Size; i++)
+        for (int i = 0; i < 5 && i < w_main.Length; i++)
             Console.WriteLine($"ε_{i} = {w_main[i]:F6}");
 
         /* save eigenfunctions (first 3) */
@@ -134,14 +134,11 @@ public static class Program
             {
                 int npoints = (int)(fixed_rmax / dr) - 1;
                 if (npoints < 1) continue;
-                matrix H = BuildHamiltonian(npoints, dr);
-                vector ew = new vector(npoints);
-                matrix ev = new matrix(npoints, npoints);
+                double[,] H = BuildHamiltonian(npoints, dr);
+                double[] ew = new double[npoints];
+                double[,] ev = new double[npoints, npoints];
                 jacobi.cyclic(H, ew, ev);
-                // drWriter.WriteLine($"{dr}, {ew.Min()}");
-                double Emin = ew[0]; for (int t = 1; t < ew.Size; t++) if (ew[t] < Emin) Emin = ew[t];
-                drWriter.WriteLine($"{dr}, {Emin}");
-
+                drWriter.WriteLine($"{dr}, {ew.Min()}");
             }
         }
         
@@ -159,14 +156,11 @@ public static class Program
             {
                 int npoints = (int)(rmax / fixed_dr) - 1;
                 if (npoints < 1) continue;
-                matrix H = BuildHamiltonian(npoints, fixed_dr);
-                vector ew = new vector(npoints);
-                matrix ev = new matrix(npoints, npoints);
+                double[,] H = BuildHamiltonian(npoints, fixed_dr);
+                double[] ew = new double[npoints];
+                double[,] ev = new double[npoints, npoints];
                 jacobi.cyclic(H, ew, ev);
-                // rmWriter.WriteLine($"{rmax}, {ew.Min()}");
-                double Emin = ew[0]; for (int t = 1; t < ew.Size; t++) if (ew[t] < Emin) Emin = ew[t];
-                rmWriter.WriteLine($"{rmax}, {Emin}");
-
+                rmWriter.WriteLine($"{rmax}, {ew.Min()}");
             }
         }
         
@@ -201,9 +195,9 @@ public static class Program
 
     /* ------------------------------------------------------------------  helpers  ------------------------------------------------------------------ */
 
-    static matrix BuildHamiltonian(int n, double dr)
+    static double[,] BuildHamiltonian(int n, double dr)
     {
-        var H = new matrix(n, n);
+        double[,] H = new double[n, n];
         double invdr2 = 1.0 / (dr * dr);
 
         for (int i = 0; i < n - 1; i++)

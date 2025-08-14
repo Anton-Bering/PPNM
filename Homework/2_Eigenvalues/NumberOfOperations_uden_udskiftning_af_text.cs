@@ -1,8 +1,5 @@
 using System;
 using System.Diagnostics;
-using static MatrixHelpers;
-using static VectorHelpers;
-
 
 public static class NumberOfOperations
 {
@@ -19,11 +16,11 @@ public static class NumberOfOperations
         int n   = int.Parse(args[0]);
 
         /* Random symmetric matrix */
-        matrix A = RandomMatrix(n, n);
-        Symmetrize(A);
+        double[,] A = VectorAndMatrix.RandomMatrix(n, n);
+        VectorAndMatrix.Symmetrize(A);
 
-        vector w = new vector(n);
-        matrix V = new matrix(n, n);
+        double[]  w = new double[n];
+        double[,] V = new double[n, n];
 
         // var watch = Stopwatch.StartNew(); // Udkometer da jeg ikke længer brugre Stopwatch men time..
         jacobi.cyclic(A, w, V);

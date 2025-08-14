@@ -1,13 +1,16 @@
 using System;
+// CHANGED: vi bruger dine helpers/typer
+using static MatrixHelpers;
 
 public static class LSFit
 {
     /* ---------------------------------------------------------
      * Ordinary least‑squares with uncertainties:
      *   y_i = Σ_k c_k f_k(x_i) ,   σ_i = dy[i]
-     * Returns (best‑fit parameter vector c, covariance matrix Cov)
+     * Returns (best‑fit parameter vector c, covariance matrix Cov)
      * --------------------------------------------------------- */
-    public static (double[] c, double[,] Cov) Fit(
+    // CHANGED: c er vector (ikke double[]), Cov er matrix (ikke double[,])
+    public static (vector c, matrix Cov) Fit(
         Func<double, double>[] fs,
         double[] x, double[] y, double[] dy)
     {
@@ -15,27 +18,28 @@ public static class LSFit
         int m = fs.Length;
 
         /* ----------- build design matrix A and weighted RHS b ----------- */
-        var A = new double[n, m];
-        var b = new double[n];
+        // CHANGED: A som matrix, b som vector
+        matrix A = new matrix(n, m);
+        vector b = new vector(n);
 
         for (int i = 0; i < n; i++)
         {
             double w = 1.0 / dy[i];
             b[i] = y[i] * w;
-            for (int k = 0; k < m; k++) A[i, k] = w * fs[k](x[i]);
+            for (int k = 0; k < m; k++)
+                A[i, k] = w * fs[k](x[i]);
         }
 
         /* ----------- QR decomposition and normal‑equation solve ---------- */
-        // var (Q, R) = QR.Decompose(A);
-        // double[] c = QR.Solve(Q, R, b);
         var qr = new QR(A);
-        double[] c = qr.solve(b);
-        double[,] Q = qr.Q;
-        double[,] R = qr.R;
-
+        // CHANGED: brug din QR.Solve(b) (hvis din metode hedder solve, så skift til qr.solve(b))
+        vector c = qr.solve(b);
+        matrix Q = qr.Q;
+        matrix R = qr.R;
 
         /* ----------- covariance matrix ---------------------------------- */
-        double[] yFit  = Evaluate(fs, c, x);
+        // CHANGED: Evaluate tager vector c og returnerer double[]
+        double[] yFit = Evaluate(fs, c, x);
         double chi2 = 0.0;
         for (int i = 0; i < n; i++)
         {
@@ -44,16 +48,17 @@ public static class LSFit
         }
         double sigma2 = chi2 / (n - m);          // reduced χ²
 
-        double[,] Rinv = InvertUpper(R);
-        double[,] Cov  = ScaleMatrix(
-                             VectorAndMatrix.Multiply(Rinv,
-                                                       VectorAndMatrix.Transpose(Rinv)),
-                             sigma2);
+        // CHANGED: væk med VectorAndMatrix.* — brug matrix-API + Transpose helper
+        matrix Rinv = InvertUpper(R);
+        matrix Cov  = Rinv * Transpose(Rinv);    // (R^{-1})(R^{-1})^T
+        ScaleInPlace(Cov, sigma2);               // Cov *= sigma2
+
         return (c, Cov);
     }
 
+    // CHANGED: c er vector (ikke double[])
     public static double[] Evaluate(Func<double, double>[] fs,
-                                    double[] c, double[] x)
+                                    vector c, double[] x)
     {
         int n = x.Length, m = fs.Length;
         var y = new double[n];
@@ -67,32 +72,32 @@ public static class LSFit
     }
 
     /* ------------- helper: invert upper‑triangular matrix ------------- */
-    private static double[,] InvertUpper(double[,] U)
+    // CHANGED: matrix-version (ikke double[,])
+    private static matrix InvertUpper(matrix U)
     {
-        int n = U.GetLength(0);
-        var X = new double[n, n];
+        int n = U.Rows;
+        if (U.Cols != n) throw new ArgumentException("U skal være kvadratisk og øvre trekantet.");
+        var X = new matrix(n, n);
 
-        for (int i = n - 1; i >= 0; i--)
+        // Løs kolonne for kolonne: U * X[:,j] = e_j (back-substitution)
+        for (int j = 0; j < n; j++)
         {
-            X[i, i] = 1.0 / U[i, i];
-            for (int j = i - 1; j >= 0; j--)
+            for (int i = n - 1; i >= 0; i--)
             {
-                double s = 0.0;
-                for (int k = j + 1; k <= i; k++) s += U[j, k] * X[k, i];
-                X[j, i] = -s / U[j, j];
+                double s = (i == j) ? 1.0 : 0.0;
+                for (int k = i + 1; k < n; k++) s -= U[i, k] * X[k, j];
+                X[i, j] = s / U[i, i];
             }
         }
         return X;
     }
 
-    /* ------------- helper: scale matrix by scalar --------------------- */
-    private static double[,] ScaleMatrix(double[,] A, double factor)
+    /* ------------- helper: scale matrix in place ---------------------- */
+    // CHANGED: in-place skalering for matrix
+    private static void ScaleInPlace(matrix A, double factor)
     {
-        int n = A.GetLength(0), m = A.GetLength(1);
-        var B = new double[n, m];
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                B[i, j] = factor * A[i, j];
-        return B;
+        for (int i = 0; i < A.Rows; i++)
+            for (int j = 0; j < A.Cols; j++)
+                A[i, j] *= factor;
     }
 }

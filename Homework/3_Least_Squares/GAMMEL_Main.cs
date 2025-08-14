@@ -1,12 +1,10 @@
 /* ----------------------------------------------------------------------
- *  Homework – Ordinary Least‑Squares Fit   (updated for 
+ *  Homework – Ordinary Least‑Squares Fit   (updated for VectorAndMatrix)
  * -------------------------------------------------------------------- */
 using System;
 using System.Globalization;
 using System.Diagnostics;   //  HERHER: CG
 using System.IO;
-using static MatrixHelpers;
-using static VectorHelpers;
 
 class Program
 {
@@ -32,30 +30,31 @@ class Program
         Console.WriteLine("Below, I check that my QR decomposition routines work for tall matrices:\n");
 
         Console.WriteLine("Check part 1) Generate a random tall (6x4) matrix A:\n");
-        matrix A = RandomMatrix(6, 4);
-        Console.WriteLine(PrintMatrix(A, "A"));
+        double[,] A = VectorAndMatrix.RandomMatrix(6, 4);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(A, "A"));
 
         Console.WriteLine("Check part 2) Decompose A into Q and R:\n");
 
         // var (Q, R) = QR.Decompose(A);
         var qr = new QR(A);
-        matrix Q = qr.Q;
-        matrix R = qr.R;
+        double[,] Q = qr.Q;
+        double[,] R = qr.R;
         
-        Console.WriteLine(PrintMatrix(Q, "Q"));
-        Console.WriteLine(PrintMatrix(R, "R"));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(Q, "Q"));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(R, "R"));
 
         Console.WriteLine("Check part 3) Check that R is upper triangular:\n");
-        CheckUpperTriangular(R, "R");
+        VectorAndMatrix.CheckUpperTriangular(R, "R");
 
         Console.WriteLine("\nCheck part 4) Check that QᵀQ ≈ I:\n");
-        matrix QTQ = Transpose(Q) * Q;
-        CheckIdentityMatrix(QTQ, "QᵀQ");
+        double[,] QTQ = VectorAndMatrix.Multiply(
+                            VectorAndMatrix.Transpose(Q), Q);
+        VectorAndMatrix.CheckIdentityMatrix(QTQ, "QᵀQ");
 
         Console.WriteLine("\nCheck part 5) Check that QR ≈ A:\n");
-        matrix QR_check5 = Q * R;
-        Console.WriteLine(PrintMatrix(QR_check5, "QR"));
-        CheckMatrixEqual(QR_check5, A, "QR", "A");
+        double[,] QR_check5 = VectorAndMatrix.Multiply(Q,R);
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(QR_check5, "QR"));
+        VectorAndMatrix.CheckMatrixEqual(QR_check5, A, "QR", "A");
         
         // ---------------- TASK A: del 2 ------------
         Console.WriteLine("\n------ Implement a routine that makes a least-squares fit (using your QR-decomposition routines) ------");
@@ -141,7 +140,7 @@ class Program
         Console.WriteLine("------ the covariance matrix and the uncertainties of the fitting coefficients ------\n");
 
         Console.WriteLine($"The covariance matrix of (ln a, λ):\n");
-        Console.WriteLine(PrintMatrix(Cov));
+        Console.WriteLine(VectorAndMatrix.PrintMatrix(Cov));
         Console.WriteLine($"Uncertainty on ln a : {dlnA:g6}");
         Console.WriteLine($"Uncertainty on λ    : {dlambda:g6}\n");
 

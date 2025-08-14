@@ -1,19 +1,27 @@
-set terminal svg size 900,600 enhanced font 'Arial,16' background rgb "white"
-set output 'QR_factorize_time.svg'
+set terminal svg size 1200,600 enhanced background rgb "white"
+set output "QR_factorize_time.svg"
+
+set fit logfile "QR_factorize_time_fit.log"
+set fit errorvariables
+FIT_LIMIT = 1e-12
 
 set title "QR-factorize an N×N matrix"
 set xlabel "Matrix Size [N]"
-set ylabel "Time [Seconds]"
-set grid
+set ylabel "Time [seconds]"
+set grid back
+set key left top
 
-set fit logfile 'QR_factorize_time_fit.log'
+# Rescale for bedre konditionering
+xscale = 100.0
+f(N) = a*(N/xscale)**3 + b
+a = 0.05
+b = 0.005
+fit f(x) "out.times.stats" using 1:2 via a,b
 
-f(x) = a * x**3
-fit f(x) 'out.times.data' using 1:2 via a
+# Label (én linje, ASCII) og rykket lidt ned
+set label 1 sprintf("Fit: t = a*(N/%g)^3 + b;  a = %.2e +/- %.1e;  b = %.2e +/- %.1e", \
+                    xscale, a, a_err, b, b_err) at graph 0.02,0.82
 
-set key top left
-
-set label sprintf("Fit: a = %.2e", a) at graph 0.05, 0.82 font "Arial,16" front
-
-plot 'out.times.data' using 1:2 with points lt rgb "blue" pt 7 title "Measured Time", \
-     f(x) with lines lt rgb "red" lw 2 title "Fit: a·N^3"
+set samples 200
+plot "out.times.stats" using 1:2:3 with yerrorbars pt 7 ps 1.2 lc rgb "blue" title "Measured (avg ± sd)", \
+     f(x) with lines lw 2 lc rgb "red" title "Fit: a*(N/100)^3 + b"

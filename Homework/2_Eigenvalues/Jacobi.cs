@@ -3,10 +3,10 @@ using System;
 public static class jacobi
 {
     /* Apply Jacobi rotation from the right:  A ← A · J(p,q,θ) */
-    private static void TimesJ(double[,] A, int p, int q, double theta)
+    private static void TimesJ(matrix A, int p, int q, double theta)
     {
         double c = Math.Cos(theta), s = Math.Sin(theta);
-        int n = A.GetLength(0);
+        int n = A.Rows;
         for (int i = 0; i < n; i++)
         {
             double Aip = A[i, p];
@@ -17,10 +17,10 @@ public static class jacobi
     }
 
     /* Apply Jacobi rotation from the left:  A ← J(p,q,θ)ᵀ · A */
-    private static void JTimes(double[,] A, int p, int q, double theta)
+    private static void JTimes(matrix A, int p, int q, double theta)
     {
         double c = Math.Cos(theta), s = Math.Sin(theta);
-        int m = A.GetLength(1);
+        int m = A.Cols;
         for (int j = 0; j < m; j++)
         {
             double Apj = A[p, j];
@@ -30,18 +30,12 @@ public static class jacobi
         }
     }
 
-    /// <summary>
-    /// Cyclic Jacobi eigen‑decomposition of a real, symmetric matrix.
-    /// On return <paramref name="A"/> is diagonal, <paramref name="w"/>
-    /// holds the eigenvalues, and <paramref name="V"/> the eigenvectors
-    /// such that  A₀ = V·diag(w)·Vᵀ.
-    /// </summary>
-    public static void cyclic(double[,] A, double[] w, double[,] V)
+    public static void cyclic(matrix A, vector w, matrix V)
     {
-        int n = A.GetLength(0);
-        if (A.GetLength(1) != n)      throw new ArgumentException("Matrix must be square.");
-        if (w.Length != n)            throw new ArgumentException("Eigenvalue vector has wrong length.");
-        if (V.GetLength(0) != n || V.GetLength(1) != n)
+        int n = A.Rows;
+        if (A.Cols != n)      throw new ArgumentException("Matrix must be square.");
+        if (w.Size != n)      throw new ArgumentException("Eigenvalue vector has wrong size.");
+        if (V.Rows != n || V.Cols != n)
             throw new ArgumentException("Eigenvector matrix has wrong dimensions.");
 
         /* V ← I */

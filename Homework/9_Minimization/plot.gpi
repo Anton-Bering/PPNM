@@ -1,11 +1,12 @@
-# -- higgs fit vs expermintelt ---
+# -- Higgs fit vs experimental --
 set terminal svg size 700,500 enhanced background rgb 'white'
 set output 'Higgs_fit_and_experimental_data.svg'
 
 set xlabel 'Energy E [GeV]'
-set ylabel 'Signal σ(E) [certain units]'
+set ylabel 'Signal σ(E) [units]'
 set key top right
+set grid
 
 plot \
- 'cross_section_experiment.txt' u 1:2:3 w yerrorbars pt 7 ps 0.7 lc rgb 'red' title 'Experiment', \
- 'Higgs_fit.txt'               u 1:2   w l lw 2 title 'Fit'
+  'cross_section_experiment.txt' using 1:2:3 with yerrorbars pt 7 ps 0.7 lc rgb 'red' title 'Experiment', \
+  'Higgs_fit.txt'               using 1:2   with lines lw 2 title 'Fit'

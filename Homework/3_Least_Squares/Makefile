@@ -19,11 +19,13 @@ PLOTS   := Rutherford_and_Soddys_ThX.svg \
           best_fit_with_changed_coefficients.svg
 
 # Kildekoden til denne opgave
-SRC        := Main.cs LSFit.cs Utils.cs
+SRC        := Main.cs LSFit.cs Utils.cs ../1_Linear_Equations/QR.cs
 COMMON_DIR := ../../General
-COMMON_SRC := $(COMMON_DIR)/Vector_and_Matrix.cs \
-		  $(COMMON_DIR)/HW_points.cs \
-		  ../1_Linear_Equations/QR.cs
+COMMON_SRC := $(COMMON_DIR)/Vector.cs \
+              $(COMMON_DIR)/VectorHelpers.cs \
+              $(COMMON_DIR)/Matrix.cs \
+              $(COMMON_DIR)/MatrixHelpers.cs \
+              $(COMMON_DIR)/HW_points.cs
 
 CSFILES := $(SRC) $(COMMON_SRC)
 
