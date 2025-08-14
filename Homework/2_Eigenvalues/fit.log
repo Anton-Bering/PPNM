@@ -1,0 +1,30 @@
+
+
+*******************************************************************************
+Thu Aug 14 16:28:12 2025
+
+
+FIT:    data read from 'number_of_operations.txt' using 1:2
+        format = x:z
+        #datapoints = 51
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(n) = a * n**3
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a            
+   0 6.6191260036e+15   0.00e+00  1.14e+07    1.000000e+00
+   4 2.9930538334e+01  -1.21e-03  1.14e+03    3.455830e-07
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 29.9305
+rel. change during last iteration : -1.20844e-08
+
+degrees of freedom    (FIT_NDF)                        : 50
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.773699
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.598611
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 3.45583e-07      +/- 9.51e-09     (2.752%)
