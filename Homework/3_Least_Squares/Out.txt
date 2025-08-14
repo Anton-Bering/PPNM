@@ -1,0 +1,119 @@
+------------ TASK A: Ordinary least-squares fit by QR-decomposition ------------
+
+------ Make sure that your QR-decomposition routines work for tall matrices ------
+------ (A tall matrix of size n×m is one where n>m)                         ------
+
+Below, I check that my QR decomposition routines work for tall matrices:
+
+Check part 1) Generate a random tall (6x4) matrix A:
+
+Matrix A:
+     -0.79600      0.84990     -0.83683     -0.82462
+     -0.79347      0.74024      0.13784      0.06905
+     -0.79521     -0.02601     -0.32348      0.28001
+      0.00607      0.22054     -0.16021      0.73241
+     -0.32215      0.46076     -0.40397     -0.72770
+     -0.50778     -0.45817     -0.12081     -0.14743
+
+Check part 2) Decompose A into Q and R:
+
+Matrix Q:
+     -0.52982      0.41219     -0.53232     -0.11542
+     -0.52813      0.31106      0.77829     -0.00439
+     -0.52929     -0.40489     -0.08931      0.38654
+      0.00404      0.20872     -0.15714      0.82673
+     -0.21442      0.27582     -0.27020     -0.34297
+     -0.33798     -0.67064     -0.07230     -0.19010
+
+Matrix R:
+      1.50241     -0.77053      0.66858      0.46104
+      0.00000      1.07150     -0.23492     -0.38077
+      0.00000      0.00000      0.72469      0.55989
+      0.00000      0.00000      0.00000      1.08621
+
+Check part 3) Check that R is upper triangular:
+
+R is upper-triangular (tol=1E-09).
+
+Check part 4) Check that QᵀQ ≈ I:
+
+QᵀQ ≈ I (tol=1E-06).
+
+Check part 5) Check that QR ≈ A:
+
+Matrix QR:
+     -0.79600      0.84990     -0.83683     -0.82462
+     -0.79347      0.74024      0.13784      0.06905
+     -0.79521     -0.02601     -0.32348      0.28001
+      0.00607      0.22054     -0.16021      0.73241
+     -0.32215      0.46076     -0.40397     -0.72770
+     -0.50778     -0.45817     -0.12081     -0.14743
+
+QR ≈ A (tol=1E-06).
+
+------ Implement a routine that makes a least-squares fit (using your QR-decomposition routines) ------
+------ The routine must calculate and return the vector of the best fit coefficients, {c_k}      ------
+
+Best‑fit coefficients:
+   ln(a)  = 4.95866486265
+   λ     = 0.17062404951
+
+Full data‑versus‑fit table written to “Fit_the_ThX_data_with_exponential_function.txt”.
+
+
+------ Fit the ThX data with exponential function in the usual logarithmic way ------
+
+Radioactive decay follows: y(t)=a*exp(-λt)
+where y is the activity, t is time, a is the activity at t=0, and λ is the decay constant.
+The uncertainty of the measurement is denoted as δy.
+
+The uncertainty of the logarithm is: δln(y)=δy/y
+
+------ Plot the experimental data (with error-bars) and your best fit ------
+
+SVG figure saved as “Rutherford_and_Soddys_ThX.svg”.
+
+
+------ From your fit find out the half-life time, T_{1/2}=ln(2)/λ, of ThX ------
+
+T_1/2  = 4.06242 ± 0.0705374 days
+
+------ Compare your result for ThX with the modern value ------
+------ (ThX is known today as 224Ra)                     ------
+
+Modern value : 3.6313 days
+The modern value lies **outside** the 1 σ uncertainty of the fit.
+
+
+------------ TASK B: Uncertainties of the fitting coefficients ------------
+
+
+------ Modify you least-squares fitting function such that it also calculates  ------
+------ the covariance matrix and the uncertainties of the fitting coefficients ------
+
+The covariance matrix of (ln a, λ):
+
+Matrix :
+      0.00021      0.00003
+      0.00003      0.00001
+
+Uncertainty on ln a : 0.0146553
+Uncertainty on λ    : 0.00296261
+
+Propagated uncertainty on half‑life: ±0.0705374 days
+
+Half‑life does **not** agree with the modern value within its uncertainty.
+
+
+------ Estimate the uncertainty of the half-life value for ThX from the given data ------
+------ does it agree with the modern value within the estimated uncertainty?       ------
+
+
+------------ TASK C: Evaluation of the quality of the uncertainties on the fit coefficients ------------
+
+
+------ Plot your best fit, together with the fits where you change the fit coefficients ------
+------ by the estimated uncertainties δc in different combinations                      ------
+
+SVG figure with curves for c ± δc saved as “best_fit_with_changed_coefficients.svg”.
+
