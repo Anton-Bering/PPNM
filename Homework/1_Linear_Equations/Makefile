@@ -1,17 +1,29 @@
-## --------- Makefile: Homework Linear_Equations ---------
+## --------- Makefile: Homework Linear_Equations ----------------------
 
 CS      := mcs
 CFLAGS  := -target:exe -langversion:latest -optimize+ -warn:4
 EXE     := main.exe
 RUN     := mono $(EXE)
+
+GNUPLOT := plot.gpi
 OUT     := Out.txt
 
-# Task C:
+# -------- Task C ----------------------------------------------------
 TIME    := /usr/bin/time
-GNUPLOT := plot.gpi
 REPEATS := 5
 
-# Kildekode
+DIR_C   := Out_Task_C
+DATA_C  := QR_factorize_time_fit.log \
+           out.times.raw \
+           out.times.data \
+           out.times.stats
+
+PLOTS_C := QR_factorize_time.svg
+# --------------------------------------------------------------------
+
+DATA    := $(DATA_C)
+PLOTS   := $(PLOTS_C)
+
 SRC := Main.cs \
        QR.cs
 
@@ -24,20 +36,20 @@ COMMON_SRC := $(COMMON_DIR)/Vector.cs \
 
 CSFILES := $(SRC) $(COMMON_SRC)
 
-.PHONY: all clean timing plot
+MOVE_C := $(DATA_C) $(PLOTS_C)
 
-all: $(OUT) QR_factorize_time.svg
+.PHONY: all clean package timing plot
 
-# Kompilér
+all: package
+
 $(EXE): $(CSFILES)
 	$(CS) $(CFLAGS) -out:$@ $^
 
-# Kør program → Out.txt
 $(OUT): $(EXE)
 	$(RUN) > $@
 
-# -------- Task C: Timing (gentagelser for stabilt gennemsnit) --------
-# Rå målinger (N, tid) gentaget REPEATS gange pr. N
+# -------- Task C -----------------------------------------------------
+# Rå målinger (N, tid) gentaget 'REPEATS' gange pr. N
 out.times.raw: $(EXE)
 	> $@
 	# Warm-up (JIT/initialisering) uden timing
@@ -50,6 +62,10 @@ out.times.raw: $(EXE)
 		done; \
 	done
 
+# Gennemsnit pr. N -> out.times.data (N mean)
+out.times.data: out.times.raw
+	awk '{sum[$$1]+=$$2; cnt[$$1]++} END{for(n in sum) printf "%d %.6f\n", n, sum[n]/cnt[n]}' $< | sort -n > $@
+
 # Gennemsnit + standardafvigelse pr. N -> out.times.stats (N mean sd)
 out.times.stats: out.times.raw
 	awk '{n=$$1; x=$$2; sum[n]+=x; sumsq[n]+=x*x; cnt[n]++} \
@@ -57,14 +73,23 @@ out.times.stats: out.times.raw
 	                       sd=sqrt((sumsq[n]-sum[n]*sum[n]/cnt[n])/(cnt[n]-1)); \
 	                       printf "%d %.6f %.6f\n", n, m, sd}}' $< | sort -n > $@
 
-# Plot (gnuplot bruger out.times.stats og skriver QR_factorize_time.svg)
-QR_factorize_time.svg: out.times.stats $(GNUPLOT)
+# Plot (gnuplot læser out.times.stats og skriver SVG + fit-log)
+$(PLOTS): out.times.stats $(GNUPLOT)
 	@gnuplot $(GNUPLOT)
 
 # Convenience-targets
 timing: out.times.stats
-plot: QR_factorize_time.svg
+plot: $(PLOTS)
 
-# Ryd op
+$(DIR_C):
+	@mkdir -p $@
+
+package: $(OUT) $(PLOTS) $(DATA) | $(DIR_C)
+	mv $(MOVE_C) $(DIR_C)/
+
+RM ?= rm
 clean:
-	- rm -f $(EXE) $(OUT) out.times.raw out.times.stats QR_factorize_time.svg QR_factorize_time_fit.log fit.log out err
+	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS)
+	-$(RM) -rf $(DIR_C)
+
+# fit.log

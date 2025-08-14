@@ -104,10 +104,7 @@ public class MainClass
 
         /*---------------- TASK C: Text‑only summary --------------------*/
         Console.WriteLine("\n------------ TASK C: ------------\n");
-        Console.WriteLine("out.times.data contains the data on how long it takes to QR-factorize a random NxN matrix.");
-        Console.WriteLine("QR_factorize_time.svg is a plot showing how long it takes to QR-factorize a random NxN matrix, using the data from out.times.data.");
-        Console.WriteLine("The time it takes to QR-factorize grows like O(N³), as shown by the fit in QR_factorize_time.svg.");
-
+        Console.WriteLine("The data and plot for QR-factorizing a random N×N matrix are in the Out_Task_C folder.");
 
         /* Homework points ---------------------------------------------*/
         int HW_POINTS_A = 1, HW_POINTS_B = 1, HW_POINTS_C = 1;
