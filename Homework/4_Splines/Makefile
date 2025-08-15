@@ -1,63 +1,73 @@
-## Makefile – PPNM Homework 4 Splines ##
+## --------- Makefile: Homework 4 Splines ---------------------------
 
 CS      := mcs
-RUN     := mono $(EXE)
+CFLAGS  := -target:exe -langversion:latest
 EXE     := main.exe
-OUT     := Out.txt
+RUN     := mono $(EXE)
 GNUPLOT := plot.gnu
-DIR_A 	:= Out_Task_A
-DIR_B 	:= Out_Task_B
-DIR_C 	:= Out_Task_C
-# I de tidliger homework opgaver har jeg bruge plot.gpi
+OUT     := Out.txt
 
-# Filer, som læses af hovedprogrammet
-# INDATA := XXX.txt
-# Bruger ikke for denne homework opgave
+DIR_A   := Out_Task_A
+DIR_B   := Out_Task_B
+DIR_C   := Out_Task_C
 
-# Filer, som hovedprogrammet genererer under kørslen og som læses af gnuplot
-DATA	:= $(DIR_A)/cos.txt $(DIR_A)quad.txt $(DIR_B)sin.txt $(DIR_B)log.txt $(DIR_C)sqrt.txt \
-       Computed_bi_and_ci_sin.txt Computed_bi_and_ci_log.txt
+DATA_A	:= cos.txt \
+	        quad.txt
 
-# Plot‑filer produceret af plot.gpi
-PLOTS   := $(DIR_A)/cos.svg $(DIR_A)quad.svg $(DIR_B)sin.svg $(DIR_B)log.svg $(DIR_C)sqrt.svg sqrt_comparing.svg \
-        bi_comparison_sin.svg ci_comparison_sin.svg \
-        bi_comparison_log.svg ci_comparison_log.svg
+DATA_B	:= sin.txt \
+	        log.txt \
+		Computed_bi_and_ci_sin.txt \
+		Computed_bi_and_ci_log.txt \
 
-# Kildekoden til denne opgave
-SRC        := Main.cs CubicSpline.cs QuadraticSpline.cs LinearSpline.cs
-COMMON_DIR := ../../General
-COMMON_SRC := $(COMMON_DIR)/Vector_and_Matrix.cs \
-		  $(COMMON_DIR)/HW_points.cs
+DATA_C := sqrt.txt
 
-CSFILES := $(SRC) $(COMMON_SRC)
+DATA  := $(DATA_A) $(DATA_B) $(DATA_C)
 
-.PHONY: all clean
+PLOTS_A := cos.svg \
+		quad.svg		
 
-all: $(OUT) $(PLOTS)
+PLOTS_B := sin.svg \
+		log.svg	\
+		bi_comparison_sin.svg \
+		ci_comparison_sin.svg \
+		bi_comparison_log.svg \
+		ci_comparison_log.svg \
+
+PLOTS_C := sqrt.svg \
+		sqrt_comparing.svg
+
+PLOTS  := $(PLOTS_A) $(PLOTS_B) $(PLOTS_C)
+
+SRC         := Main.cs CubicSpline.cs QuadraticSpline.cs LinearSpline.cs
+COMMON_DIR  := ../../General
+COMMON_SRC  := $(COMMON_DIR)/HW_points.cs
+CSFILES     := $(SRC) $(COMMON_SRC)
+
+MOVE_A := $(DATA_A) $(PLOTS_A)
+MOVE_B := $(DATA_B) $(PLOTS_B)
+MOVE_C := $(DATA_C) $(PLOTS_C)
+
+.PHONY: all clean package
+all: package
 
 $(EXE): $(CSFILES)
-	$(CS) -out:$@ $^
+	$(CS) $(CFLAGS) -out:$@ $^
 
-# Kør programmet for at generere Out.txt og datatabeller
-$(OUT) $(DATA)&: $(EXE) | $(DIR_A) $(DIR_B) $(DIR_C)
-	mono $(EXE) > $(OUT)
+$(OUT) $(DATA): $(EXE)
+	$(RUN) > $(OUT)
 
-# Ét kald til gnuplot producerer begge .svg‑filer
-$(PLOTS): $(DATA) $(GNUPLOT) | $(DIR_A) $(DIR_B) $(DIR_C)
+$(PLOTS)&: $(DATA) $(GNUPLOT)
 	@gnuplot $(GNUPLOT)
 
+$(DIR_A) $(DIR_B) $(DIR_C):
+	@mkdir -p $@
+
+package: $(PLOTS) | $(DIR_A) $(DIR_B) $(DIR_C)
+	mv $(MOVE_A) $(DIR_A)/
+	mv $(MOVE_B) $(DIR_B)/
+	mv $(MOVE_C) $(DIR_C)/
+
 RM ?= rm
-
-# Opretter mappen, hvis den ikke findes:
-$(DIR_A):
-	@mkdir -p $(DIR_A)
-$(DIR_B):
-	@mkdir -p $(DIR_B)
-$(DIR_C):
-	@mkdir -p $(DIR_C)
-
-
 clean:
-	-$(RM) -f $(EXE)  $(OUT) $(DATA) $(PLOTS)
-	-$(RM) -r $(DIR_A) $(DIR_B) $(DIR_C)
-
+	-$(RM) -f $(EXE) $(OUT) $(DATA) $(PLOTS)
+	-$(RM) -rf $(DIR_A) $(DIR_B) $(DIR_C)
