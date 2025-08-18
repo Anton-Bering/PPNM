@@ -1,123 +1,157 @@
 using System;
+using static MatrixHelpers;   // only used for DEBUG checks
 
 namespace PPNM.Minimization {
 
 public static class QuasiNewton {
+    // ------------ Numeric parameters --------------------
+    const double α = 1e-4;
+    const double λ_minimal = 1.0/1024.0;
+    const double machine_epsilon = 2.220446049250313e-16;
 
-    // ---------- små lokale hjælpere ----------
-    static double[,] Copy(double[,] A){
-        int n=A.GetLength(0), m=A.GetLength(1);
-        var B=new double[n,m]; Array.Copy(A,B,A.Length); return B;
-    }
-    static void AddInPlace(double[,] A, double[,] B){
-        int n=A.GetLength(0), m=A.GetLength(1);
-        for(int i=0;i<n;i++) for(int j=0;j<m;j++) A[i,j]+=B[i,j];
-    }
-    static vector MatVec(double[,] A, vector v){ return VectorAndMatrix.Multiply(A,v); }
-    static double DotVec(vector a, vector b){ double s=0; for(int i=0;i<a.size;i++) s+=a[i]*b[i]; return s; }
-    static double NormVec(vector a){ return Math.Sqrt(DotVec(a,a)); }
-    static double[] VecToArray(vector v){ var a=new double[v.size]; for(int i=0;i<v.size;i++) a[i]=v[i]; return a; }
-    static vector ArrayToVec(double[] a){ var v=new vector(a.Length); for(int i=0;i<a.Length;i++) v[i]=a[i]; return v; }
-
-    // ---------- numerisk gradient (central differens) ----------
+    // ------------ Approximation for the gradient (central differences) -------
     static vector Grad(Func<vector,double> f, vector x){
-        int n=x.size; var g=new vector(n);
-        for(int i=0;i<n;i++){
-            double xi=x[i];
-            double h = Math.Sqrt(2.220446049250313e-16)*(Math.Abs(xi)+1.0);
-            x[i]=xi+h; double fph=f(x);
-            x[i]=xi-h; double fmh=f(x);
-            g[i]=(fph-fmh)/(2*h);
-            x[i]=xi;
+        int n = x.Size;
+        var g = new vector(n);
+        for(int k=0;k<n;k++){
+            double x_k  = x[k];
+            double δx_k = Math.Sqrt(machine_epsilon) * (1.0 + Math.Abs(x_k));
+            x[k] = x_k + δx_k; double f_plus  = f(x);
+            x[k] = x_k - δx_k; double f_minus = f(x);
+            g[k] = (f_plus - f_minus) / (2 * δx_k);
+            x[k] = x_k;
         }
         return g;
     }
 
-    // ---------- Armijo backtracking ----------
-    static double LineSearch(Func<vector,double> f, vector x, double fx, vector g, vector p){
-        double c1=1e-4, tau=0.5, t=1.0;
-        double gTp = DotVec(g,p);
-        if(gTp>0){ for(int i=0;i<p.size;i++) p[i]=-g[i]; gTp = -NormVec(g)*NormVec(g); }
-        var xtrial=x.copy();
-        for(int it=0; it<50; it++){
-            for(int i=0;i<x.size;i++) xtrial[i]=x[i]+t*p[i];
-            if(f(xtrial) <= fx + c1*t*gTp) break;
-            t*=tau; if(t<1e-12) break;
+    // ------------ Armijo backtracking line search [p. 100 (PDF 108)] --------
+    static double LineSearchArmijo(Func<vector,double> f, vector x, double fx, vector g, ref vector Δx){
+        double gT__Δx = vector.Dot(g, Δx);
+        if (gT__Δx >= 0){
+            Δx     = -g;
+            gT__Δx = -vector.Dot(g, g);
         }
-        return t;
+
+        double λ = 1.0;
+        while (λ >= λ_minimal && f(x + λ*Δx) > fx + α*λ*gT__Δx)
+            λ *= 0.5;
+        return λ;
     }
 
-    // ---------- Broyden/SR1 opdateringer på B (double[,]) ----------
-    // Broyden: B <- B + ((y - B s) s^T)/(s^T s)
-    static void BroydenUpdate(double[,] B, vector s, vector y){
-        var Bs = MatVec(B, s);
-        var u  = y - Bs;
-        double denom = DotVec(s,s); if(Math.Abs(denom) < 1e-16) return;
-        var rank1 = VectorAndMatrix.Outer(u, s);                // u s^T
-        AddInPlace(B, VectorAndMatrix.Scale(rank1, 1.0/denom)); // B += (u s^T)/(s^T s)
-    }
-    // SR1: B <- B + (r r^T)/(r^T s), r = y - B s
-    static void SR1Update(double[,] B, vector s, vector y){
-        var Bs = MatVec(B, s);
-        var r  = y - Bs;
-        double denom=0; for(int i=0;i<s.size;i++) denom += r[i]*s[i];
-        if(Math.Abs(denom) <= 1e-12) return;
-        var rrT = VectorAndMatrix.Outer(r, r);
-        AddInPlace(B, VectorAndMatrix.Scale(rrT, 1.0/denom));
+    // ------------ Result bundle for reporting --------------------------------
+    public struct Result {
+        public vector x_min;     
+        public double f_min;     
+        public double gradNorm;  
+        public double last_step; 
+        public int iterations;   
+        public int resets;       
+        public int fevals;       
     }
 
-    // ---------- løs B p = -g med din QR ----------
-    static vector SolveByQR(double[,] B, vector g){
-        var qr  = new QR(B);           // din QR-klasse
-        var rhs = VecToArray(g);
-        for(int i=0;i<rhs.Length;i++) rhs[i]*=-1;   // -g
-        var x   = qr.solve(rhs);      // løser B x = -g
-        return ArrayToVec(x);
-    }
+    // API: run QN with Broyden
+    public static vector broyden(Func<vector,double> f, vector x, double acc)
+    => MinimizeReport(f,x,acc,useSymmetrized:false).x_min;
 
-    // ---------- public API ----------
-    public static vector broyden(Func<vector,double> f, vector start, double acc){
-        return Minimize(f, start, acc, useSR1:false);
-    }
-    public static vector broyden_sym(Func<vector,double> f, vector start, double acc){
-        return Minimize(f, start, acc, useSR1:true);
-    }
+    // API: run QN with symmetrized Broyden
+    public static vector broyden_sym(Func<vector,double> f, vector x, double acc)
+    => MinimizeReport(f,x,acc,useSymmetrized:true).x_min;
 
-    static vector Minimize(Func<vector,double> f, vector x0, double acc, bool useSR1){
-        int n=x0.size;
-        var x  = x0.copy();
-        var B  = VectorAndMatrix.IdentityMatrix(n); // double[,]
-        double fx = f(x);
-        var g  = Grad(f,x);
+    // ------------ Main driver (one minimization run) -------------------------
+    public static Result MinimizeReport(Func<vector,double> f, vector x0, double acc, bool useSymmetrized){
+        int fe = 0;
+        Func<vector,double> fcount = z => { fe++; return f(z); };
 
-        int maxit=10000;
-        for(int it=0; it<maxit; it++){
-            if(NormVec(g) <= acc) break;
+        // initial state
+        int n = x0.Size;
+        vector x = x0.Copy();
+        double fx = fcount(x);
+        vector g  = Grad(fcount, x);
 
-            vector p;
-            try{ p = SolveByQR(B, g); }
-            catch{
-                B = VectorAndMatrix.IdentityMatrix(n);
-                p = SolveByQR(B, g);
+        matrix B = matrix.Eye(n);
+
+        int    iter   = 0;
+        int    resets = 0;
+        double last_λ = 0;
+
+        for(; iter<10000; iter++){
+            if (g.NormInf() <= acc*(1.0 + Math.Abs(fx))) break;
+
+            vector Δx = -(B * g);
+            double λ = LineSearchArmijo(fcount, x, fx, g, ref Δx);
+            last_λ = λ;
+
+            vector s      = λ*Δx;
+            vector x_new  = x + s;
+            double fx_new = fcount(x_new);
+            vector g_new  = Grad(fcount, x_new);
+            vector y      = g_new - g;
+
+            if (λ < λ_minimal){
+                x = x_new; fx = fx_new; g = g_new;
+                B = matrix.Eye(n);
+                resets++;
+                #if DEBUG
+                CheckIdentityMatrix(B, "B reset (λ < λ_minimal)", tol:1e-12, throwOnFail:false);
+                #endif
+                continue;
             }
-            if(DotVec(p,g) > 0) for(int i=0;i<p.size;i++) p[i] = -g[i];
 
-            double t = LineSearch(f,x,fx,g,p);
-            var s    = p.copy(); for(int i=0;i<s.size;i++) s[i]*=t; // s = t*p
-            var xnew = x + s;
-            double fxnew = f(xnew);
-            var gnew = Grad(f,xnew);
+            double sy  = vector.Dot(s,y);
+            double tol = 1e-12 * (1.0 + s.Norm()*y.Norm());
+            if (Math.Abs(sy) <= tol){
+                x = x_new; fx = fx_new; g = g_new;
+                B = matrix.Eye(n);
+                resets++;
+                #if DEBUG
+                CheckIdentityMatrix(B, "B reset (curvature guard)", tol:1e-12, throwOnFail:false);
+                #endif
+                continue;
+            }
 
-            var y = gnew - g;
-            if(useSR1) SR1Update(B, s, y);
-            else       BroydenUpdate(B, s, y);
+            // quasi-Newton update on B so the secant (B⁺) y = s holds:
+            if(useSymmetrized)
+                SymmetrizedBroydenUpdates.InverseSymBroyden(ref B, s, y);
+            else
+                BroydenUpdates.InverseBroyden(ref B, s, y);
 
-            x=xnew; fx=fxnew; g=gnew;
-
-            if(NormVec(s)<1e-14) B = VectorAndMatrix.IdentityMatrix(n);
+            // accept move
+            x = x_new; fx = fx_new; g = g_new;
         }
-        return x;
+
+        return new Result{
+            x_min     = x,
+            f_min     = fx,
+            gradNorm  = g.Norm(),   
+            last_step = last_λ,
+            iterations= iter,
+            resets    = resets,
+            fevals    = fe
+        };
+    }
+}
+
+// -------------------- Update rules --------------------------
+public static class BroydenUpdates {
+    public static void InverseBroyden(ref matrix B, vector s, vector y, double ε=1e-12){
+        double sy = vector.Dot(s,y);
+        if (Math.Abs(sy) <= ε) return;          
+        var u = s - (B * y);                    
+        B += matrix.Outer(u, s)/sy;            
+    }
+}
+
+public static class SymmetrizedBroydenUpdates {
+    public static void InverseSymBroyden(ref matrix B, vector s, vector y, double ε=1e-12){
+        double sy  = vector.Dot(s,y);
+        double tol = ε * (1.0 + s.Norm()*y.Norm());     
+        if (Math.Abs(sy) <= tol) return;
+        var u = s - (B * y);
+        double γ = vector.Dot(u,y)/(2.0*sy);
+        var a = (u - γ*s)/sy;
+        B += matrix.Outer(a,s) + matrix.Outer(s,a);
     }
 }
 
 }
+

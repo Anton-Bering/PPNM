@@ -1,31 +1,22 @@
----- Rosenbrock (Broyden)
-start  = [-1.2, 1]
-xmin   = [0.999999922078141, 0.99999984442041]
-f(xmin)= 6.07879e-15
+------------ Rosenbrock (acc=1e-06) ------------
+start = [-1.2 1]
+method         xmin                              f(xmin)       ||grad||     iters  resets  last_λ   fevals
+Broyden     [1 1]                             1.17137E-20     4.79E-09     395       4       1     5200
+Sym-Broyden [1 1]                             3.18205E-18     4.69E-08      34       1       1      228
+speedup (iters): 11.6,  speedup (fevals): 22.8
 
----- Rosenbrock (SR1)
-start  = [-1.2, 1]
-xmin   = [0.999999998935799, 0.99999999791284]
-f(xmin)= 1.30261e-18
+------------ Himmelblau (acc=1e-06) ------------
+start = [0 0]
+method         xmin                              f(xmin)       ||grad||     iters  resets  last_λ   fevals
+Broyden     [3 2]                              2.8048E-17     5.92E-08      15       0       1      143
+Sym-Broyden [3 2]                             1.42834E-19     3.79E-09      10       0       1       76
+speedup (iters): 1.5,  speedup (fevals): 1.88
 
----- Himmelblau (Broyden)
-start  = [0, 0]
-xmin   = [2.99999999999379, 1.99999999967562]
-f(xmin)= 1.83052e-18
-
----- Himmelblau (SR1)
-start  = [0, 0]
-xmin   = [2.99999999685328, 1.99999999936742]
-f(xmin)= 4.12981e-16
-
----- RotatedQuadratic6D (Broyden)
-start  = [1, -1, 2, -2, 1.5, 0.5]
-xmin   = [1.10904564264513E-11, 0.500000000006193, 0.999999999995435, 1.50000000000384, 2.00000000000295, 2.49999999999201]
-f(xmin)= 1.04311e-21
-
----- RotatedQuadratic6D (SR1)
-start  = [1, -1, 2, -2, 1.5, 0.5]
-xmin   = [1.1610443879928E-07, 0.500000170233288, 0.999999955934556, 1.49999998791486, 2.00000001495382, 2.49999997321088]
-f(xmin)= 4.70862e-14
+------------ RotatedQuadratic6D (acc=1e-06) ------------
+start = [1 -1 2 -2 1.5 0.5]
+method         xmin                              f(xmin)       ||grad||     iters  resets  last_λ   fevals
+Broyden     [-1.86775E-12 0.5 1 1.5 2 2.5]    9.38555E-24     8.55E-12      23       0       1      363
+Sym-Broyden [-6.76436E-08 0.5 1 1.5 2 2.5]    4.39972E-14     9.37E-07      13       0       1      208
+speedup (iters): 1.77,  speedup (fevals): 1.75
 
 Done.
