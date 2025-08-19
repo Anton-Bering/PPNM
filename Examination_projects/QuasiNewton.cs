@@ -4,10 +4,9 @@ using static MatrixHelpers;   // only used for DEBUG checks
 namespace PPNM.Minimization {
 
 public static class QuasiNewton {
-    // ------------ Numeric parameters --------------------
-    const double α = 1e-4;
-    const double λ_minimal = 1.0/1024.0;
-    const double machine_epsilon = 2.220446049250313e-16;
+
+    // Machine epsilon for double. Used to scale finite-difference steps. [p. 101 (PDF 109)]
+    const double machine_epsilon = 2.220446049250313e-16; // = 2^-52
 
     // ------------ Approximation for the gradient (central differences) -------
     static vector Grad(Func<vector,double> f, vector x){
@@ -25,7 +24,15 @@ public static class QuasiNewton {
     }
 
     // ------------ Armijo backtracking line search [p. 100 (PDF 108)] --------
-    static double LineSearchArmijo(Func<vector,double> f, vector x, double fx, vector g, ref vector Δx){
+    static double LineSearchArmijo(
+        Func<vector,double> f, 
+        vector x, 
+        double fx, 
+        vector g, 
+        ref vector Δx,
+        double α,
+        double λ_minimal)
+    {
         double gT__Δx = vector.Dot(g, Δx);
         if (gT__Δx >= 0){
             Δx     = -g;
@@ -49,16 +56,19 @@ public static class QuasiNewton {
         public int fevals;       
     }
 
-    // API: run QN with Broyden
-    public static vector broyden(Func<vector,double> f, vector x, double acc)
-    => MinimizeReport(f,x,acc,useSymmetrized:false).x_min;
-
-    // API: run QN with symmetrized Broyden
-    public static vector broyden_sym(Func<vector,double> f, vector x, double acc)
-    => MinimizeReport(f,x,acc,useSymmetrized:true).x_min;
+    public static vector broyden(Func<vector,double> f, vector x, double acc) => MinimizeReport(f,x,acc,useSymmetrized:false).x_min;
+    public static vector broyden_sym(Func<vector,double> f, vector x, double acc) => MinimizeReport(f,x,acc,useSymmetrized:true).x_min;
 
     // ------------ Main driver (one minimization run) -------------------------
-    public static Result MinimizeReport(Func<vector,double> f, vector x0, double acc, bool useSymmetrized){
+    public static Result MinimizeReport(
+        Func<vector,double> f, 
+        vector x0, 
+        double acc, 
+        bool useSymmetrized,
+        int maxIterations = 10000,
+        double α = 1e-4,
+        double λ_minimal = 1.0/1024.0)
+    {
         int fe = 0;
         Func<vector,double> fcount = z => { fe++; return f(z); };
 
@@ -74,11 +84,11 @@ public static class QuasiNewton {
         int    resets = 0;
         double last_λ = 0;
 
-        for(; iter<10000; iter++){
+        for(; iter<maxIterations; iter++){
             if (g.NormInf() <= acc*(1.0 + Math.Abs(fx))) break;
 
             vector Δx = -(B * g);
-            double λ = LineSearchArmijo(fcount, x, fx, g, ref Δx);
+            double λ = LineSearchArmijo(fcount, x, fx, g, ref Δx, α, λ_minimal);
             last_λ = λ;
 
             vector s      = λ*Δx;
@@ -109,11 +119,7 @@ public static class QuasiNewton {
                 continue;
             }
 
-            // quasi-Newton update on B so the secant (B⁺) y = s holds:
-            if(useSymmetrized)
-                SymmetrizedBroydenUpdates.InverseSymBroyden(ref B, s, y);
-            else
-                BroydenUpdates.InverseBroyden(ref B, s, y);
+            BroydenUpdates.Update(ref B, s, y, useSymmetrized);
 
             // accept move
             x = x_new; fx = fx_new; g = g_new;
@@ -131,27 +137,36 @@ public static class QuasiNewton {
     }
 }
 
-// -------------------- Update rules --------------------------
-public static class BroydenUpdates {
-    public static void InverseBroyden(ref matrix B, vector s, vector y, double ε=1e-12){
+// -------------------- Update rules ('Broyden's update' and 'symmetrized Broyden's update') --------------------------
+public static class BroydenUpdates 
+{
+    public static void Update(
+        ref matrix B, 
+        vector s, 
+        vector y, 
+        bool useSymmetrized, // =false ==> 'Broyden's update' // true ==> 'symmetrized Broyden's update'
+        double ε=1e-12)
+    {
         double sy = vector.Dot(s,y);
-        if (Math.Abs(sy) <= ε) return;          
-        var u = s - (B * y);                    
-        B += matrix.Outer(u, s)/sy;            
+
+        double tol = ε * (s.Norm() * y.Norm() + 1.0);
+        if (Math.Abs(sy) <= tol) return;        
+        
+        var u = s - (B * y);
+
+        if (useSymmetrized) // symmetrized Broyden's update
+        {
+            double γ = vector.Dot(u,y) / (2.0 * sy);
+            var a = (u - γ*s) / sy;
+            B += matrix.Outer(a,s) + matrix.Outer(s,a);
+        }
+        else // Broyden's update
+        {
+            B += matrix.Outer(u, s) / sy;            
+        }
     }
 }
 
-public static class SymmetrizedBroydenUpdates {
-    public static void InverseSymBroyden(ref matrix B, vector s, vector y, double ε=1e-12){
-        double sy  = vector.Dot(s,y);
-        double tol = ε * (1.0 + s.Norm()*y.Norm());     
-        if (Math.Abs(sy) <= tol) return;
-        var u = s - (B * y);
-        double γ = vector.Dot(u,y)/(2.0*sy);
-        var a = (u - γ*s)/sy;
-        B += matrix.Outer(a,s) + matrix.Outer(s,a);
-    }
-}
 
 }
 
