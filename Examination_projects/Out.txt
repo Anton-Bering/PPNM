@@ -1,22 +1,105 @@
------------- Rosenbrock (acc=1e-06) ------------
-start = [-1.2 1]
-method         xmin                              f(xmin)       ||grad||     iters  resets  last_λ   fevals
-Broyden     [1 1]                             1.17137E-20     4.79E-09     395       4       1     5200
-Sym-Broyden [1 1]                             3.18205E-18     4.69E-08      34       1       1      228
-speedup (iters): 11.6,  speedup (fevals): 22.8
+------------ Function: Quadratic (acc=1e-06) ------------
 
------------- Himmelblau (acc=1e-06) ------------
-start = [0 0]
-method         xmin                              f(xmin)       ||grad||     iters  resets  last_λ   fevals
-Broyden     [3 2]                              2.8048E-17     5.92E-08      15       0       1      143
-Sym-Broyden [3 2]                             1.42834E-19     3.79E-09      10       0       1       76
-speedup (iters): 1.5,  speedup (fevals): 1.88
+Start point(s): [1 1]
 
------------- RotatedQuadratic6D (acc=1e-06) ------------
-start = [1 -1 2 -2 1.5 0.5]
-method         xmin                              f(xmin)       ||grad||     iters  resets  last_λ   fevals
-Broyden     [-1.86775E-12 0.5 1 1.5 2 2.5]    9.38555E-24     8.55E-12      23       0       1      363
-Sym-Broyden [-6.76436E-08 0.5 1 1.5 2 2.5]    4.39972E-14     9.37E-07      13       0       1      208
-speedup (iters): 1.77,  speedup (fevals): 1.75
+--- Results for Broyden update ---
+Estimated minimizer (x*):   [0 0]
+Objective at x*:            0
+Gradient norm at x*:        0
+Outer iterations:           1
+B resets:                   0
+Last accepted step (λ):     0.5
+Function evaluations:       12
 
+--- Results for Symmetrized Broyden update ---
+Estimated minimizer (x*):   [0 0]
+Objective at x*:            0
+Gradient norm at x*:        0
+Outer iterations:           1
+B resets:                   0
+Last accepted step (λ):     0.5
+Function evaluations:       12
+
+--- Broyden vs Sym-Broyden ---
+speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
+Iterations speedup: 1
+function evaluations speedup: 1
+------------ Function: Rosenbrock (acc=1e-06) ------------
+
+Start point(s): [-1.2 1]
+
+--- Results for Broyden update ---
+Estimated minimizer (x*):   [1 1]
+Objective at x*:            1.17136817701495E-20
+Gradient norm at x*:        4.78603647126985E-09
+Outer iterations:           395
+B resets:                   4
+Last accepted step (λ):     1
+Function evaluations:       5200
+
+--- Results for Symmetrized Broyden update ---
+Estimated minimizer (x*):   [1 1]
+Objective at x*:            3.1820528225396E-18
+Gradient norm at x*:        4.69155913709529E-08
+Outer iterations:           34
+B resets:                   1
+Last accepted step (λ):     1
+Function evaluations:       228
+
+--- Broyden vs Sym-Broyden ---
+speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
+Iterations speedup: 11.6176470588235
+function evaluations speedup: 22.8070175438597
+------------ Function: Himmelblau (acc=1e-06) ------------
+
+Start point(s): [0 0]
+
+--- Results for Broyden update ---
+Estimated minimizer (x*):   [3 2]
+Objective at x*:            2.80479745626465E-17
+Gradient norm at x*:        5.91544552261804E-08
+Outer iterations:           15
+B resets:                   0
+Last accepted step (λ):     1
+Function evaluations:       143
+
+--- Results for Symmetrized Broyden update ---
+Estimated minimizer (x*):   [3 2]
+Objective at x*:            1.42834105056552E-19
+Gradient norm at x*:        3.79244985896579E-09
+Outer iterations:           10
+B resets:                   0
+Last accepted step (λ):     1
+Function evaluations:       76
+
+--- Broyden vs Sym-Broyden ---
+speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
+Iterations speedup: 1.5
+function evaluations speedup: 1.88157894736842
+------------ Function: RotatedQuadratic6D (acc=1e-06) ------------
+
+Start point(s): [1 -1 2 -2 1.5 0.5]
+
+--- Results for Broyden update ---
+Estimated minimizer (x*):   [-1.86775E-12 0.5 1 1.5 2 2.5]
+Objective at x*:            9.38554895344442E-24
+Gradient norm at x*:        8.54882313258248E-12
+Outer iterations:           23
+B resets:                   0
+Last accepted step (λ):     1
+Function evaluations:       363
+
+--- Results for Symmetrized Broyden update ---
+Estimated minimizer (x*):   [-6.76436E-08 0.5 1 1.5 2 2.5]
+Objective at x*:            4.39972017767178E-14
+Gradient norm at x*:        9.37408968303684E-07
+Outer iterations:           13
+B resets:                   0
+Last accepted step (λ):     1
+Function evaluations:       208
+
+--- Broyden vs Sym-Broyden ---
+speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
+Iterations speedup: 1.76923076923077
+function evaluations speedup: 1.74519230769231
 Done.

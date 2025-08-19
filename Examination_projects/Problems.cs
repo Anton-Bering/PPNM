@@ -3,6 +3,13 @@ using System;
 namespace PPNM.Minimization {
 
 public static class Problems {
+
+    // Quadratic test function (global min at (0,0))
+    public static double Quadratic(vector v){
+        double x = v[0], y = v[1];
+        return x*x + y*y;
+    }
+
     // Rosenbrock test function (global min at (1,1))
     public static double Rosenbrock(vector v){
         double x = v[0], y = v[1];
