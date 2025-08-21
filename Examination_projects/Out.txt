@@ -1,4 +1,6 @@
------------- Test the implementation on some functions with known minima ------------
+###################################################################################
+############ Testing the implementation on functions with known minima ############
+###################################################################################
 
 ------------ Quadratic function ------------
 
@@ -6,7 +8,7 @@ Expected minimum: [0 0]
 Accuracy goal (acc): 1E-06
 Start point (x_start): [1 1]
 
---- Results for Broyden update ---
+--- Results for Broyden's update ---
 Found minimum (x_min):                    [0 0]
 Value at minimum, f(x_min):               0
 Gradient norm at x_min:                   0  (should be < acc)
@@ -17,7 +19,7 @@ Number of evaluations:                    12  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Results for Symmetrized Broyden update ---
+--- Results for Symmetrized Broyden's update ---
 Found minimum (x_min):                    [0 0]
 Value at minimum, f(x_min):               0
 Gradient norm at x_min:                   0  (should be < acc)
@@ -28,10 +30,23 @@ Number of evaluations:                    12  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Broyden's update vs Symmetrized Broyden's update ---
-speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 1
-Evaluations speedup: 1
+--- Comparison Summary: Broyden vs Symmetrized Broyden ---
+
+0. Accuracy (did the method find the correct minimum?):
+   >> Tie. Both methods found the correct minimum.
+
+1. Quality of the found minimum (lower f_min is better):
+   >> Tie. Both methods found minima of similar quality.
+
+2. Efficiency (fewer function evaluations is better):
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 1.00
+   >> Tie. Both methods had a similar efficiency.
+
+3. Robustness (fewer resets and successful convergence indicates stability):
+   >> Tie. Both methods were equally robust.
+
+Overall Verdict:
+Both methods performed identically on this task.
 
 ------------ Rosenbrock's valley function ------------
 
@@ -39,7 +54,7 @@ Expected minimum: [1 1]
 Accuracy goal (acc): 1E-06
 Start point (x_start): [-1.2 1]
 
---- Results for Broyden update ---
+--- Results for Broyden's update ---
 Found minimum (x_min):                    [1 1]
 Value at minimum, f(x_min):               1.17136817701495E-20
 Gradient norm at x_min:                   4.78603647126985E-09  (should be < acc)
@@ -50,7 +65,7 @@ Number of evaluations:                    5200  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Results for Symmetrized Broyden update ---
+--- Results for Symmetrized Broyden's update ---
 Found minimum (x_min):                    [1 1]
 Value at minimum, f(x_min):               3.1820528225396E-18
 Gradient norm at x_min:                   4.69155913709529E-08  (should be < acc)
@@ -61,10 +76,23 @@ Number of evaluations:                    228  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Broyden's update vs Symmetrized Broyden's update ---
-speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 11.6176470588235
-Evaluations speedup: 22.8070175438597
+--- Comparison Summary: Broyden vs Symmetrized Broyden ---
+
+0. Accuracy (did the method find the correct minimum?):
+   >> Tie. Both methods found the correct minimum.
+
+1. Quality of the found minimum (lower f_min is better):
+   >> Winner: Broyden. Found a significantly better minimum (1.1714E-20 vs 3.1821E-18).
+
+2. Efficiency (fewer function evaluations is better):
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 22.81
+   >> Winner: Symmetrized Broyden. Was significantly more efficient.
+
+3. Robustness (fewer resets and successful convergence indicates stability):
+   >> Winner: Symmetrized Broyden. Was more stable (1 vs 4 resets).
+
+Overall Verdict:
+The WINNER is Broyden's update, as it found a minimum of significantly higher quality.
 
 ------------ Himmelblau's function ------------
 
@@ -72,7 +100,7 @@ Expected minimum: [3 2]
 Accuracy goal (acc): 1E-06
 Start point (x_start): [0 0]
 
---- Results for Broyden update ---
+--- Results for Broyden's update ---
 Found minimum (x_min):                    [3 2]
 Value at minimum, f(x_min):               2.80479745626465E-17
 Gradient norm at x_min:                   5.91544552261804E-08  (should be < acc)
@@ -83,7 +111,7 @@ Number of evaluations:                    143  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Results for Symmetrized Broyden update ---
+--- Results for Symmetrized Broyden's update ---
 Found minimum (x_min):                    [3 2]
 Value at minimum, f(x_min):               1.42834105056552E-19
 Gradient norm at x_min:                   3.79244985896579E-09  (should be < acc)
@@ -94,12 +122,23 @@ Number of evaluations:                    76  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Broyden's update vs Symmetrized Broyden's update ---
-speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 1.5
-Evaluations speedup: 1.88157894736842
+--- Comparison Summary: Broyden vs Symmetrized Broyden ---
 
------------- Test the implementation in higher dimensions 8 ------------
+0. Accuracy (did the method find the correct minimum?):
+   >> Tie. Both methods found the correct minimum.
+
+1. Quality of the found minimum (lower f_min is better):
+   >> Winner: Symmetrized Broyden. Found a significantly better minimum (1.4283E-19 vs 2.8048E-17).
+
+2. Efficiency (fewer function evaluations is better):
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 1.88
+   >> Winner: Symmetrized Broyden. Was significantly more efficient.
+
+3. Robustness (fewer resets and successful convergence indicates stability):
+   >> Tie. Both methods were equally robust.
+
+Overall Verdict:
+The WINNER is Symmetrized Broyden's update, as it found a minimum of significantly higher quality.
 
 ------------ Quadratic function in 8D ------------
 
@@ -107,7 +146,7 @@ Expected minimum: [0 0 0 0 0 0 0 0]
 Accuracy goal (acc): 1E-06
 Start point (x_start): [1 1 1 1 1 1 1 1]
 
---- Results for Broyden update ---
+--- Results for Broyden's update ---
 Found minimum (x_min):                    [7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09]
 Value at minimum, f(x_min):               4.44089209850063E-16
 Gradient norm at x_min:                   4.2146848510894E-08  (should be < acc)
@@ -118,7 +157,7 @@ Number of evaluations:                    36  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Results for Symmetrized Broyden update ---
+--- Results for Symmetrized Broyden's update ---
 Found minimum (x_min):                    [7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09]
 Value at minimum, f(x_min):               4.44089209850063E-16
 Gradient norm at x_min:                   4.2146848510894E-08  (should be < acc)
@@ -129,10 +168,23 @@ Number of evaluations:                    36  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Broyden's update vs Symmetrized Broyden's update ---
-speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 1
-Evaluations speedup: 1
+--- Comparison Summary: Broyden vs Symmetrized Broyden ---
+
+0. Accuracy (did the method find the correct minimum?):
+   >> Tie. Both methods found the correct minimum.
+
+1. Quality of the found minimum (lower f_min is better):
+   >> Tie. Both methods found minima of similar quality.
+
+2. Efficiency (fewer function evaluations is better):
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 1.00
+   >> Tie. Both methods had a similar efficiency.
+
+3. Robustness (fewer resets and successful convergence indicates stability):
+   >> Tie. Both methods were equally robust.
+
+Overall Verdict:
+Both methods performed identically on this task.
 
 ------------ Rosenbrock's valley function in 8D ------------
 
@@ -140,7 +192,7 @@ Expected minimum: [1 1 1 1 1 1 1 1]
 Accuracy goal (acc): 1E-06
 Start point (x_start): [-1.2 1 -1.2 1 -1.2 1 -1.2 1]
 
---- Results for Broyden update ---
+--- Results for Broyden's update ---
 Found minimum (x_min):                    [1 1 1 1 0.999999 0.999998 0.999997 0.999993]
 Value at minimum, f(x_min):               1.6298135659808E-11
 Gradient norm at x_min:                   7.2888652892073E-06  (should be < acc)
@@ -151,7 +203,7 @@ Number of evaluations:                    272399  (lower is better)
 
 Does the found minimum agree with expectation? NO.
 
---- Results for Symmetrized Broyden update ---
+--- Results for Symmetrized Broyden's update ---
 Found minimum (x_min):                    [1 1 1 1 1 1 1 1]
 Value at minimum, f(x_min):               5.25964706136631E-16
 Gradient norm at x_min:                   1.29068014946382E-06  (should be < acc)
@@ -162,24 +214,34 @@ Number of evaluations:                    1404  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Broyden's update vs Symmetrized Broyden's update ---
-speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 136.986301369863
-Evaluations speedup: 194.016381766382
+--- Comparison Summary: Broyden vs Symmetrized Broyden ---
 
------------- Applying the implementation to a more complicated problems ------------
+0. Accuracy (did the method find the correct minimum?):
+   >> Winner: Symmetrized Broyden. Found the correct minimum where the other failed.
 
-I use the data from the Higgs experiment (CERN 2012) we were given in homework exercise 9.
-The data is fitted to the Breit-Wigner function, by minimizing the deviation function.
-The first component of the minimum corresponds to the Higgs mass in GeV (the mass should be ~125.3 GeV).
-The second and third components are the resonance width and the scale factor, respectively, for the given experiment.
+1. Quality of the found minimum (lower f_min is better):
+   >> Winner: Symmetrized Broyden. Found a significantly better minimum (5.2596E-16 vs 1.6298E-11).
+
+2. Efficiency (fewer function evaluations is better):
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 194.02
+   >> Winner: Symmetrized Broyden. Was significantly more efficient.
+
+3. Robustness (fewer resets and successful convergence indicates stability):
+   >> Winner: Symmetrized Broyden. Converged where Broyden failed.
+
+Overall Verdict:
+The WINNER is Symmetrized Broyden's update, as it was the only one to find the correct minimum.
+
+##################################################################################
+############ Applying the implementation to more complicated problems ############
+##################################################################################
 
 ------------ Higgs Boson Fit ------------
 
 Accuracy goal (acc): 1E-06
 Start point (x_start): [125 2 10]
 
---- Results for Broyden update ---
+--- Results for Broyden's update ---
 Found minimum (x_min):                    [125.972 2.08633 9.87621]
 Value at minimum, f(x_min):               26.8695117786709
 Gradient norm at x_min:                   2.69112588810939E-07  (should be < acc)
@@ -188,7 +250,7 @@ Number of resets:                         1  (lower is better)
 Length of last accepted step (λ_last):    1  (ideally ≈ 1)
 Number of evaluations:                    556  (lower is better)
 
---- Results for Symmetrized Broyden update ---
+--- Results for Symmetrized Broyden's update ---
 Found minimum (x_min):                    [125.972 2.08633 9.87622]
 Value at minimum, f(x_min):               26.8695117786711
 Gradient norm at x_min:                   2.12035778016702E-06  (should be < acc)
@@ -197,38 +259,76 @@ Number of resets:                         0  (lower is better)
 Length of last accepted step (λ_last):    1  (ideally ≈ 1)
 Number of evaluations:                    288  (lower is better)
 
---- Broyden's update vs Symmetrized Broyden's update ---
-speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 1.76666666666667
-Evaluations speedup: 1.93055555555556
+--- Comparison Summary: Broyden vs Symmetrized Broyden ---
 
->> Generated higgs_data.txt and higgs_fit_curve.txt for plotting.
+1. Quality of the found minimum (lower f_min is better):
+   >> Tie. Both methods found minima of similar quality.
 
-This section trains a simple Artificial Neural Network to approximate a function.
-The problem is complex and can have many local minima. We will try multiple random starts to find a better solution.
+2. Efficiency (fewer function evaluations is better):
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 1.93
+   >> Winner: Symmetrized Broyden. Was significantly more efficient.
 
-Target function to approximate: g(x) = Cos(5x-1) * Exp(-x²)
+3. Robustness (fewer resets and successful convergence indicates stability):
+   >> Winner: Symmetrized Broyden. Was more stable (0 vs 1 resets).
 
-Attempting 10 random starts to find a good minimum...
-  Try 1/10: Found a minimum with f(x_min) = 0.00812139765759851
-    >> This is the new best result!
-  Try 2/10: Found a minimum with f(x_min) = 9.91361078586332E-07
-    >> This is the new best result!
-  Try 3/10: Found a minimum with f(x_min) = 4.16588962626454
-  Try 4/10: Found a minimum with f(x_min) = 1.11655888847649E-05
-  Try 5/10: Found a minimum with f(x_min) = 5.77293225851141
-  Try 6/10: Found a minimum with f(x_min) = 5.43030887895433
-  Try 7/10: Found a minimum with f(x_min) = 1.52734543000482E-05
-  Try 8/10: Found a minimum with f(x_min) = 4.65191396171437
-  Try 9/10: Found a minimum with f(x_min) = 0.188441040420539
-  Try 10/10: Found a minimum with f(x_min) = 5.75273589761563
+Overall Verdict:
+With equal solution quality, Symmetrized Broyden's update wins by being more robust.
 
---- Best result found after all attempts ---
-Found minimum (x_min):                    [3.01539 -6.11976 2.24384 -1.12366 -0.500818 -1.521 -1.42581 1.53725 -3.43656 -0.136479 -0.450445 -1.5624 0.462078 0.458453 -1.55502]
-Value at minimum, f(x_min):               9.91361078586332E-07
-Gradient norm at x_min:                   1.64657599199647E-06
-Number of iterations:                     355
+>> Generated higgs_data.txt and higgs_fit_curve.txt for plotting with the best parameters found.
 
->> Generated ann_approximation.txt for plotting with the best parameters found.
+------------ Artificial Neural Network Training ------------
 
-Done.
+Attempting 10 random starts for each method to find a good minimum...
+
+--- Running for: Broyden's update ---
+  >> Best found minimum value f(x_min) for this method: 1.94437805846104E-06
+
+--- Running for: Symmetrized Broyden's update ---
+  >> Best found minimum value f(x_min) for this method: 3.88852863910629E-07
+
+
+--- Best overall results found after all attempts ---
+--- Results for Broyden's update ---
+Value at best minimum, f(x_min):          1.94437805846104E-06
+Average evaluations over 10 runs:   357800.20
+Success Rate:                             1/10 runs converged
+
+--- Results for Symmetrized Broyden's update ---
+Value at best minimum, f(x_min):          3.88852863910629E-07
+Average evaluations over 10 runs:   125929.40
+Success Rate:                             8/10 runs converged
+
+--- Broyden vs Symmetrized Broyden (for ANN) ---
+
+Robustness (higher success rate is better):
+  Broyden Success Rate:           1/10
+  Symmetrized Success Rate:       8/10
+
+Quality of best minimum (lower is better):
+  Broyden:           1.94437805846104E-06
+  Symmetrized:       3.88852863910629E-07
+
+Average efficiency over 10 runs (lower is better):
+  Avg. Evals Broyden:           357800.20
+  Avg. Evals Symmetrized:       125929.40
+
+Overall Verdict for ANN Training:
+The WINNER is Symmetrized Broyden's update due to its significantly higher success rate, making it more reliable.
+
+>> Generated ann_approximation.txt for plotting with the best overall parameters found.
+
+#############################################################################
+### Is the implementation of the symmetrized Broyden's update better?     ###
+#############################################################################
+
+--- Final Scorecard across 7 tests ---
+
+Symmetrized Broyden's update wins: 4
+Broyden's update wins:             1
+Ties:                              2
+
+--- Final Conclusion ---
+
+YES, the Symmetrized Broyden's update is better for most problems, although the standard Broyden's update was better in some cases.
+
+All tasks completed.

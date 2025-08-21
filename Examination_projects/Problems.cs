@@ -35,7 +35,7 @@ public static class Problems {
         }
         return sum;
     }
-    // Rosenbrock's valley function nD
+    // Rosenbrock's valley function in nD
     public static double Rosenbrock_nD(vector v) {
         double sum = 0;
         for (int i = 0; i < v.Size - 1; i++) {

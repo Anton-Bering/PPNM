@@ -44,4 +44,4 @@ run: $(EXE)
 
 # 'clean' sletter nu også alle genererede data- og plot-filer.
 clean:
-	rm -f $(EXE) $(OUT) $(DATA) $(PLOTS)
+	rm -f $(EXE) $(OUT) $(DATA) $(PLOTS) *svg
