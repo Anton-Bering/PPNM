@@ -1,0 +1,152 @@
+------------ TASK A: Jacobi diagonalization with cyclic sweeps ------------
+
+------ Prove that the implementation works as intended ------
+
+--- Generate a random symmetric matrix A (5x5) ---
+
+Matrix A:
+     -0.15615      0.90842     -0.29033     -0.22558     -0.26260
+      0.90842     -0.61937      0.10178     -0.41346     -0.97686
+     -0.29033      0.10178     -0.69308      0.40394     -0.14138
+     -0.22558     -0.41346      0.40394      0.27013     -0.14520
+     -0.26260     -0.97686     -0.14138     -0.14520      0.54429
+
+
+--- Apply your routine to perform the eigenvalue-decomposition, A=VDVᵀ ---
+--- (where V is the orthogonal matrix of eigenvectors                  ---
+--- and D is the diagonal matrix with the corresponding eigenvalues)   ---
+
+The orthogonal matrix V of eigenvectors:
+
+Matrix V:
+      0.44775      0.07002     -0.72637     -0.25444     -0.44975
+     -0.78089      0.27552     -0.09556     -0.05372     -0.54980
+      0.25990      0.89744      0.11095      0.33755      0.02831
+     -0.19317     -0.17703     -0.53401      0.77794      0.20246
+     -0.29131      0.28714     -0.40717     -0.46178      0.67354
+
+
+The diagonal matrix D with the corresponding eigenvalues:
+
+Matrix D:
+     -1.64082      0.00000      0.00000      0.00000      0.00000
+      0.00000     -0.80940      0.00000      0.00000      0.00000
+      0.00000      0.00000     -0.30534      0.00000      0.00000
+      0.00000      0.00000      0.00000      0.63392      0.00000
+      0.00000      0.00000      0.00000      0.00000      1.46745
+
+
+The vector w of the eigenvalues:
+
+Vector w:
+     -1.64082
+     -0.80940
+     -0.30534
+      0.63392
+      1.46745
+
+
+The matrix Vᵀ (which is the transpose of V)
+
+Matrix Vᵀ:
+      0.44775     -0.78089      0.25990     -0.19317     -0.29131
+      0.07002      0.27552      0.89744     -0.17703      0.28714
+     -0.72637     -0.09556      0.11095     -0.53401     -0.40717
+     -0.25444     -0.05372      0.33755      0.77794     -0.46178
+     -0.44975     -0.54980      0.02831      0.20246      0.67354
+
+
+--- Check that VᵀAV≈D ---
+
+Matrix VᵀAV:
+     -1.64082      0.00000      0.00000      0.00000      0.00000
+      0.00000     -0.80940      0.00000      0.00000      0.00000
+      0.00000      0.00000     -0.30534      0.00000      0.00000
+      0.00000      0.00000      0.00000      0.63392      0.00000
+      0.00000      0.00000      0.00000      0.00000      1.46745
+
+VᵀAV ≈ D (tol=1E-06).
+
+--- Check that VDVᵀ≈A ---
+
+Matrix VDVᵀ:
+     -0.15615      0.90842     -0.29033     -0.22558     -0.26260
+      0.90842     -0.61937      0.10178     -0.41346     -0.97686
+     -0.29033      0.10178     -0.69308      0.40394     -0.14138
+     -0.22558     -0.41346      0.40394      0.27013     -0.14520
+     -0.26260     -0.97686     -0.14138     -0.14520      0.54429
+
+VDVᵀ ≈ A (tol=1E-06).
+
+--- Check that VᵀV≈I ---
+
+Matrix VᵀV:
+      1.00000      0.00000      0.00000      0.00000      0.00000
+      0.00000      1.00000      0.00000      0.00000      0.00000
+      0.00000      0.00000      1.00000      0.00000      0.00000
+      0.00000      0.00000      0.00000      1.00000      0.00000
+      0.00000      0.00000      0.00000      0.00000      1.00000
+
+VᵀV ≈ I (tol=1E-06).
+
+--- Check that VVᵀ≈I ---
+
+Matrix VVᵀ:
+      1.00000      0.00000      0.00000      0.00000      0.00000
+      0.00000      1.00000      0.00000      0.00000      0.00000
+      0.00000      0.00000      1.00000      0.00000      0.00000
+      0.00000      0.00000      0.00000      1.00000      0.00000
+      0.00000      0.00000      0.00000      0.00000      1.00000
+
+VVᵀ ≈ I (tol=1E-06).
+
+------------ TASK B: Hydrogen atom, s-wave radial Schrödinger equation on a grid -----------
+
+------ Calculate numerically the lowest egenvalues and eigenfunctions ------
+------ of the s-wave states in the hydrogen atom                      ------
+------ and compare them with the exact results                        ------
+
+Numerically calculated lowest eigenvalues:
+ε_0 = -0.489228
+ε_1 = -0.111120
+ε_2 = 0.096284
+ε_3 = 0.411759
+ε_4 = 0.829649
+
+numerically_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the numerically calculated eigenfunctions with n = 1, 2, 3, respectively.
+eigenfunctions.svg is a plot of the numerically calculated eigenfunctions.
+
+analytic_eigenfunctions_ni.txt (for i = 1, 2, 3) contains the data for the (exact) analytically computed eigenfunctions with n = 1, 2, 3, respectively.
+eigenfunctions.svg also contains the exact results for comparison.
+
+------ Fix r_max and calculate ε₀ for several different values of Δr ------
+------ and plot the resulting curve                                  ------
+
+r_max is fixed to 10.
+varying_dr.txt contains the data for the calculated ε₀.
+varying_dr.svg is a plot of the resulting curve.
+
+------ Fix Δr and calculate ε₀ for several different values of r_max ------
+------ and plot the resulting curve                                  ------
+
+
+Δr is fixed to 0.3.
+varying_rmax.txt contains the data for the calculated ε₀.
+varying_rmax.svg is a plot of the resulting curve.
+
+------------ TASK C: Scaling and optimization ------------
+
+------ Check that the number of operations for matrix diagonalization scales as O(n³) ------
+------ do the measurements in parallel                                                ------
+
+The file 'number_of_operations.txt' contains timing data for Jacobi diagonalization of random matrices of size N.
+The plot 'number_of_operations.svg' shows the data along with a fitted curve f(N) = a * N³.
+
+
+------------ POINTS: received from tasks A, B, and C ------------
+
+Task A completed → 6 points😊
+Task B completed → 3 points😄
+Task C completed → 1 point 😎
+
+In total, this exercise results in 10 points 🎉🎉🎉

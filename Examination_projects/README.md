@@ -37,7 +37,7 @@ that takes the function `f` and runs the quasi-Newton algorithm from the startin
 
     **Part 2:** For a more complex problem, I followed a procedure similar to that in homework problem 9 to find the mass of the Higgs boson. But unlike in Homework 9, where Newton’s method with numerical Hessian was used, here I apply my Quasi-Newton implementation with Broyden’s update (and the symmetrized update).
 
-    The found minima (for both the standard Broyden's update and the symmetrized Broyden's update) at approximately `[125.97, 2.086, 9.88]` correspond to the Higgs mass, the width of the resonance, and the scale-factor, respectively. Furthermore, the uncertainties on these parameters were estimated from the inverse Hessian approximation. The resulting mass of the Higgs boson was determined to be 125.972 ± 0.213 GeV/c².
+    The found minima (for both the standard Broyden's update and the symmetrized Broyden's update) at approximately `[125.97, 2.086, 9.88]` correspond to the Higgs mass, the width of the resonance, and the scale-factor, respectively. Furthermore, the uncertainties on these parameters were estimated from the inverse Hessian approximation. The resulting mass of the Higgs boson was determined to be 125.972 ± 0.213 GeV/c² (when I make the run).
 
     The generated file `Higgs_fit.svg` (using the symmetrized Broyden's update) shows a plot of the signal [certain units] as a function of Energy [GeV], with the experimental data (CERN 2012) along with the fit. The peak in the fit at approximately 126.0 GeV corresponds to the Higgs mass (in units of GeV/c²).
 
@@ -45,7 +45,7 @@ that takes the function `f` and runs the quasi-Newton algorithm from the startin
 
     The generated plot `ANN_fit.svg` shows a plot of g(x) as a function of x, for the ANN approximation of the function along with the analytical solution. As seen from the plot, the ANN approximation aligns well with the analytical solution.
 
-    The functions for all three of these more complicated problems are defined in the file `problems.cs`.
+    The functions for all three of these more complicated problems are defined in the file `Problems.cs`.
 
 4.  The implementation of the symmetrized Broyden's update is made alongside the standard Broyden's update in the file `QuasiNewton.cs`. 
 

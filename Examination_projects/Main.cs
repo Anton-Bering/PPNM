@@ -358,6 +358,7 @@ class Program {
             double avg_feval = (double)total_fevals[i] / numberOfTries;
             Console.WriteLine($"--- Results for {methods[i].Name} ---");
             Console.WriteLine($"Value at best minimum, f(x_min):          {r.f_min}");
+            Console.WriteLine($"Average iterations over {numberOfTries} runs:    {avg_iter:F2}");
             Console.WriteLine($"Average evaluations over {numberOfTries} runs:   {avg_feval:F2}");
             Console.WriteLine($"Success Rate:                             {success_counts[i]}/{numberOfTries} runs converged\n");
         }

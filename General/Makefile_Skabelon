@@ -1,5 +1,0 @@
-### Navn på mappe = __DIRNAME__ ###
-
-alle_cs_filer  = __CS_FILES__
-alle_txt_filer = __TXT_FILES__
-alle_svg_filer = __SVG_FILES__

@@ -1,3 +1,4 @@
+// Detter er bare en fil, jeg bruge til at give mig selv points, for de forsklihe HW-opgaver, så jeg har et overblik over det.
 using System;
 
 class HW_points

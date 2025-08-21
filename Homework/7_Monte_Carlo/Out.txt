@@ -70,9 +70,9 @@ QMC achieves lower error and faster convergence compared to MC, especially for s
 --- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
 Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
        N      MC est.err   MC actual err     QMC est.err  QMC actual err
-    1000   6.876479E-003   9.736103E-003   2.105490E-004   1.783078E-003
-   10000   2.205779E-003   7.039356E-004   2.932159E-005   2.253326E-004
-  100000   6.968927E-004   3.876645E-004   2.449113E-006   2.617998E-005
+    1000   6.960629E-003   7.164929E-004   2.105490E-004   1.783078E-003
+   10000   2.182845E-003   2.738376E-003   2.932159E-005   2.253326E-004
+  100000   6.964008E-004   7.323010E-004   2.449113E-006   2.617998E-005
 
 Results saved to: QuasiVsPseudoResults.txt
 (MC uses internal variance; QMC uses difference of two sequences.)
@@ -88,7 +88,7 @@ StratifiedSamplingError.svg shows the actual error as a function of N in log-log
 
 --- Part C: Recursive Stratified Sampling ---
 Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
-Plain MC:      result = 0.938018,  error estimate = 0.123563,  actual error = 0.061936
-Stratified MC: result = 0.837997,  error estimate = 0.064775,  actual error = 0.161957
+Plain MC:      result = 1.107261,  error estimate = 0.183571,  actual error = 0.107306
+Stratified MC: result = 1.002862,  error estimate = 0.022835,  actual error = 0.002907
 
 Results saved to: StratifiedSamplingResults.txt

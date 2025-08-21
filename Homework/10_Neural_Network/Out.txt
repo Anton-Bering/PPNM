@@ -1,0 +1,85 @@
+------------ TASK A: Function Approximation ------------
+
+------ Train the network to approximate some function ------
+------ And sampled at several points on [-1,1] ------
+
+--- Function to approximate: g(x)=Cos(5*x-1)*Exp(-x*x) ---
+
+Initial cost = 33.543023, Final cost = 0.000009
+
+Netwerk (g_n) vs exact value (g_e):
+  x:         g_n(x):        g_e(x):      error:
+ -1.00       0.354368       0.353227     0.001141
+ -0.50      -0.729268      -0.729313     0.000045
+  0.00       0.540500       0.540302     0.000198
+  0.50       0.054801       0.055090    -0.000290
+  1.00      -0.241332      -0.240462    -0.000870
+
+Data saved as function_g.txt
+Plot saved as function_g.svg
+
+------------ TASK B: Derivatives and Anti-derivative ------------
+
+------ Train the network to give first and second derivatives ------
+------ And also the anti-derivative ------
+
+Netwerk (g_n') vs exact value (g_e'):
+  x:         g_n'(x):       g_e'(x):     error:
+ -1.00       0.133591       0.192498  -0.058907
+ -0.50      -2.089181      -2.095264   0.006084
+  0.00       4.203765       4.207355  -0.003590
+  0.50      -3.938262      -3.939340   0.001078
+  1.00       1.816985       1.872984  -0.056000
+
+Netwerk (g_n'') vs exact value (g_e''):
+  x:         g_n''(x):      g_e''(x):     error:
+ -1.00      -9.009478     -10.180043   1.170565
+ -0.50      16.206742      16.230241  -0.023499
+  0.00     -14.645732     -14.588162  -0.057570
+  0.50       6.435002       6.336154   0.098848
+  1.00      -1.421448      -0.037614  -1.383834
+
+Netwerk (∫dx g_n) vs exact value (∫dx g_e ≈ numerically integrated):
+  x:         ∫dx g_n(x):        ∫dx g_e(x):      error:
+ -1.00           0.000000           0.000000   0.000000
+ -0.50          -0.028946          -0.028912  -0.000034
+  0.00          -0.234209          -0.234206  -0.000002
+  0.50           0.111579           0.111596  -0.000017
+  1.00          -0.074519          -0.074514  -0.000005
+
+Data saved as derivatives_and_anti_derivative_g.txt
+Plot saved as first_derivatives_g.svg
+Plot saved as second_derivatives_g.svg
+Plot saved as anti_derivative.svg
+
+------------ TASK C: Differential Equation Solution Approximation ------------
+
+------ Solving y'' + y = 0 ------
+
+Initial cost = 96.902079, Final cost = 0.000026
+Boundary check: Φ_n(0) = 0.000000 (target 0.00), Φ_n'(0) = 1.000000 (target 1.00)
+Sample solution values vs sin(x):
+    x        Φ_n(x)    Φ_e=sin(x)   error
+  0.00       0.000000         0.000000    0.000000
+  0.52       0.500050         0.500000    0.000050
+  0.79       0.707143         0.707107    0.000036
+  1.57       1.000085         1.000000    0.000085
+  3.14       0.000039         0.000000    0.000039
+
+Data saved as differential_equation_phi1.txt
+Data saved as differential_equation_residual_phi1.txt
+
+------ Solving y'' + sin(x)y' + cos(x)y = x ------
+
+Initial cost = 80.317902, Final cost = 0.001569
+Boundary check: Φ_n(0) = 0.002109 (target 0.00), Φ_n'(0) = 0.999213 (target 1.00)
+Sample solution values:
+    x        Φ_n(x)
+  0.00       0.002109
+  0.52       0.503798
+  0.79       0.723374
+  1.57       1.336552
+  3.14       5.261845
+
+Data saved as differential_equation_phi2.txt
+Data saved as differential_equation_residual_phi2.txt
