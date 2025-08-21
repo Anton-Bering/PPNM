@@ -274,43 +274,50 @@ Number of evaluations:                    288  (lower is better)
 Overall Verdict:
 With equal solution quality, Symmetrized Broyden's update wins by being more robust.
 
->> Generated higgs_data.txt and higgs_fit_curve.txt for plotting with the best parameters found.
+>> Generated higgs_data.txt and higgs_fit_curve.txt for plotting.
+
+--- Final Fit Parameters with Estimated Uncertainties ---
+(Uncertainties are estimated from the final inverse Hessian approximation)
+
+Higgs Mass:      125.972 ± 0.213 GeV
+Resonance Width: 2.086 ± 1.119
+Scale Factor:    9.88 ± 5.24
 
 ------------ Artificial Neural Network Training ------------
 
 Attempting 10 random starts for each method to find a good minimum...
 
 --- Running for: Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 8.74374959817862E-06
+  >> Best found minimum value f(x_min) for this method: 0.000891697780799077
 
 --- Running for: Symmetrized Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 8.03776092481897E-06
+  >> Best found minimum value f(x_min) for this method: 2.61281720746669E-08
 
 
 --- Best overall results found after all attempts ---
 --- Results for Broyden's update ---
-Value at best minimum, f(x_min):          8.74374959817862E-06
-Average evaluations over 10 runs:   354947.90
-Success Rate:                             1/10 runs converged
+Value at best minimum, f(x_min):          0.000891697780799077
+Average evaluations over 10 runs:   398453.70
+Success Rate:                             0/10 runs converged
 
 --- Results for Symmetrized Broyden's update ---
-Value at best minimum, f(x_min):          8.03776092481897E-06
-Average evaluations over 10 runs:   188468.70
-Success Rate:                             6/10 runs converged
+Value at best minimum, f(x_min):          2.61281720746669E-08
+Average evaluations over 10 runs:   242010.30
+Success Rate:                             4/10 runs converged
 
 --- Broyden vs Symmetrized Broyden (for ANN) ---
 
 Robustness (higher success rate is better):
-  Broyden Success Rate:           1/10
-  Symmetrized Success Rate:       6/10
+  Broyden Success Rate:           0/10
+  Symmetrized Success Rate:       4/10
 
 Quality of best minimum (lower is better):
-  Broyden:           8.74374959817862E-06
-  Symmetrized:       8.03776092481897E-06
+  Broyden:           0.000891697780799077
+  Symmetrized:       2.61281720746669E-08
 
 Average efficiency over 10 runs (lower is better):
-  Avg. Evals Broyden:           354947.90
-  Avg. Evals Symmetrized:       188468.70
+  Avg. Evals Broyden:           398453.70
+  Avg. Evals Symmetrized:       242010.30
 
 Overall Verdict for ANN Training:
 The WINNER is Symmetrized Broyden's update due to its significantly higher success rate, making it more reliable.

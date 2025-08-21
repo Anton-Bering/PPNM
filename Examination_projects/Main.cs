@@ -3,7 +3,6 @@ using PPNM.Minimization;
 using System.IO;
 using System.Collections.Generic;
 
-
 class Program {
 
     // A static scoreboard to track wins across all tests.
@@ -32,7 +31,7 @@ class Program {
     }
     
     // Runs both minimization methods on a given problem and prints a detailed report and comparison.
-    static QuasiNewton.Result[] PrintBlock(
+    static QuasiNewton.MinimizationOutput[] PrintBlock(
         string title, 
         Func<vector,double> f, 
         vector start, 
@@ -45,7 +44,7 @@ class Program {
             new { Name = "Symmetrized Broyden's update", UseSym = true  }
         };
 
-        var results = new QuasiNewton.Result[methods.Length];
+        var results = new QuasiNewton.MinimizationOutput[methods.Length];
         for (int i = 0; i < methods.Length; i++)
             results[i] = QuasiNewton.MinimizeReport(f, start, acc, useSymmetrized: methods[i].UseSym);
 
@@ -58,7 +57,7 @@ class Program {
 
         for (int i = 0; i < methods.Length; i++)
         {
-            var r = results[i];
+            var r = results[i].Stats;
             Console.WriteLine($"--- Results for {methods[i].Name} ---");
             Console.WriteLine($"Found minimum (x_min):                    {r.x_min}");
             Console.WriteLine($"Value at minimum, f(x_min):               {r.f_min}"); 
@@ -76,12 +75,12 @@ class Program {
             }
         }
 
-        // --- Enhanced Comparison: Broyden vs Symmetrized Broyden ---
-        Console.WriteLine($"--- Comparison Summary: Broyden vs Symmetrized Broyden ---\n");
+        // --- Broyden vs Symmetrized Broyden ---
+        Console.WriteLine($"--- Broyden's update vs Symmetrized Broyden's update ---\n");
 
-        var rb = results[0]; // Results for regular Broyden
-        var rs = results[1]; // Results for symmetrized Broyden
-        string overallWinner = "Tie"; // Default winner is a tie.
+        var rb = results[0].Stats;
+        var rs = results[1].Stats;
+        string overallWinner = "Tie";
 
         // Criterion 0: Accuracy (highest priority, only if expected_x_min is provided)
         string accuracyWinner = "N/A"; 
@@ -182,7 +181,6 @@ class Program {
         }
         Console.WriteLine();
         
-        // Update the global scoreboard with the result of this test.
         TallyOverallWinner(overallWinner);
         
         return results;
@@ -199,7 +197,7 @@ class Program {
         Console.WriteLine("All tasks completed.");
     }
 
-    // Runs a suite of standard, well-defined minimization problems.
+    // ------------ Test your implementation on some functions with known minima ------------
     private static void RunStandardTests(double acc)
     {
         Console.WriteLine("###################################################################################");
@@ -208,11 +206,9 @@ class Program {
 
         int n_dim = 8;
         vector start_quadratic_nD = new vector(n_dim);
+        for(int i=0; i < n_dim; i++) start_quadratic_nD[i] = 1.0;
         vector expected_quadratic_nD = new vector(n_dim);
-        for(int i=0; i < n_dim; i++) {
-            start_quadratic_nD[i] = 1.0;
-            expected_quadratic_nD[i] = 0.0;
-        }
+
         vector start_rosenbrock_nD = new vector(n_dim);
         vector expected_rosenbrock_nD = new vector(n_dim);
         for(int i=0; i < n_dim; i++) {
@@ -220,7 +216,6 @@ class Program {
             expected_rosenbrock_nD[i] = 1.0;
         }
 
-        // A list of all standard problems to be tested, enabling a data-driven approach.
         var testProblems = new List<TestProblem>
         {
             new TestProblem { Title = "Quadratic function", Function = Problems.Quadratic, StartPoint = vector.Create(1.0, 1.0), ExpectedMinimum = vector.Create(0.0, 0.0) },
@@ -237,7 +232,7 @@ class Program {
         }
     }
 
-    // Runs the more complicated problems.
+    // ------------ Apply the implementation to more complicated problems ------------
     private static void RunComplexProblemTests(double acc)
     {
         Console.WriteLine("##################################################################################");
@@ -247,20 +242,21 @@ class Program {
         RunAnnTrainingTest(acc);
     }
 
-    // Performs minimization to fit the Breit-Wigner function to Higgs boson data.
+    // Higgs boson ...
     private static void RunHiggsFitTest(double acc)
     {
         vector higgs_start_params = vector.Create(125, 2, 10);
         
-        var higgs_results = PrintBlock("Higgs Boson Fit", Problems.HiggsDeviation, higgs_start_params, acc);
+        var higgs_outputs = PrintBlock("Higgs Boson Fit", Problems.HiggsDeviation, higgs_start_params, acc);
 
-        vector higgs_params_fit = (higgs_results[0].f_min < higgs_results[1].f_min) 
-                                    ? higgs_results[0].x_min 
-                                    : higgs_results[1].x_min;
+        int best_method_index = (higgs_outputs[1].Stats.f_min < higgs_outputs[0].Stats.f_min) ? 1 : 0;
+        var best_output = higgs_outputs[best_method_index];
+        
+        vector higgs_params_fit = best_output.Stats.x_min;
+        matrix final_B = best_output.InverseHessian;
 
         using (var writer = new StreamWriter("higgs_data.txt")) {
-            for(int i=0; i < Problems.energy.Length; i++)
-                writer.WriteLine($"{Problems.energy[i]} {Problems.signal[i]} {Problems.error[i]}");
+            for(int i=0; i < Problems.energy.Length; i++) writer.WriteLine($"{Problems.energy[i]} {Problems.signal[i]} {Problems.error[i]}");
         }
         using (var writer = new StreamWriter("higgs_fit_curve.txt")) {
             double m = higgs_params_fit[0], Gamma = higgs_params_fit[1], A = higgs_params_fit[2];
@@ -269,10 +265,26 @@ class Program {
                 writer.WriteLine($"{E} {F}");
             }
         }
-        Console.WriteLine(">> Generated higgs_data.txt and higgs_fit_curve.txt for plotting with the best parameters found.\n");
+        Console.WriteLine(">> Generated higgs_data.txt and higgs_fit_curve.txt for plotting.\n");
+
+        try
+        {
+            double mass_uncertainty = Math.Sqrt(Math.Abs(final_B[0,0]));
+            double width_uncertainty = Math.Sqrt(Math.Abs(final_B[1,1]));
+            double amp_uncertainty = Math.Sqrt(Math.Abs(final_B[2,2]));
+
+            Console.WriteLine("--- Final Fit Parameters with Estimated Uncertainties ---");
+            Console.WriteLine($"(Uncertainties are estimated from the final inverse Hessian approximation)\n");
+            Console.WriteLine($"Higgs Mass:      {higgs_params_fit[0]:F3} ± {mass_uncertainty:F3} GeV");
+            Console.WriteLine($"Resonance Width: {higgs_params_fit[1]:F3} ± {width_uncertainty:F3}");
+            Console.WriteLine($"Scale Factor:    {higgs_params_fit[2]:F2} ± {amp_uncertainty:F2}\n");
+        }
+        catch (Exception e) {
+            Console.WriteLine($"Could not calculate uncertainties: {e.Message}\n");
+        }
     }
 
-    // Trains an Artificial Neural Network using a multi-start strategy.
+    // AAN
     private static void RunAnnTrainingTest(double acc)
     {
         // 1. Setup
@@ -306,7 +318,7 @@ class Program {
         Console.WriteLine($"Attempting {numberOfTries} random starts for each method to find a good minimum...\n");
 
         var methods = new[] { new { Name = "Broyden's update", UseSym = false }, new { Name = "Symmetrized Broyden's update", UseSym = true } };
-        var best_results = new QuasiNewton.Result[methods.Length];
+        var best_results = new QuasiNewton.MinimizationOutput[methods.Length];
         var total_iterations = new long[methods.Length];
         var total_fevals = new long[methods.Length];
         var success_counts = new int[methods.Length]; 
@@ -315,22 +327,24 @@ class Program {
         {
             var method = methods[i];
             double best_f_min_for_method = double.PositiveInfinity;
-            QuasiNewton.Result best_result_for_method = new QuasiNewton.Result();
+            QuasiNewton.MinimizationOutput best_output_for_method = new QuasiNewton.MinimizationOutput();
             int successful_runs = 0; 
 
             Console.WriteLine($"--- Running for: {method.Name} ---");
             foreach(var start_point in start_points)
             {
                 var current_result = QuasiNewton.MinimizeReport(costFunction, start_point, acc, useSymmetrized: method.UseSym, maxIterations: maxIterations);
-                total_iterations[i] += current_result.iterations;
-                total_fevals[i] += current_result.fevals;
-                if(current_result.iterations < maxIterations) successful_runs++;
-                if (current_result.f_min < best_f_min_for_method) {
-                    best_f_min_for_method = current_result.f_min;
-                    best_result_for_method = current_result;
+                total_iterations[i] += current_result.Stats.iterations;
+                total_fevals[i] += current_result.Stats.fevals;
+                
+                if(current_result.Stats.iterations < maxIterations) successful_runs++;
+                
+                if (current_result.Stats.f_min < best_f_min_for_method) {
+                    best_f_min_for_method = current_result.Stats.f_min;
+                    best_output_for_method = current_result;
                 }
             }
-            best_results[i] = best_result_for_method;
+            best_results[i] = best_output_for_method;
             success_counts[i] = successful_runs;
             Console.WriteLine($"  >> Best found minimum value f(x_min) for this method: {best_f_min_for_method}\n");
         }
@@ -339,7 +353,7 @@ class Program {
         Console.WriteLine("\n--- Best overall results found after all attempts ---");
         for (int i = 0; i < methods.Length; i++)
         {
-            var r = best_results[i];
+            var r = best_results[i].Stats; // Extract stats from the best run's output
             double avg_iter = (double)total_iterations[i] / numberOfTries;
             double avg_feval = (double)total_fevals[i] / numberOfTries;
             Console.WriteLine($"--- Results for {methods[i].Name} ---");
@@ -352,11 +366,13 @@ class Program {
         Console.WriteLine($"Robustness (higher success rate is better):");
         Console.WriteLine($"  Broyden Success Rate:           {success_counts[0]}/{numberOfTries}");
         Console.WriteLine($"  Symmetrized Success Rate:       {success_counts[1]}/{numberOfTries}\n");
-        double f_min_broyden = best_results[0].f_min;
-        double f_min_sym = best_results[1].f_min;
+        
+        double f_min_broyden = best_results[0].Stats.f_min;
+        double f_min_sym = best_results[1].Stats.f_min;
         Console.WriteLine($"Quality of best minimum (lower is better):");
         Console.WriteLine($"  Broyden:           {f_min_broyden}");
         Console.WriteLine($"  Symmetrized:       {f_min_sym}\n");
+        
         Console.WriteLine($"Average efficiency over {numberOfTries} runs (lower is better):");
         double avg_eval_broyden = (double)total_fevals[0] / numberOfTries;
         double avg_eval_sym = (double)total_fevals[1] / numberOfTries;
@@ -396,7 +412,7 @@ class Program {
         TallyOverallWinner(annWinner);
 
         // 4. Plotting
-        vector ann_params_fit = (best_results[0].f_min < best_results[1].f_min) ? best_results[0].x_min : best_results[1].x_min;
+        vector ann_params_fit = (best_results[0].Stats.f_min < best_results[1].Stats.f_min) ? best_results[0].Stats.x_min : best_results[1].Stats.x_min;
         var trained_ann = new Problems.Ann(ann_params_fit);
         using (var writer = new StreamWriter("ann_approximation.txt")) {
             for (double x = -1.0; x <= 1.0; x += 0.02) {
@@ -425,32 +441,19 @@ class Program {
 
         Console.WriteLine("--- Final Conclusion ---\n");
 
-        if (symBroydenWins == totalTests)
-        {
+        if (symBroydenWins == totalTests) {
             Console.WriteLine("YES, the Symmetrized Broyden's update is better for all problems tested!");
-        }
-        else if (symBroydenWins > 0 && broydenWins == 0)
-        {
+        } else if (symBroydenWins > 0 && broydenWins == 0) {
             Console.WriteLine("YES, the Symmetrized Broyden's update is better. It performed better on some problems and was equally good on all others.");
-        }
-        else if (symBroydenWins > broydenWins)
-        {
+        } else if (symBroydenWins > broydenWins) {
             Console.WriteLine("YES, the Symmetrized Broyden's update is better for most problems, although the standard Broyden's update was better in some cases.");
-        }
-        else if (broydenWins == totalTests)
-        {
+        } else if (broydenWins == totalTests) {
             Console.WriteLine("NO, surprisingly, the standard Broyden's update is better for all problems tested!");
-        }
-        else if (broydenWins > symBroydenWins)
-        {
+        } else if (broydenWins > symBroydenWins) {
             Console.WriteLine("NO, surprisingly, the standard Broyden's update is better for most problems, although the Symmetrized Broyden's update was better in some cases.");
-        }
-        else if (ties == totalTests)
-        {
+        } else if (ties == totalTests) {
             Console.WriteLine("NO, both methods are equally good for all problems tested.");
-        }
-        else
-        {
+        } else {
             Console.WriteLine("NO, neither method is definitively better. Overall, both methods are equally good, as they each won the same number of tests.");
         }
         Console.WriteLine();

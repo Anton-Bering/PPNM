@@ -38,7 +38,6 @@ public static class QuasiNewton {
             Δx     = -g;
             gT__Δx = -vector.Dot(g, g);
         }
-
         double λ = 1.0;
         while (λ >= λ_minimal && f(x + λ*Δx) > fx + α*λ*gT__Δx)
             λ *= 0.5;
@@ -56,11 +55,18 @@ public static class QuasiNewton {
         public int fevals;       
     }
 
-    public static vector broyden(Func<vector,double> f, vector x, double acc) => MinimizeReport(f,x,acc,useSymmetrized:false).x_min;
-    public static vector broyden_sym(Func<vector,double> f, vector x, double acc) => MinimizeReport(f,x,acc,useSymmetrized:true).x_min;
+    // This allows me calculate uncertainties
+    public struct MinimizationOutput
+    {
+        public Result Stats;
+        public matrix InverseHessian;
+    }
+
+    public static vector broyden(Func<vector,double> f, vector x, double acc) => MinimizeReport(f,x,acc,useSymmetrized:false).Stats.x_min;
+    public static vector broyden_sym(Func<vector,double> f, vector x, double acc) => MinimizeReport(f,x,acc,useSymmetrized:true).Stats.x_min;
 
     // ------------ Main driver (one minimization run) -------------------------
-    public static Result MinimizeReport(
+    public static MinimizationOutput MinimizeReport(
         Func<vector,double> f, 
         vector x0, 
         double acc, 
@@ -71,19 +77,16 @@ public static class QuasiNewton {
     {
         int fe = 0;
         Func<vector,double> fcount = z => { fe++; return f(z); };
-
-        // initial state
+        
         int n = x0.Size;
         vector x = x0.Copy();
         double fx = fcount(x);
         vector g  = Grad(fcount, x);
-
         matrix B = matrix.Eye(n);
-
-        int    iter   = 0;
-        int    resets = 0;
+        int iter = 0;
+        int resets = 0;
         double last_λ = 0;
-
+        
         for(; iter<maxIterations; iter++){
             if (g.NormInf() <= acc*(1.0 + Math.Abs(fx))) break;
 
@@ -91,11 +94,11 @@ public static class QuasiNewton {
             double λ = LineSearchArmijo(fcount, x, fx, g, ref Δx, α, λ_minimal);
             last_λ = λ;
 
-            vector s      = λ*Δx;
-            vector x_new  = x + s;
+            vector s = λ*Δx;
+            vector x_new = x + s;
             double fx_new = fcount(x_new);
-            vector g_new  = Grad(fcount, x_new);
-            vector y      = g_new - g;
+            vector g_new = Grad(fcount, x_new);
+            vector y = g_new - g;
 
             if (λ < λ_minimal){
                 x = x_new; fx = fx_new; g = g_new;
@@ -125,14 +128,18 @@ public static class QuasiNewton {
             x = x_new; fx = fx_new; g = g_new;
         }
 
-        return new Result{
-            x_min     = x,
-            f_min     = fx,
-            gradNorm  = g.Norm(),   
-            last_step = last_λ,
-            iterations= iter,
-            resets    = resets,
-            fevals    = fe
+        // liavet lidt om for at kunne inkluder usikkerheder
+        return new MinimizationOutput {
+            Stats = new Result {
+                x_min     = x,
+                f_min     = fx,
+                gradNorm  = g.Norm(),   
+                last_step = last_λ,
+                iterations= iter,
+                resets    = resets,
+                fevals    = fe
+            },
+            InverseHessian = B
         };
     }
 }
@@ -148,7 +155,6 @@ public static class BroydenUpdates
         double ε=1e-12)
     {
         double sy = vector.Dot(s,y);
-
         double tol = ε * (s.Norm() * y.Norm() + 1.0);
         if (Math.Abs(sy) <= tol) return;        
         
@@ -167,6 +173,4 @@ public static class BroydenUpdates
     }
 }
 
-
 }
-
