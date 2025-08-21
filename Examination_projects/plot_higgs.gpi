@@ -1,0 +1,9 @@
+set terminal svg size 1200,600 enhanced background rgb "white"
+set output 'Higgs_fit.svg'
+set xlabel "Energy [GeV]"
+set ylabel "Signal [certain units]"
+set title "Higgs Boson Data with Breit-Wigner Fit"
+set key top right
+plot \
+'higgs_data.txt' with yerrorbars title 'Data', \
+'higgs_fit_curve.txt' with lines lw 2 title 'Fit'

@@ -1,105 +1,234 @@
------------- Function: Quadratic (acc=1e-06) ------------
+------------ Test the implementation on some functions with known minima ------------
 
-Start point(s): [1 1]
+------------ Quadratic function ------------
+
+Expected minimum: [0 0]
+Accuracy goal (acc): 1E-06
+Start point (x_start): [1 1]
 
 --- Results for Broyden update ---
-Estimated minimizer (x*):   [0 0]
-Objective at x*:            0
-Gradient norm at x*:        0
-Outer iterations:           1
-B resets:                   0
-Last accepted step (λ):     0.5
-Function evaluations:       12
+Found minimum (x_min):                    [0 0]
+Value at minimum, f(x_min):               0
+Gradient norm at x_min:                   0  (should be < acc)
+Number of iterations:                     1  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    0.5  (ideally ≈ 1)
+Number of evaluations:                    12  (lower is better)
+
+Does the found minimum agree with expectation? YES.
 
 --- Results for Symmetrized Broyden update ---
-Estimated minimizer (x*):   [0 0]
-Objective at x*:            0
-Gradient norm at x*:        0
-Outer iterations:           1
-B resets:                   0
-Last accepted step (λ):     0.5
-Function evaluations:       12
+Found minimum (x_min):                    [0 0]
+Value at minimum, f(x_min):               0
+Gradient norm at x_min:                   0  (should be < acc)
+Number of iterations:                     1  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    0.5  (ideally ≈ 1)
+Number of evaluations:                    12  (lower is better)
 
---- Broyden vs Sym-Broyden ---
+Does the found minimum agree with expectation? YES.
+
+--- Broyden's update vs Symmetrized Broyden's update ---
 speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
 Iterations speedup: 1
-function evaluations speedup: 1
------------- Function: Rosenbrock (acc=1e-06) ------------
+Evaluations speedup: 1
 
-Start point(s): [-1.2 1]
+------------ Rosenbrock's valley function ------------
+
+Expected minimum: [1 1]
+Accuracy goal (acc): 1E-06
+Start point (x_start): [-1.2 1]
 
 --- Results for Broyden update ---
-Estimated minimizer (x*):   [1 1]
-Objective at x*:            1.17136817701495E-20
-Gradient norm at x*:        4.78603647126985E-09
-Outer iterations:           395
-B resets:                   4
-Last accepted step (λ):     1
-Function evaluations:       5200
+Found minimum (x_min):                    [1 1]
+Value at minimum, f(x_min):               1.17136817701495E-20
+Gradient norm at x_min:                   4.78603647126985E-09  (should be < acc)
+Number of iterations:                     395  (lower is better)
+Number of resets:                         4  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    5200  (lower is better)
+
+Does the found minimum agree with expectation? YES.
 
 --- Results for Symmetrized Broyden update ---
-Estimated minimizer (x*):   [1 1]
-Objective at x*:            3.1820528225396E-18
-Gradient norm at x*:        4.69155913709529E-08
-Outer iterations:           34
-B resets:                   1
-Last accepted step (λ):     1
-Function evaluations:       228
+Found minimum (x_min):                    [1 1]
+Value at minimum, f(x_min):               3.1820528225396E-18
+Gradient norm at x_min:                   4.69155913709529E-08  (should be < acc)
+Number of iterations:                     34  (lower is better)
+Number of resets:                         1  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    228  (lower is better)
 
---- Broyden vs Sym-Broyden ---
+Does the found minimum agree with expectation? YES.
+
+--- Broyden's update vs Symmetrized Broyden's update ---
 speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
 Iterations speedup: 11.6176470588235
-function evaluations speedup: 22.8070175438597
------------- Function: Himmelblau (acc=1e-06) ------------
+Evaluations speedup: 22.8070175438597
 
-Start point(s): [0 0]
+------------ Himmelblau's function ------------
+
+Expected minimum: [3 2]
+Accuracy goal (acc): 1E-06
+Start point (x_start): [0 0]
 
 --- Results for Broyden update ---
-Estimated minimizer (x*):   [3 2]
-Objective at x*:            2.80479745626465E-17
-Gradient norm at x*:        5.91544552261804E-08
-Outer iterations:           15
-B resets:                   0
-Last accepted step (λ):     1
-Function evaluations:       143
+Found minimum (x_min):                    [3 2]
+Value at minimum, f(x_min):               2.80479745626465E-17
+Gradient norm at x_min:                   5.91544552261804E-08  (should be < acc)
+Number of iterations:                     15  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    143  (lower is better)
+
+Does the found minimum agree with expectation? YES.
 
 --- Results for Symmetrized Broyden update ---
-Estimated minimizer (x*):   [3 2]
-Objective at x*:            1.42834105056552E-19
-Gradient norm at x*:        3.79244985896579E-09
-Outer iterations:           10
-B resets:                   0
-Last accepted step (λ):     1
-Function evaluations:       76
+Found minimum (x_min):                    [3 2]
+Value at minimum, f(x_min):               1.42834105056552E-19
+Gradient norm at x_min:                   3.79244985896579E-09  (should be < acc)
+Number of iterations:                     10  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    76  (lower is better)
 
---- Broyden vs Sym-Broyden ---
+Does the found minimum agree with expectation? YES.
+
+--- Broyden's update vs Symmetrized Broyden's update ---
 speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
 Iterations speedup: 1.5
-function evaluations speedup: 1.88157894736842
------------- Function: RotatedQuadratic6D (acc=1e-06) ------------
+Evaluations speedup: 1.88157894736842
 
-Start point(s): [1 -1 2 -2 1.5 0.5]
+------------ Test the implementation in higher dimensions 8 ------------
+
+------------ Quadratic function in 8D ------------
+
+Expected minimum: [0 0 0 0 0 0 0 0]
+Accuracy goal (acc): 1E-06
+Start point (x_start): [1 1 1 1 1 1 1 1]
 
 --- Results for Broyden update ---
-Estimated minimizer (x*):   [-1.86775E-12 0.5 1 1.5 2 2.5]
-Objective at x*:            9.38554895344442E-24
-Gradient norm at x*:        8.54882313258248E-12
-Outer iterations:           23
-B resets:                   0
-Last accepted step (λ):     1
-Function evaluations:       363
+Found minimum (x_min):                    [7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09]
+Value at minimum, f(x_min):               4.44089209850063E-16
+Gradient norm at x_min:                   4.2146848510894E-08  (should be < acc)
+Number of iterations:                     1  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    0.5  (ideally ≈ 1)
+Number of evaluations:                    36  (lower is better)
+
+Does the found minimum agree with expectation? YES.
 
 --- Results for Symmetrized Broyden update ---
-Estimated minimizer (x*):   [-6.76436E-08 0.5 1 1.5 2 2.5]
-Objective at x*:            4.39972017767178E-14
-Gradient norm at x*:        9.37408968303684E-07
-Outer iterations:           13
-B resets:                   0
-Last accepted step (λ):     1
-Function evaluations:       208
+Found minimum (x_min):                    [7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09 7.45058E-09]
+Value at minimum, f(x_min):               4.44089209850063E-16
+Gradient norm at x_min:                   4.2146848510894E-08  (should be < acc)
+Number of iterations:                     1  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    0.5  (ideally ≈ 1)
+Number of evaluations:                    36  (lower is better)
 
---- Broyden vs Sym-Broyden ---
+Does the found minimum agree with expectation? YES.
+
+--- Broyden's update vs Symmetrized Broyden's update ---
 speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
-Iterations speedup: 1.76923076923077
-function evaluations speedup: 1.74519230769231
+Iterations speedup: 1
+Evaluations speedup: 1
+
+------------ Rosenbrock's valley function in 8D ------------
+
+Expected minimum: [1 1 1 1 1 1 1 1]
+Accuracy goal (acc): 1E-06
+Start point (x_start): [-1.2 1 -1.2 1 -1.2 1 -1.2 1]
+
+--- Results for Broyden update ---
+Found minimum (x_min):                    [1 1 1 1 0.999999 0.999998 0.999997 0.999993]
+Value at minimum, f(x_min):               1.6298135659808E-11
+Gradient norm at x_min:                   7.2888652892073E-06  (should be < acc)
+Number of iterations:                     10000  (lower is better)
+Number of resets:                         1191  (lower is better)
+Length of last accepted step (λ_last):    0.0009765625  (ideally ≈ 1)
+Number of evaluations:                    272399  (lower is better)
+
+Does the found minimum agree with expectation? NO.
+
+--- Results for Symmetrized Broyden update ---
+Found minimum (x_min):                    [1 1 1 1 1 1 1 1]
+Value at minimum, f(x_min):               5.25964706136631E-16
+Gradient norm at x_min:                   1.29068014946382E-06  (should be < acc)
+Number of iterations:                     73  (lower is better)
+Number of resets:                         1  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    1404  (lower is better)
+
+Does the found minimum agree with expectation? YES.
+
+--- Broyden's update vs Symmetrized Broyden's update ---
+speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
+Iterations speedup: 136.986301369863
+Evaluations speedup: 194.016381766382
+
+------------ Applying the implementation to a more complicated problems ------------
+
+I use the data from the Higgs experiment (CERN 2012) we were given in homework exercise 9.
+The data is fitted to the Breit-Wigner function, by minimizing the deviation function.
+The first component of the minimum corresponds to the Higgs mass in GeV (the mass should be ~125.3 GeV).
+The second and third components are the resonance width and the scale factor, respectively, for the given experiment.
+
+------------ Higgs Boson Fit ------------
+
+Accuracy goal (acc): 1E-06
+Start point (x_start): [125 2 10]
+
+--- Results for Broyden update ---
+Found minimum (x_min):                    [125.972 2.08633 9.87621]
+Value at minimum, f(x_min):               26.8695117786709
+Gradient norm at x_min:                   2.69112588810939E-07  (should be < acc)
+Number of iterations:                     53  (lower is better)
+Number of resets:                         1  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    556  (lower is better)
+
+--- Results for Symmetrized Broyden update ---
+Found minimum (x_min):                    [125.972 2.08633 9.87622]
+Value at minimum, f(x_min):               26.8695117786711
+Gradient norm at x_min:                   2.12035778016702E-06  (should be < acc)
+Number of iterations:                     30  (lower is better)
+Number of resets:                         0  (lower is better)
+Length of last accepted step (λ_last):    1  (ideally ≈ 1)
+Number of evaluations:                    288  (lower is better)
+
+--- Broyden's update vs Symmetrized Broyden's update ---
+speedup ≡ Broyden / Sym-Broyden, ( >1 mean Sym-Broyden is more efficient)
+Iterations speedup: 1.76666666666667
+Evaluations speedup: 1.93055555555556
+
+>> Generated higgs_data.txt and higgs_fit_curve.txt for plotting.
+
+This section trains a simple Artificial Neural Network to approximate a function.
+The problem is complex and can have many local minima. We will try multiple random starts to find a better solution.
+
+Target function to approximate: g(x) = Cos(5x-1) * Exp(-x²)
+
+Attempting 10 random starts to find a good minimum...
+  Try 1/10: Found a minimum with f(x_min) = 0.00812139765759851
+    >> This is the new best result!
+  Try 2/10: Found a minimum with f(x_min) = 9.91361078586332E-07
+    >> This is the new best result!
+  Try 3/10: Found a minimum with f(x_min) = 4.16588962626454
+  Try 4/10: Found a minimum with f(x_min) = 1.11655888847649E-05
+  Try 5/10: Found a minimum with f(x_min) = 5.77293225851141
+  Try 6/10: Found a minimum with f(x_min) = 5.43030887895433
+  Try 7/10: Found a minimum with f(x_min) = 1.52734543000482E-05
+  Try 8/10: Found a minimum with f(x_min) = 4.65191396171437
+  Try 9/10: Found a minimum with f(x_min) = 0.188441040420539
+  Try 10/10: Found a minimum with f(x_min) = 5.75273589761563
+
+--- Best result found after all attempts ---
+Found minimum (x_min):                    [3.01539 -6.11976 2.24384 -1.12366 -0.500818 -1.521 -1.42581 1.53725 -3.43656 -0.136479 -0.450445 -1.5624 0.462078 0.458453 -1.55502]
+Value at minimum, f(x_min):               9.91361078586332E-07
+Gradient norm at x_min:                   1.64657599199647E-06
+Number of iterations:                     355
+
+>> Generated ann_approximation.txt for plotting with the best parameters found.
+
 Done.
