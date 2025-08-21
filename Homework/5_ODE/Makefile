@@ -46,7 +46,7 @@ PLOTS  := $(PLOTS_A) $(PLOTS_B) $(PLOTS_C)
 # 5) Source files
 SRC         := Main.cs OdeSolver.cs RKStepper.cs ODEModels.cs
 COMMON_DIR  := ../../General
-COMMON_SRC  := $(COMMON_DIR)/Vector_and_Matrix.cs \
+COMMON_SRC  := $(COMMON_DIR)/Vector.cs \
                $(COMMON_DIR)/HW_points.cs
 CSFILES     := $(SRC) $(COMMON_SRC)
 

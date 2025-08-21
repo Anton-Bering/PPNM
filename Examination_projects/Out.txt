@@ -281,36 +281,36 @@ With equal solution quality, Symmetrized Broyden's update wins by being more rob
 Attempting 10 random starts for each method to find a good minimum...
 
 --- Running for: Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 6.94046631182184E-06
+  >> Best found minimum value f(x_min) for this method: 8.74374959817862E-06
 
 --- Running for: Symmetrized Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 1.00043040991123E-06
+  >> Best found minimum value f(x_min) for this method: 8.03776092481897E-06
 
 
 --- Best overall results found after all attempts ---
 --- Results for Broyden's update ---
-Value at best minimum, f(x_min):          6.94046631182184E-06
-Average evaluations over 10 runs:   361106.80
+Value at best minimum, f(x_min):          8.74374959817862E-06
+Average evaluations over 10 runs:   354947.90
 Success Rate:                             1/10 runs converged
 
 --- Results for Symmetrized Broyden's update ---
-Value at best minimum, f(x_min):          1.00043040991123E-06
-Average evaluations over 10 runs:   219924.60
-Success Rate:                             5/10 runs converged
+Value at best minimum, f(x_min):          8.03776092481897E-06
+Average evaluations over 10 runs:   188468.70
+Success Rate:                             6/10 runs converged
 
 --- Broyden vs Symmetrized Broyden (for ANN) ---
 
 Robustness (higher success rate is better):
   Broyden Success Rate:           1/10
-  Symmetrized Success Rate:       5/10
+  Symmetrized Success Rate:       6/10
 
 Quality of best minimum (lower is better):
-  Broyden:           6.94046631182184E-06
-  Symmetrized:       1.00043040991123E-06
+  Broyden:           8.74374959817862E-06
+  Symmetrized:       8.03776092481897E-06
 
 Average efficiency over 10 runs (lower is better):
-  Avg. Evals Broyden:           361106.80
-  Avg. Evals Symmetrized:       219924.60
+  Avg. Evals Broyden:           354947.90
+  Avg. Evals Symmetrized:       188468.70
 
 Overall Verdict for ANN Training:
 The WINNER is Symmetrized Broyden's update due to its significantly higher success rate, making it more reliable.

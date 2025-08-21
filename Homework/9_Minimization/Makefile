@@ -17,7 +17,7 @@ $(BIN): $(SRC)
 # Programmet skriver FITTXT selv; stdout gemmes i OUTTXT
 $(OUTTXT) $(FITTXT): $(BIN) cross_section_experiment.txt
 	@echo " --- Running program to produce $(OUTTXT) and $(FITTXT) ---"
-	mono $(BIN) < cross_section_experiment.txt > $(OUTTXT)
+	mono $(BIN) < cross_section_experiment.txt
 
 $(PLOTFIG): plot.gpi $(FITTXT) cross_section_experiment.txt
 	@echo " --- Drawing plot with gnuplot ---"

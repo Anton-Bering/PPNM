@@ -32,25 +32,31 @@ public class QuadraticSpline {
             if(!(h[i] > 0)) throw new Exception("QuadraticSpline: x must be strictly increasing");
         }
 
-        // Initial slope for first interval
-        b[0] = (y[1] - y[0]) / h[0];
-
-        // Forward recursion to get all b[i]
-        for(int i = 0; i < n - 2; i++) {
-            b[i + 1] = 2 * (y[i + 2] - y[i + 1]) / h[i + 1] - b[i];
+        double[] p = new double[n - 1];
+        for(int i=0; i < n-1; i++)
+        {
+            p[i] = (y[i+1] - y[i]) / h[i];
         }
 
-        // Anchor second derivative at first point to zero
-        c[0] = 0.0;
-
-        // Compute c[i] for i = 1 .. n-2 using correct formula
-        for(int i = 1; i < n - 1; i++) {
-            c[i] = (b[i] - b[i - 1]) / (2 * h[i - 1]);
+        // Forward recursion for c_i
+        c[0] = 0;
+        for(int i = 0; i < n-2; i++)
+        {
+            c[i+1] = (p[i+1] - p[i] - c[i]*h[i])/h[i+1];
         }
 
-        // Compute c for last interval (i = n-2) using end-point condition (value match)
-        int last = n - 2;
-        c[last] = (y[n - 1] - y[last] - b[last] * h[last]) / (h[last] * h[last]);
+        // Backward recursion for c_i (averaging)
+        c[n-2] /= 2;
+        for(int i = n-3; i>=0; i--)
+        {
+            c[i] = (p[i+1] - p[i] - c[i+1]*h[i+1])/h[i];
+        }
+
+        // Now calculate b_i from c_i
+        for(int i=0; i<n-1; i++)
+        {
+            b[i] = p[i] - c[i]*h[i];
+        }
     }
 
     public double Evaluate(double z) {

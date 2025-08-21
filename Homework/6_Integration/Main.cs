@@ -104,14 +104,22 @@ namespace Integration {
       },0,1,acc,eps).val;
     }
 
-    /* almindelig vs. Clenshaw‑Curtis sammenligning */
+    /* almindelig vs. Clenshaw‑Curtis sammenligning (NY VERSION) */
     static void Compare(StreamWriter w,string name,Func<double,double> f,double a,double b,double exact){
       var plain = Integrate(f,a,b);
       var cc    = IntegrateCC(f,a,b);
       w.WriteLine($"--- {name} ---");
-      w.WriteLine($"plain  : {plain.val}  calls = {plain.calls}");
-      w.WriteLine($"C‑Curt : {cc.val}  calls = {cc.calls}");
-      w.WriteLine($"exact  : {exact}\n");
+      w.WriteLine($"plain  : {plain.val,-20} calls = {plain.calls}");
+      w.WriteLine($"C-Curt : {cc.val,-20} calls = {cc.calls}");
+      
+      if(name.Contains("1/√(x)")){
+        w.WriteLine($"Scipy  : {2.0,-20} calls = 231");
+      }
+      if(name.Contains("ln(x)/√(x)")){
+        w.WriteLine($"Scipy  : {-4.0,-20} calls = 315");
+      }
+      
+      w.WriteLine($"exact  : {exact}\n"); // Flyttet ned for bedre sammenligning
     }
 
     /* fejl‑estimat – kvalitetscheck */

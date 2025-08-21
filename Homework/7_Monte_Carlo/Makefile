@@ -37,15 +37,11 @@ PLOTS_C := StratifiedSamplingError.svg
 PLOTS  := $(PLOTS_A) $(PLOTS_B) $(PLOTS_C)
 
 SRC         := Main.cs \
-				GaussianBellCalculator.cs \
 				QuasiRandomMC.cs \
-				SpecialIntegralCalculator.cs \
 				StratifiedSamplingComparison.cs \
-				LessSungularIntegralCalculator.cs \
 				PlainMC.cs \
 				QuasiVsPseudoComparison.cs \
 				StratifiedMC.cs \
-				UnitCircleCalculator.cs \
 				GenericMCCalculator.cs
 
 COMMON_DIR  := ../../General

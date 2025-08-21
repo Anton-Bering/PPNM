@@ -3,14 +3,6 @@ using PPNM.Minimization;
 using System.IO;
 using System.Collections.Generic;
 
-// Static helper class for creating vectors easily.
-static class V {
-    public static vector vec(params double[] a){
-        var v = new vector(a.Length);
-        for(int i=0;i<a.Length;i++) v[i]=a[i];
-        return v;
-    }
-}
 
 class Program {
 
@@ -231,9 +223,9 @@ class Program {
         // A list of all standard problems to be tested, enabling a data-driven approach.
         var testProblems = new List<TestProblem>
         {
-            new TestProblem { Title = "Quadratic function", Function = Problems.Quadratic, StartPoint = V.vec(1.0, 1.0), ExpectedMinimum = V.vec(0.0, 0.0) },
-            new TestProblem { Title = "Rosenbrock's valley function", Function = Problems.Rosenbrock, StartPoint = V.vec(-1.2, 1.0), ExpectedMinimum = V.vec(1.0, 1.0) },
-            new TestProblem { Title = "Himmelblau's function", Function = Problems.Himmelblau, StartPoint = V.vec(0.0, 0.0), ExpectedMinimum = V.vec(3.0, 2.0) },
+            new TestProblem { Title = "Quadratic function", Function = Problems.Quadratic, StartPoint = vector.Create(1.0, 1.0), ExpectedMinimum = vector.Create(0.0, 0.0) },
+            new TestProblem { Title = "Rosenbrock's valley function", Function = Problems.Rosenbrock, StartPoint = vector.Create(-1.2, 1.0), ExpectedMinimum = vector.Create(1.0, 1.0) },
+            new TestProblem { Title = "Himmelblau's function", Function = Problems.Himmelblau, StartPoint = vector.Create(0.0, 0.0), ExpectedMinimum = vector.Create(3.0, 2.0) },
             new TestProblem { Title = $"Quadratic function in {n_dim}D", Function = Problems.Quadratic_nD, StartPoint = start_quadratic_nD, ExpectedMinimum = expected_quadratic_nD },
             new TestProblem { Title = $"Rosenbrock's valley function in {n_dim}D", Function = Problems.Rosenbrock_nD, StartPoint = start_rosenbrock_nD, ExpectedMinimum = expected_rosenbrock_nD }
         };
@@ -258,7 +250,7 @@ class Program {
     // Performs minimization to fit the Breit-Wigner function to Higgs boson data.
     private static void RunHiggsFitTest(double acc)
     {
-        vector higgs_start_params = V.vec(125, 2, 10);
+        vector higgs_start_params = vector.Create(125, 2, 10);
         
         var higgs_results = PrintBlock("Higgs Boson Fit", Problems.HiggsDeviation, higgs_start_params, acc);
 

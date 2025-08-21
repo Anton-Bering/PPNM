@@ -15,15 +15,15 @@ public static class OdeSolver {
         if (a > b) throw new ArgumentException("driver: a > b");
         if (stepper == null) stepper = RKStepper.rkstep12;  // default to RK12
         double x = a;
-        vector y = ya.copy();
+        vector y = ya.Copy();
         var xlist = new List<double>(); xlist.Add(x);
         var ylist = new List<vector>(); ylist.Add(y);
         while (true) {
             if (x >= b) break;                 // done
             if (x + h > b) h = b - x;          // trim last step to end at b
             var (yh, err) = stepper(F, x, y, h);
-            double tol = (acc + eps * yh.norm()) * Sqrt(h / (b - a));
-            double errNorm = err.norm();
+            double tol = (acc + eps * yh.Norm()) * Sqrt(h / (b - a));
+            double errNorm = err.Norm();
             if (errNorm <= tol) {
                 // Accept step
                 x += h;
@@ -60,7 +60,7 @@ public static class OdeSolver {
         vector[] b = new vector[n];
         vector[] c = new vector[n];
         int last = n - 2;
-        c[last] = new vector(ys[last].size);  // c_last = 0 vector
+        c[last] = new vector(ys[last].Size);  // c_last = 0 vector
         b[last] = (ys[last + 1] - ys[last]) * (1.0 / (xs[last + 1] - xs[last]));
         // Backward recursion for other segments
         for (int i = n - 3; i >= 0; i--) {

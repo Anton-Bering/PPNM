@@ -11,7 +11,7 @@ using static VectorHelpers;
 class Program
 {
     const string OutPath   = "Out.txt";
-    const string RawFile   = "Rutherford_and_Soddys_ThX.txt";
+    const string RawFile   = "In_Task_A/Rutherford_and_Soddys_ThX.txt";
     const string LogFile   = "Rutherford_and_Soddys_ThX_log.txt";
     const string CurvesTxt = "bestfit_curves.txt";
     const string DataPlot  = "Rutherford_and_Soddys_ThX.svg";

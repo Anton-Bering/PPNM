@@ -93,6 +93,11 @@ public sealed class vector {
         return m;
     }
 
+    public static vector Create(params double[] values) // tilføje til eksamens-prosjekt
+    {
+        return new vector(values);
+    }
+
     // --- Formatting ---
     public override string ToString() => ToString("G6");
     public string ToString(string format, int cols = 0) {

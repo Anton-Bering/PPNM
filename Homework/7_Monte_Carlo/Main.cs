@@ -19,170 +19,56 @@ class Program
     static void Main()
     {
         Console.WriteLine("------------ TASK A ------------");
-        Console.WriteLine("\n------ Calculate two-dimensional integrals with my Monte Carlo routine ------");
-        Console.WriteLine("------ Plot the estimated error and the actual error as functions of the number of sampling points ------");
-        Console.WriteLine("------ And check whether the actual error scales as N^(-1/2) ------");
+        Console.WriteLine("\n------ Calculate integrals with the Monte Carlo routine and plot errors ------");
 
-        // --- Area of Unit Circle ---
-        Console.WriteLine("\n--- Area of Unit Circle ---");
-        UnitCircleCalculator.CalculateAndSaveResults();
-
-        string circlePath = "Estimate_the_area_of_a_unit_circle.txt";
-        if (File.Exists(circlePath))
-        {
-            string lastLine = File.ReadAllLines(circlePath)
-                                   .Reverse()
-                                   .First(line => line.Trim().Length > 0 && !line.StartsWith("N"));
-
-            string[] parts = lastLine.Split('\t');
-            int lastN = int.Parse(parts[0]);
-            double lastEstimate = double.Parse(parts[3], System.Globalization.CultureInfo.InvariantCulture);
-
-            Console.WriteLine($"\nThe file '{circlePath}' contains the Monte Carlo estimates of the unit circle area.");
-            Console.WriteLine($"After {lastN} samples, the estimated area is {lastEstimate:F6}.");
-            Console.WriteLine($"The plot 'area_of_a_unit_circle_error.plot' shows the estimated and actual error as a function of N.");
-            Console.WriteLine($"As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.");
-        }
-        else
-        {
-            Console.WriteLine("\nError: Estimate_the_area_of_a_unit_circle.txt not found.");
-        }
-
-        // --- Gaussian Bell Integral ---
-        Console.WriteLine("\n--- Calculating Gaussian Bell Integral ---");
-        GaussianBellCalculator.CalculateAndSaveResults();
-
-        string gaussPath = "Estimate_GaussianBell2D.txt";
-        if (File.Exists(gaussPath))
-        {
-            string lastLine_gauss = File.ReadAllLines(gaussPath)
-                                        .Reverse()
-                                        .FirstOrDefault(line => line.Trim().Length > 0 && !line.StartsWith("N"));
-
-            if (lastLine_gauss != null)
-            {
-                string[] parts_gauss = lastLine_gauss.Split('\t');
-                // Console.WriteLine($"Parsing line: {lastLine_gauss}");
-
-                if (parts_gauss.Length >= 4)
-                {
-                    bool successN = int.TryParse(parts_gauss[0], out int lastN_gauss);
-                    bool successEstimate = double.TryParse(parts_gauss[3], System.Globalization.NumberStyles.Float,
-                            System.Globalization.CultureInfo.InvariantCulture, out double lastEstimate_gauss);
-
-                    if (successN && successEstimate)
-                    {
-                        Console.WriteLine($"\nThe file '{gaussPath}' contains the Monte Carlo estimates of the area.");
-                        Console.WriteLine($"After {lastN_gauss} samples, the estimated area is {lastEstimate_gauss:F6}.");
-                        Console.WriteLine($"The plot 'Estimate_GaussianBell2D_error.plot' shows the estimated and actual error as a function of N.");
-                        Console.WriteLine($"As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: Could not parse values from last data line in 'Estimate_GaussianBell2D.txt'.");
-                        Console.WriteLine($" - Parse N success: {successN}");
-                        Console.WriteLine($" - Parse estimate success: {successEstimate}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Error: Last data line does not contain enough columns (expected at least 4).");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Error: No valid data line found in 'Estimate_GaussianBell2D.txt'.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Error: File 'Estimate_GaussianBell2D.txt' not found.");
-        }
-
-        // HERHER TILFØJET ------- START --------
-
-                // 1) Unit-circle
+        // 1) Areal af enhedscirkel
         GenericMCCalculator.Run(
-            v => (v[0]*v[0]+v[1]*v[1] <= 1) ? 1 : 0,
-            new[]{-1.0,-1.0}, new[]{1.0,1.0},
-            Math.PI,
-            "Estimate_the_area_of_a_unit_circle.txt",
-            maxN: 10_000, logScaleN: false);
+            f: v => (v[0]*v[0] + v[1]*v[1] <= 1) ? 1.0 : 0.0,
+            a: new[] { -1.0, -1.0 },
+            b: new[] { 1.0, 1.0 },
+            trueValue: Math.PI,
+            dataFile: "Estimate_the_area_of_a_unit_circle.txt",
+            description: "Unit Circle Area"
+        );
 
-        // 2) Gaussian bell
+        // 2) 2D Gauss-integral
         GenericMCCalculator.Run(
-            v => Math.Exp(-(v[0]*v[0]+v[1]*v[1])),
-            new[]{-2.0,-2.0}, new[]{2.0,2.0},
-            Math.PI,
-            "Estimate_GaussianBell2D.txt");
+            f: v => Math.Exp(-(v[0]*v[0] + v[1]*v[1])),
+            a: new[] { -2.0, -2.0 },
+            b: new[] { 2.0, 2.0 },
+            trueValue: 3.141592653589793 * (1 - Math.Exp(-4)), // Præcis værdi for det afgrænsede integral
+            dataFile: "Estimate_GaussianBell2D.txt",
+            description: "Gaussian Bell Integral"
+        );
 
-        // 3) Less-singular 3D integral
+        // 3) "Svært" singulært integral
         GenericMCCalculator.Run(
-            v => Math.Cos(v[0])*Math.Cos(v[1])*Math.Cos(v[2]) /
-                (Math.PI*Math.PI*Math.PI),
-            new[]{0.0,0.0,0.0}, new[]{Math.PI,Math.PI,Math.PI},
-            8.0/(Math.PI*Math.PI*Math.PI),
-            "Estimate_LessSingularIntegral.txt");
-
-        // 4) Special integral
-        GenericMCCalculator.Run(
-            v => {
-                double d = 1 - Math.Cos(v[0])*Math.Cos(v[1])*Math.Cos(v[2]);
-                return (d < 1e-10) ? 0 : 1.0/(Math.PI*Math.PI*Math.PI*d);
+            f: v => {
+                double d = 1.0 - Math.Cos(v[0])*Math.Cos(v[1])*Math.Cos(v[2]);
+                return (d == 0) ? 0 : 1.0 / (Math.PI*Math.PI*Math.PI * d);
             },
-            new[]{0.0,0.0,0.0}, new[]{Math.PI,Math.PI,Math.PI},
-            1.393203929685676859,
-            "Estimate_SpecialIntegral.txt");
+            a: new[] { 0.0, 0.0, 0.0 },
+            b: new[] { Math.PI, Math.PI, Math.PI },
+            trueValue: 1.393203929685676859,
+            dataFile: "Estimate_SpecialIntegral.txt",
+            description: "Special 3D Integral"
+        );
+
+        // 4) Mindre singulært integral (til test)
+        GenericMCCalculator.Run(
+            f: v => Math.Cos(v[0])*Math.Cos(v[1])*Math.Cos(v[2]) / (Math.PI*Math.PI*Math.PI),
+            a: new[] { 0.0, 0.0, 0.0 },
+            b: new[] { Math.PI, Math.PI, Math.PI },
+            trueValue: 0.0, // Integralet af cos(x) fra 0 til pi er 0, så hele integralet er 0
+            dataFile: "Estimate_LessSungularIntegral.txt",
+            description: "Less Singular 3D Integral"
+        );
+
+        Console.WriteLine("\nAll calculations for Task A are complete.");
+        Console.WriteLine("Data files are generated, and plots can be created using 'make'.");
 
 
-        // HERHER TILFØJET ------- END --------
-
-        Console.WriteLine("\n------ Calculating The Special 3D Integral ------\n");
-        
-        Console.WriteLine("The special 3D integral: ∫₀^π dx/π ∫₀^π dy/π ∫₀^π dz/π [1 - cos(x)cos(y)cos(z)]⁻¹ = Γ(¼)⁴ / (4π³) ≈ 1.3932039296856768591842462603255\n"); // Integrale
-        
-        SpecialIntegralCalculator.CalculateAndSaveResults();
-        string specialPath = "Estimate_SpecialIntegral.txt";
-        if (File.Exists(specialPath))
-        {
-            string lastLine_special = File.ReadAllLines(specialPath)
-                                        .Reverse()
-                                        .FirstOrDefault(line =>
-                                        {
-                                            string[] parts = line.Split('\t');
-                                            return parts.Length >= 4 &&
-                                                    double.TryParse(parts[3], System.Globalization.NumberStyles.Float,
-                                                        System.Globalization.CultureInfo.InvariantCulture, out _);
-                                        });
-
-            if (lastLine_special != null)
-            {
-                string[] parts_special = lastLine_special.Split('\t');
-                int.TryParse(parts_special[0], out int lastN_special);
-                double.TryParse(parts_special[3], System.Globalization.NumberStyles.Float,
-                                System.Globalization.CultureInfo.InvariantCulture, out double result_special);
-
-                Console.WriteLine($"The file '{specialPath}' contains the results for the value of the Special 3D Integral.");
-                Console.WriteLine($"After {lastN_special} samples, the estimated value is {result_special:F9}.");
-            }
-            else
-            {
-                Console.WriteLine($"Warning: No valid data found in '{specialPath}'.");
-            }
-        }
-        else
-        {
-            Console.WriteLine($"Error: File '{specialPath}' not found.");
-        }
-
-        Console.WriteLine("\n------ Calculating The Less Sungular 3D Integral ------\n");
-        
-        Console.WriteLine("The less sungular 3D integral: ∫₀^π dx ∫₀^π dy ∫₀^π dz cos(x)cos(y)cos(z) /π³ = 8/π³ ≈ 0.2580122754655959134753764215085"); // Integrale
-        LessSungularIntegralCalculator.CalculateAndSaveResults();
-        LessSungularIntegralCalculator.PrintLastEstimateSummary();
-
-
-        // --- TASJ B: 
+        // --- TASK B:
         Console.WriteLine("\n ------------ TASK B ------------");
 
         // Estimated the error by using two different sequences:
@@ -214,17 +100,14 @@ class Program
             }
         }
 
-
-
-
         // Compare the scaling of the error with your pseudo-random Monte-Carlo integrator:
         Console.WriteLine("\n------ Compare the scaling of the error with my pseudo-random Monte-Carlo integrator ------\n");
         Console.WriteLine("QuasiVsPseudoResults.txt contains the estimated and actual errors for both MC and QMC.");
         Console.WriteLine("Estimate_QMC_vs_MC_error.svg is a log-log plot visualizing the error scaling as a function of N.");
         Console.WriteLine("QMC achieves lower error and faster convergence compared to MC, especially for smaller sample sizes.");
         QuasiVsPseudoComparison.RunComparison();
-        
-        
+
+
         // ------------ TASK C ------------
         Console.WriteLine("\n ------------ TASK C ------------");
 

@@ -1,31 +1,94 @@
 ------------ TASK A ------------
 
------- Calculate two-dimensional integrals with my Monte Carlo routine ------
------- Plot the estimated error and the actual error as functions of the number of sampling points ------
------- And check whether the actual error scales as N^(-1/2) ------
+------ Calculate integrals with the Monte Carlo routine and plot errors ------
+Processing Unit Circle Area: N=60
+Processing Unit Circle Area: N=120
+Processing Unit Circle Area: N=180
+Processing Unit Circle Area: N=240
+Processing Unit Circle Area: N=360
+Processing Unit Circle Area: N=540
+Processing Unit Circle Area: N=780
+Processing Unit Circle Area: N=1380
+Processing Unit Circle Area: N=1500
+Processing Unit Circle Area: N=4920
+Processing Unit Circle Area: N=9120
+Finished calculation for Unit Circle Area. Results saved to Estimate_the_area_of_a_unit_circle.txt.
+Processing Gaussian Bell Integral: N=60
+Processing Gaussian Bell Integral: N=120
+Processing Gaussian Bell Integral: N=180
+Processing Gaussian Bell Integral: N=240
+Processing Gaussian Bell Integral: N=360
+Processing Gaussian Bell Integral: N=540
+Processing Gaussian Bell Integral: N=780
+Processing Gaussian Bell Integral: N=1380
+Processing Gaussian Bell Integral: N=1500
+Processing Gaussian Bell Integral: N=4920
+Processing Gaussian Bell Integral: N=9120
+Finished calculation for Gaussian Bell Integral. Results saved to Estimate_GaussianBell2D.txt.
+Processing Special 3D Integral: N=60
+Processing Special 3D Integral: N=120
+Processing Special 3D Integral: N=180
+Processing Special 3D Integral: N=240
+Processing Special 3D Integral: N=360
+Processing Special 3D Integral: N=540
+Processing Special 3D Integral: N=780
+Processing Special 3D Integral: N=1380
+Processing Special 3D Integral: N=1500
+Processing Special 3D Integral: N=4920
+Processing Special 3D Integral: N=9120
+Finished calculation for Special 3D Integral. Results saved to Estimate_SpecialIntegral.txt.
+Processing Less Singular 3D Integral: N=60
+Processing Less Singular 3D Integral: N=120
+Processing Less Singular 3D Integral: N=180
+Processing Less Singular 3D Integral: N=240
+Processing Less Singular 3D Integral: N=360
+Processing Less Singular 3D Integral: N=540
+Processing Less Singular 3D Integral: N=780
+Processing Less Singular 3D Integral: N=1380
+Processing Less Singular 3D Integral: N=1500
+Processing Less Singular 3D Integral: N=4920
+Processing Less Singular 3D Integral: N=9120
+Finished calculation for Less Singular 3D Integral. Results saved to Estimate_LessSungularIntegral.txt.
 
---- Area of Unit Circle ---
-Processed N=1000
-Processed N=2000
-Processed N=3000
-Processed N=4000
-Processed N=5000
-Processed N=6000
-Processed N=7000
-Processed N=8000
-Processed N=9000
-Processed N=10000
+All calculations for Task A are complete.
+Data files are generated, and plots can be created using 'make'.
 
-The file 'Estimate_the_area_of_a_unit_circle.txt' contains the Monte Carlo estimates of the unit circle area.
-After 10000 samples, the estimated area is 3.140000.
-The plot 'area_of_a_unit_circle_error.plot' shows the estimated and actual error as a function of N.
-As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
+ ------------ TASK B ------------
 
---- Calculating Gaussian Bell Integral ---
-Processed N=1000 for Gaussian Bell
-Processed N=10000 for Gaussian Bell
+------ Estimated the error by using two different sequences ------
 
-The file 'Estimate_GaussianBell2D.txt' contains the Monte Carlo estimates of the area.
-After 10000 samples, the estimated area is 3.065652.
-The plot 'Estimate_GaussianBell2D_error.plot' shows the estimated and actual error as a function of N.
-As shown in the plot, the error scales approximately as N^(-1/2), as expected from theory.
+Estimate_QMC_vs_MC.txt contains the data for the estimated errors.
+Estimate_QMC_vs_MC_error.svg is a plot showing the estimated and actual error for MC and QMC as a function of N.
+The QMC error is estimated as the absolute difference between two independent Halton sequence evaluations.
+
+------ Compare the scaling of the error with my pseudo-random Monte-Carlo integrator ------
+
+QuasiVsPseudoResults.txt contains the estimated and actual errors for both MC and QMC.
+Estimate_QMC_vs_MC_error.svg is a log-log plot visualizing the error scaling as a function of N.
+QMC achieves lower error and faster convergence compared to MC, especially for smaller sample sizes.
+
+--- Part B: Quasi-Random vs Pseudo-Random Monte Carlo ---
+Integrand f(x,y) = x*y over [0,1]^2 (true value = 0.250000)
+       N      MC est.err   MC actual err     QMC est.err  QMC actual err
+    1000   6.876479E-003   9.736103E-003   2.105490E-004   1.783078E-003
+   10000   2.205779E-003   7.039356E-004   2.932159E-005   2.253326E-004
+  100000   6.968927E-004   3.876645E-004   2.449113E-006   2.617998E-005
+
+Results saved to: QuasiVsPseudoResults.txt
+(MC uses internal variance; QMC uses difference of two sequences.)
+
+ ------------ TASK C ------------
+This task implements recursive stratified sampling, where the domain is adaptively subdivided based on estimated sub-variances.
+The integrator distributes more points where the function varies most, improving accuracy in difficult regions.
+The method is recursive and stops subdividing when the number of points is below a fixed threshold (nmin).
+
+StratifiedSamplingErrors.txt contains error data for plain vs stratified MC.
+StratifiedSamplingError.svg shows the actual error as a function of N in log-log scale.
+
+
+--- Part C: Recursive Stratified Sampling ---
+Integrating 1000*exp(-100x - 10y) on [0,1]^2 (true value ≈ 0.999955) with N=10000
+Plain MC:      result = 0.938018,  error estimate = 0.123563,  actual error = 0.061936
+Stratified MC: result = 0.837997,  error estimate = 0.064775,  actual error = 0.161957
+
+Results saved to: StratifiedSamplingResults.txt

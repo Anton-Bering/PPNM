@@ -115,7 +115,7 @@ public class Program {
             for (int i = 0; i < xs_ne.Count; i++) writer.WriteLine($"{xs_ne[i]} {ys_ne[i][0]}");
         }
 
-        var (xs_rel, ys_rel) = OdeSolver.driver(ODEModels.Precession(0.01), 0, u1.copy(), phi_max, acc:1e-6, eps:1e-6);
+        var (xs_rel, ys_rel) = OdeSolver.driver(ODEModels.Precession(0.01), 0, u1.Copy(), phi_max, acc:1e-6, eps:1e-6);
         using (var writer = new StreamWriter("Relativistic_motion.txt")) {
             for (int i = 0; i < xs_rel.Count; i++) writer.WriteLine($"{xs_rel[i]} {ys_rel[i][0]}");
         }

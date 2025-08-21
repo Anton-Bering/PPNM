@@ -45,9 +45,10 @@ public static class StratifiedMC
                 }
             }
         }
-
+        
+        // ------------------------------------ NY version ---- start --- 
         int splitDim = -1;
-        double minCombinedVar = double.PositiveInfinity;
+        double maxCombinedVar = 0.0;
         for (int i = 0; i < dim; i++)
         {
             if (leftCount[i] == 0 || rightCount[i] == 0) continue;
@@ -59,12 +60,13 @@ public static class StratifiedMC
             double sigmaLeft = Sqrt(Max(0.0, leftVar));
             double sigmaRight = Sqrt(Max(0.0, rightVar));
             double combinedVar = Pow(sigmaLeft + sigmaRight, 2);
-            if (combinedVar < minCombinedVar)
+            if (combinedVar > maxCombinedVar)
             {
-                minCombinedVar = combinedVar;
+                maxCombinedVar = combinedVar;
                 splitDim = i;
             }
         }
+        // ------------------------------------ NY version ---- slut --- 
 
         if (splitDim == -1)
         {

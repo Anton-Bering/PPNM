@@ -133,6 +133,22 @@ public sealed class matrix {
         return R;
     }
 
+    // --- Addition ---
+    public static matrix operator +(matrix A, matrix B) {
+        if (A.Rows != B.Rows || A.Cols != B.Cols) throw new ArgumentException("Matrices must have the same dimensions for addition");
+        var R = new matrix(A.Rows, A.Cols);
+        for (int i = 0; i < A.data.Length; i++) R.data[i] = A.data[i] + B.data[i];
+        return R;
+    }
+
+    // --- Subtraction ---
+    public static matrix operator -(matrix A, matrix B) {
+        if (A.Rows != B.Rows || A.Cols != B.Cols) throw new ArgumentException("Matrices must have the same dimensions for subtraction");
+        var R = new matrix(A.Rows, A.Cols);
+        for (int i = 0; i < A.data.Length; i++) R.data[i] = A.data[i] - B.data[i];
+        return R;
+    }
+
     // --- Outer product: u v^T ---
     public static matrix Outer(vector u, vector v) {
         var M = new matrix(u.Size, v.Size);

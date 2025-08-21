@@ -22,7 +22,7 @@ namespace Integration {
                                            double acc=1e-6,double eps=1e-6)
     {
       if(double.IsNegativeInfinity(a) && double.IsPositiveInfinity(b))
-        return IntegrateCC(t=>f(t/Tan(t))*1/(Sin(t)*Sin(t)), -PI/2, PI/2, acc,eps);
+        return IntegrateCC(t => f(Tan(t)) / (Cos(t)*Cos(t)), -PI/2, PI/2, acc, eps);
       if(double.IsNegativeInfinity(a))
         return IntegrateCC(t=>f(b - (1-t)/t)/t/t, 0, 1, acc,eps);
       if(double.IsPositiveInfinity(b))

@@ -7,7 +7,7 @@
 Exact value: 0.666666666666667
 Value from my implementation: 0.666666679685227
 Estimated error = 5.617417E-007
-Calls = 412
+Calls = 276
 
 Test: Is the value within the accuracy goals?
 Result: Yes
@@ -17,7 +17,7 @@ Result: Yes
 Exact value: 2
 Value from my implementation: 1.99999999894916
 Estimated error = 6.148834E-007
-Calls = 185848
+Calls = 123900
 
 Test: Is the value within the accuracy goals?
 Result: Yes
@@ -27,7 +27,7 @@ Result: Yes
 Exact value: 0.785398163397448
 Value from my implementation: 0.785398170578572
 Estimated error = 4.223270E-007
-Calls = 574
+Calls = 384
 
 Test: Is the value within the accuracy goals?
 Result: Yes
@@ -37,7 +37,7 @@ Result: Yes
 Exact value: -4
 Value from my implementation: -3.99999999941305
 Estimated error = 6.137502E-007
-Calls = 454492
+Calls = 302996
 
 Test: Is the value within the accuracy goals?
 Result: Yes
@@ -65,18 +65,20 @@ The plot is written to erf1.svg
 ------------ TASK B: Variable transformation quadratures ------------
 
 --- ∫₀¹ 1/√(x) dx ---
-plain  : 1.99999999894916  calls = 185848
-C‑Curt : 1.99999999993764  calls = 526
+plain  : 1.99999999894916     calls = 123900
+C-Curt : 1.99999999993764     calls = 352
+Scipy  : 2                    calls = 231
 exact  : 2
 
 --- ∫₀¹ ln(x)/√(x) dx ---
-plain  : -3.99999999941305  calls = 454492
-C‑Curt : -3.99999826112127  calls = 2950
+plain  : -3.99999999941305    calls = 302996
+C-Curt : -3.99999826112127    calls = 1968
+Scipy  : -4                   calls = 315
 exact  : -4
 
 
 --- Infinite‑limit test: ∫₀^∞ e^(‑x) dx = 1 ---
-result = 0.999999988000672, calls = 808,  exact = 1,  |Δ|=1.199933E-008
+result = 0.999999988000672, calls = 540,  exact = 1,  |Δ|=1.199933E-008
 
 ------------ TASK C: Error estimate ------------
 
