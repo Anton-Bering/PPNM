@@ -4,13 +4,15 @@ This repository contains my solution for the exam project in the course [Practic
 
 ## The task for the exam is the following:
 
-1.  Implement a function with the signature
+1. Implement a function with the signature
     `vector broyden(Func<vector,double> f, vector x, double acc)`
-    that takes the function `f` and runs the quasi-Newton algorithm from the starting point `x`, using the Broyden's update of the Hessian matrix until the accuracy goal `acc` is reached (see the [course book](https://fedorov.sdfeu.org/prog/book/book.pdf) for the details).
+that takes the function `f` and runs the quasi-Newton algorithm from the starting point `x`, using the Broyden's update of the Hessian matrix until the accuracty goal `acc` is reached [see the book for the details]((https://fedorov.sdfeu.org/prog/book/book.pdf)).
 
 2.  Test your implementation on some functions with known minima.
 
-3.  Apply your implementation to a more complicated problem.
+3.  Apply your implementation to a more complicated problem
+
+4.  Implement also the symmetrized Broyden's update and check whether it is any better.
 
 ## Below is a summary of my solution:
 
@@ -35,7 +37,7 @@ This repository contains my solution for the exam project in the course [Practic
 
     **Part 2:** For a more complex problem, I followed a procedure similar to that in homework problem 9 to find the mass of the Higgs boson. But unlike in Homework 9, where Newton’s method with numerical Hessian was used, here I apply my Quasi-Newton implementation with Broyden’s update (and the symmetrized update).
 
-    The found minima (for both the standard Broyden's update and the symmetrized Broyden's update) at approximately `[125.97, 2.086, 9.88]` correspond to the Higgs mass, the width of the resonance, and the scale-factor, respectively.
+    The found minima (for both the standard Broyden's update and the symmetrized Broyden's update) at approximately `[125.97, 2.086, 9.88]` correspond to the Higgs mass, the width of the resonance, and the scale-factor, respectively. Furthermore, the uncertainties on these parameters were estimated from the inverse Hessian approximation. The resulting mass of the Higgs boson was determined to be 125.972 ± 0.213 GeV/c².
 
     The generated file `Higgs_fit.svg` (using the symmetrized Broyden's update) shows a plot of the signal [certain units] as a function of Energy [GeV], with the experimental data (CERN 2012) along with the fit. The peak in the fit at approximately 126.0 GeV corresponds to the Higgs mass (in units of GeV/c²).
 
@@ -46,3 +48,8 @@ This repository contains my solution for the exam project in the course [Practic
     The functions for all three of these more complicated problems are defined in the file `problems.cs`.
 
 4.  The implementation of the symmetrized Broyden's update is made alongside the standard Broyden's update in the file `QuasiNewton.cs`.
+
+
+
+
+

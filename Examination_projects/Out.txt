@@ -30,7 +30,7 @@ Number of evaluations:                    12  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Comparison Summary: Broyden vs Symmetrized Broyden ---
+--- Broyden's update vs Symmetrized Broyden's update ---
 
 0. Accuracy (did the method find the correct minimum?):
    >> Tie. Both methods found the correct minimum.
@@ -76,7 +76,7 @@ Number of evaluations:                    228  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Comparison Summary: Broyden vs Symmetrized Broyden ---
+--- Broyden's update vs Symmetrized Broyden's update ---
 
 0. Accuracy (did the method find the correct minimum?):
    >> Tie. Both methods found the correct minimum.
@@ -122,7 +122,7 @@ Number of evaluations:                    76  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Comparison Summary: Broyden vs Symmetrized Broyden ---
+--- Broyden's update vs Symmetrized Broyden's update ---
 
 0. Accuracy (did the method find the correct minimum?):
    >> Tie. Both methods found the correct minimum.
@@ -168,7 +168,7 @@ Number of evaluations:                    36  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Comparison Summary: Broyden vs Symmetrized Broyden ---
+--- Broyden's update vs Symmetrized Broyden's update ---
 
 0. Accuracy (did the method find the correct minimum?):
    >> Tie. Both methods found the correct minimum.
@@ -214,7 +214,7 @@ Number of evaluations:                    1404  (lower is better)
 
 Does the found minimum agree with expectation? YES.
 
---- Comparison Summary: Broyden vs Symmetrized Broyden ---
+--- Broyden's update vs Symmetrized Broyden's update ---
 
 0. Accuracy (did the method find the correct minimum?):
    >> Winner: Symmetrized Broyden. Found the correct minimum where the other failed.
@@ -259,7 +259,7 @@ Number of resets:                         0  (lower is better)
 Length of last accepted step (λ_last):    1  (ideally ≈ 1)
 Number of evaluations:                    288  (lower is better)
 
---- Comparison Summary: Broyden vs Symmetrized Broyden ---
+--- Broyden's update vs Symmetrized Broyden's update ---
 
 1. Quality of the found minimum (lower f_min is better):
    >> Tie. Both methods found minima of similar quality.
@@ -288,36 +288,36 @@ Scale Factor:    9.88 ± 5.24
 Attempting 10 random starts for each method to find a good minimum...
 
 --- Running for: Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 0.000891697780799077
+  >> Best found minimum value f(x_min) for this method: 3.70918493113645E-06
 
 --- Running for: Symmetrized Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 2.61281720746669E-08
+  >> Best found minimum value f(x_min) for this method: 1.32422389953847E-07
 
 
 --- Best overall results found after all attempts ---
 --- Results for Broyden's update ---
-Value at best minimum, f(x_min):          0.000891697780799077
-Average evaluations over 10 runs:   398453.70
+Value at best minimum, f(x_min):          3.70918493113645E-06
+Average evaluations over 10 runs:   384755.60
 Success Rate:                             0/10 runs converged
 
 --- Results for Symmetrized Broyden's update ---
-Value at best minimum, f(x_min):          2.61281720746669E-08
-Average evaluations over 10 runs:   242010.30
-Success Rate:                             4/10 runs converged
+Value at best minimum, f(x_min):          1.32422389953847E-07
+Average evaluations over 10 runs:   197998.40
+Success Rate:                             5/10 runs converged
 
 --- Broyden vs Symmetrized Broyden (for ANN) ---
 
 Robustness (higher success rate is better):
   Broyden Success Rate:           0/10
-  Symmetrized Success Rate:       4/10
+  Symmetrized Success Rate:       5/10
 
 Quality of best minimum (lower is better):
-  Broyden:           0.000891697780799077
-  Symmetrized:       2.61281720746669E-08
+  Broyden:           3.70918493113645E-06
+  Symmetrized:       1.32422389953847E-07
 
 Average efficiency over 10 runs (lower is better):
-  Avg. Evals Broyden:           398453.70
-  Avg. Evals Symmetrized:       242010.30
+  Avg. Evals Broyden:           384755.60
+  Avg. Evals Symmetrized:       197998.40
 
 Overall Verdict for ANN Training:
 The WINNER is Symmetrized Broyden's update due to its significantly higher success rate, making it more reliable.
