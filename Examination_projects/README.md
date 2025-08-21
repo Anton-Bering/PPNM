@@ -47,9 +47,7 @@ that takes the function `f` and runs the quasi-Newton algorithm from the startin
 
     The functions for all three of these more complicated problems are defined in the file `problems.cs`.
 
-4.  The implementation of the symmetrized Broyden's update is made alongside the standard Broyden's update in the file `QuasiNewton.cs`.
+4.  The implementation of the symmetrized Broyden's update is made alongside the standard Broyden's update in the file `QuasiNewton.cs`. 
 
-
-
-
+The task asks whether the symmetrized Broyden's update is any better. My ansower to this is YES. It is significantly better overall, especially when dealing with more complicated problems. The winner of each test (witchis is better stantart Broyden's update or symmetrized Broyden's update) is determined automatically in the code based on a prioritized hierarchy of criteria: Accuracy, Robustness, Quality, and finally Efficiency. Onley for the the 2D Rosenbrock's valley function, the standard Broyden's update is declared the winner. This is because it found a minimum with a marginally better Quality (a lower f_min value), which has a high priority in the evaluation. However, the symmetrized update was still beters if deturmt baste on Efficiency (faster) and Robustness (fewer resets).
 
