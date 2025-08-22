@@ -20,5 +20,6 @@ The homework assignments are the following:
 [9) Minimization](https://fedorov.sdfeu.org/prog/homeworks/minimum.htm)  
 [10) neural network / Artificial Neural Networks](https://fedorov.sdfeu.org/prog/homeworks/neural-network.htm)  
 
-
+My assigned examination project is the following:  
+[Quasi-Newton mininization with Broyden's update of the Hessian matrix](https://fedorov.sdfeu.org/prog/projex/minimum-broyden.htm)
 
