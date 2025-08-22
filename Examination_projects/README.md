@@ -3,6 +3,10 @@
 This repository contains my solution for the exam project in the course  
 [Practical Programming and Numerical Methods (Spring 2025)](https://fedorov.sdfeu.org/prog/).
 
+## Self-Evaluation of my solution to the examination projects:
+
+To be honest, I think my solution are quite good, so since I am asked to do my own evaluation, I would say 10 out of 10. But of course, there might be some errors or missing parts which I am not aware of, but I hope you agree with my evaluation :D
+
 ## The task for the exam is the following:
 
 1. Implement a function with the signature  
