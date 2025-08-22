@@ -7,7 +7,7 @@ This repository contains my solution for the exam project in the course
 
 1. Implement a function with the signature  
     `vector broyden(Func<vector,double> f, vector x, double acc)`  
-that takes the function `f` and runs the quasi-Newton algorithm from the starting point `x`, using the Broyden's update of the Hessian matrix until the accuracty goal `acc` is reached [see the book for the details](https://fedorov.sdfeu.org/prog/book/book.pdf).
+that takes the function `f` and runs the quasi-Newton algorithm from the starting point `x`, using the Broyden's update of the Hessian matrix until the accuracty goal `acc` is reached ([see the book chapter 10 for the details](https://fedorov.sdfeu.org/prog/book/book.pdf)).
 
 2.  Test your implementation on some functions with known minima.
 
