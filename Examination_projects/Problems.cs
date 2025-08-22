@@ -27,6 +27,9 @@ public static class Problems {
     }
 
     // ------------ Test functions udvidet til nD ------------
+    // Note: Of course, the creation of the Quadratic function and Rosenbrock's valley function in nD, 
+    // in principle makes the 2D versions unnecessary. However, I have chosen to keep them to be safe and avoid errors.
+    
     // Quadratic function nD
     public static double Quadratic_nD(vector v) {
         double sum = 0;
