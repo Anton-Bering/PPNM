@@ -1,6 +1,6 @@
 # [Homework EVD (eigenvalue decomposition)](https://fedorov.sdfeu.org/prog/homeworks/eigenvalues.htm)
 
-## Task
+## Tasks
 
 ### A. Jacobi diagonalization with cyclic sweeps
 
