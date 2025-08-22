@@ -6,7 +6,9 @@ Course information is available on the [course homepage](https://fedorov.sdfeu.o
 
 As students, we have been free to choose our preferred programming language; I have chosen **C#**.
 
-The course is structured around a series of programming assignments, including *exercises*, *homework*, and ultimately an *examination project*. My solutions to these assignments can be found in the corresponding folders.
+The course is structured around a series of programming assignments, including *exercises*, *homework*, and ultimately an *examination project*. My solutions to these assignments can be found in the corresponding folders.  
+
+The folder *General* is a library which includes some general files I use in several assignments.
 
 The homework assignments are the following:  
 [1) Linear Equations](https://fedorov.sdfeu.org/prog/homeworks/lineq.htm)  
