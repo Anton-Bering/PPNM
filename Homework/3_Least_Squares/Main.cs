@@ -16,7 +16,7 @@ class Program
     const string CurvesTxt = "bestfit_curves.txt";
     const string DataPlot  = "Rutherford_and_Soddys_ThX.svg";
     const string CurvesSvg = "best_fit_with_changed_coefficients.svg";
-    const string FitTxt    = "Fit_the_ThX_data_with_exponential_function.txt"; // HERHER: CG
+    const string FitTxt    = "Fit_the_ThX_data_with_exponential_function.txt";
 
     const double Tmodern = 3.6313;   // modern half‑life of 224-Ra [days], Kilde: https://www.sciencedirect.com/science/article/abs/pii/S0969804320307107
 
@@ -99,7 +99,6 @@ class Program
                 bf.WriteLine($"{z} {fit(z)} {fitLow(z)} {fitHi(z)}");
 
         /* ------------- 3a.  write data–vs–fit table (Task A) ------------- */
-        //  Create the table // HERHER: CG
         using (var ft = new StreamWriter(FitTxt, false))
             for (int i = 0; i < t.Length; i++)
                 ft.WriteLine($"{t[i]} {lnY[i]} {fit(t[i])}");

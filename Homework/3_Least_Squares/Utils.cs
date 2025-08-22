@@ -5,18 +5,10 @@ using System.Linq;
 
 public static class Utils
 {
-    /* -------------------------------------------------------------
-     *  Write a matrix in a neat, readable format to a StreamWriter
-     * ------------------------------------------------------------- */
-
     public static void WriteTest(StreamWriter sw,
                                  string description, bool ok)
         => sw.WriteLine($"TEST: {description}\nRESULT: {(ok ? "Yes" : "No")}\n");
 
-    /* -------------------------------------------------------------
-     *  Read column ‘col’ (0‑based) from a whitespace‑separated text
-     *  file, ignoring blank lines and lines starting with ‘#’.
-     * ------------------------------------------------------------- */
     public static double[] ReadColumn(string path, int col)
     {
         var goodLines = File.ReadLines(path)

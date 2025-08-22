@@ -88,8 +88,8 @@ public static class Program
         /* save eigenfunctions (first 3) */
         double normConst = 1.0 / Math.Sqrt(fixed_dr);
         for (int k = 0; k < 3; k++)
-        using (var swNum = new StreamWriter($"numerically_eigenfunctions_n{k + 1}.txt")) // Skal den her linje ændrer/slettes?
-        using (var swAna = new StreamWriter($"analytic_eigenfunctions_n{k + 1}.txt")) // Skal den her linje ændrer/slettes?
+        using (var swNum = new StreamWriter($"numerically_eigenfunctions_n{k + 1}.txt"))
+        using (var swAna = new StreamWriter($"analytic_eigenfunctions_n{k + 1}.txt"))
         {
             for (int i = 0; i < npoints_main; i++)
             {
@@ -98,7 +98,7 @@ public static class Program
                 swNum.WriteLine($"{r} {f}");
 
                 double fa;
-                switch (k)           //  <-- C#‑7.3‑compatible
+                switch (k)
                 {
                     case 0:
                         fa = 2 * r * Math.Exp(-r);
@@ -154,7 +154,7 @@ public static class Program
         var rmaxs = Enumerable.Range(8, 33).Select(i => i * 0.5);
         using (var rmWriter = new StreamWriter("varying_rmax.txt"))
         {
-            rmWriter.WriteLine("rmax, E0");                             // CHANGED: correct writer name
+            rmWriter.WriteLine("rmax, E0");                         
             foreach (double rmax in rmaxs)
             {
                 int npoints = (int)(rmax / fixed_dr) - 1;

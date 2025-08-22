@@ -1,27 +1,8 @@
-// OBS: Gamme udgave som ikke bruges mere
-
-/*======================================================================
-  VectorAndMatrix.cs  –  v3  (C#-7.3-kompatibel)
-  ----------------------------------------------------------------------
-  Ét statisk værktøjsbibliotek til alle generelle matrix- og vektor-
-  operationer, som bruges i PPNM-hjemmeopgaverne.
-
-  Nye funktioner i v3
-    • Symmetrize                 (A ← ½(A + Aᵀ))
-    • DiagonalMatrix             (byg  diag(d) )
-    • CheckDiagonalMatrix        (to overloads)
-  Eksisterende v2-tilføjelser
-    • Dot / Norm
-    • SolveUpperTriangular
-    • RandomMatrix/RandomVector med ekstern Random
-
-  Alt er skrevet med *klassisk* metode-syntaks (ingen C# 8-features),
-  så filen kan kompilere med `mcs` (C# 7.3).
- ======================================================================*/
+// OBS: Gamme udgave som ikke bruges mere!
+// OBS: This is an old version, which is no longer in use!
 using System;
 using System.Text;
 
-/* HERHER ------ Vector-Class tilføget til at bruge i HW5: ------ START */
 public class vector {
     private double[] data;
 
@@ -77,27 +58,17 @@ public class vector {
         return "[" + string.Join(", ", data) + "]";
     }
 
-    /* HERHER ------ Vector-Class tilføget til at bruge i HW5: ------ END */
-
-    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ START */
-
     public double[] ToArray() {
         var arr = new double[size];
         Array.Copy(data, arr, size);
         return arr;
     }
 
-    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ END */
-
 }
 
 
-/*  Ingen namespace for at matche tidligere brug;  ønskes et namespace,
-    skal brugskoden naturligvis tilrettes. */
 public static class VectorAndMatrix
 {
-    // tol_upper_limmet = 1e-12; // HERHER: tilføj evetuelt det her.
-    // tol_lower_limmet = 1e-5; //HERHER:   tilføj evetuelt det her.
     /* ------------------------------------------------------------------
        1.  Random-generation
        ------------------------------------------------------------------ */
@@ -260,8 +231,6 @@ public static class VectorAndMatrix
         return x;
     }
 
-    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ START */
-
     public static double[,] Outer(vector a, vector b) {
         var A = new double[a.size, b.size];
         for (int i = 0; i < a.size; i++)
@@ -301,8 +270,6 @@ public static class VectorAndMatrix
                 C[i, j] = A[i, j] - B[i, j];
         return C;
     }
-
-    /* HERHER ------ Vector-Class tilføget til at bruge i HW8: ------ END */
 
     /* ------------------------------------------------------------------
        5.  Convenience  “Check*”  – skriver resultat til Console

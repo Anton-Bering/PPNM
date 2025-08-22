@@ -95,10 +95,10 @@ public class qrgs {
 
 	public qrgs(matrix A){
 		int n=A.size1, m=A.size2;
-		// Vi forventer her kvadratisk A (n==m); GS virker også for n>=m.
+		// forventer her kvadratisk A (n==m); GS virker også for n>=m.
 		Q=new matrix(n,m);
 		R=new matrix(m,m);
-		// Kopiér kolonner én ad gangen
+		// Kopier kolonner en ad gangen
 		var a_j = new vector(n);
 		var q_j = new vector(n);
 
