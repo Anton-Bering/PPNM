@@ -71,7 +71,7 @@ public static class QuasiNewton {
         vector x0, 
         double acc, 
         bool useSymmetrized,
-        int maxIterations = 10000,
+        int maxIterations = 20000, // lavet om fra 10,000
         double α = 1e-4,
         double λ_minimal = 1.0/1024.0)
     {

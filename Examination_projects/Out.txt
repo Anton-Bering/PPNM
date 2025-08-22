@@ -193,13 +193,13 @@ Accuracy goal (acc): 1E-06
 Start point (x_start): [-1.2 1 -1.2 1 -1.2 1 -1.2 1]
 
 --- Results for Broyden's update ---
-Found minimum (x_min):                    [1 1 1 1 0.999999 0.999998 0.999997 0.999993]
-Value at minimum, f(x_min):               1.6298135659808E-11
-Gradient norm at x_min:                   7.2888652892073E-06  (should be < acc)
-Number of iterations:                     10000  (lower is better)
-Number of resets:                         1191  (lower is better)
+Found minimum (x_min):                    [1 1 1 1 1 0.999999 0.999999 0.999998]
+Value at minimum, f(x_min):               1.60267460166539E-12
+Gradient norm at x_min:                   1.98373042345519E-06  (should be < acc)
+Number of iterations:                     11847  (lower is better)
+Number of resets:                         3038  (lower is better)
 Length of last accepted step (λ_last):    0.0009765625  (ideally ≈ 1)
-Number of evaluations:                    272399  (lower is better)
+Number of evaluations:                    323582  (lower is better)
 
 Does the found minimum agree with expectation? NO.
 
@@ -220,10 +220,10 @@ Does the found minimum agree with expectation? YES.
    >> Winner: Symmetrized Broyden. Found the correct minimum where the other failed.
 
 1. Quality of the found minimum (lower f_min is better):
-   >> Winner: Symmetrized Broyden. Found a significantly better minimum (5.2596E-16 vs 1.6298E-11).
+   >> Winner: Symmetrized Broyden. Found a significantly better minimum (5.2596E-16 vs 1.6027E-12).
 
 2. Efficiency (fewer function evaluations is better):
-   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 194.02
+   Efficiency Speedup (Broyden Evals / Symmetrized Evals): 230.47
    >> Winner: Symmetrized Broyden. Was significantly more efficient.
 
 3. Robustness (fewer resets and successful convergence indicates stability):
@@ -288,38 +288,38 @@ Scale Factor:    9.88 ± 5.24
 Attempting 10 random starts for each method to find a good minimum...
 
 --- Running for: Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 7.82909621329671E-07
+  >> Best found minimum value f(x_min) for this method: 2.90174222266956E-06
 
 --- Running for: Symmetrized Broyden's update ---
-  >> Best found minimum value f(x_min) for this method: 1.09889842778336E-06
+  >> Best found minimum value f(x_min) for this method: 4.18616080720897E-07
 
 
 --- Best overall results found after all attempts ---
 --- Results for Broyden's update ---
-Value at best minimum, f(x_min):          7.82909621329671E-07
-Average iterations over 10 runs:    9729.30
-Average evaluations over 10 runs:   382243.40
+Value at best minimum, f(x_min):          2.90174222266956E-06
+Average iterations over 10 runs:    9033.40
+Average evaluations over 10 runs:   351377.40
 Success Rate:                             1/10 runs converged
 
 --- Results for Symmetrized Broyden's update ---
-Value at best minimum, f(x_min):          1.09889842778336E-06
-Average iterations over 10 runs:    5372.30
-Average evaluations over 10 runs:   197459.40
-Success Rate:                             7/10 runs converged
+Value at best minimum, f(x_min):          4.18616080720897E-07
+Average iterations over 10 runs:    6419.50
+Average evaluations over 10 runs:   237902.20
+Success Rate:                             4/10 runs converged
 
 --- Broyden vs Symmetrized Broyden (for ANN) ---
 
 Robustness (higher success rate is better):
   Broyden Success Rate:           1/10
-  Symmetrized Success Rate:       7/10
+  Symmetrized Success Rate:       4/10
 
 Quality of best minimum (lower is better):
-  Broyden:           7.82909621329671E-07
-  Symmetrized:       1.09889842778336E-06
+  Broyden:           2.90174222266956E-06
+  Symmetrized:       4.18616080720897E-07
 
 Average efficiency over 10 runs (lower is better):
-  Avg. Evals Broyden:           382243.40
-  Avg. Evals Symmetrized:       197459.40
+  Avg. Evals Broyden:           351377.40
+  Avg. Evals Symmetrized:       237902.20
 
 Overall Verdict for ANN Training:
 The WINNER is Symmetrized Broyden's update due to its significantly higher success rate, making it more reliable.
